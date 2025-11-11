@@ -12,6 +12,11 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
+        setCart: (state, action) => {
+            state.items = action.payload;
+            localStorage.setItem("cartItems", JSON.stringify(state.items));
+        },
+
         addToCart: (state, action) => {
             const product = action.payload;
             const existing= state.items.find(i => i.id === product.id);
@@ -54,8 +59,15 @@ const cartSlice = createSlice({
         },
     },
 });
-export const { addToCart, removeFromCart, increaseQty, decreaseQty, clearCart } =
- cartSlice.actions;
+export const { addToCart, removeFromCart, increaseQty, decreaseQty, clearCart, setCart } = cartSlice.actions;
 export default cartSlice.reducer;  
+
+export const syncCartToDB = (userId, cart) => {
+    return fetch(`http://localhost:5000/users/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({ cart })
+    }).then(res => res.json());
+};
 
 

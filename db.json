@@ -390,7 +390,10 @@
       "id": "87c4",
       "name": "Sulthana",
       "email": "sulthana@gmail.com",
-      "password": "sulthana123"
+      "password": "sulthana123",
+      "cart": []
     }
-  ]
+  ],
+  "cart": [],
+  "order": []
 }
