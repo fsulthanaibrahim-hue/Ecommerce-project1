@@ -1,0 +1,396 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "MIDI DRESS WITH BELT",
+      "category": "Women",
+      "price": 4999,
+      "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+      "description": "Dress with a round neck and short sleeves. Featuring faux button detail and an elasticated belt at the front with gold appliqué. Front patch pockets with flaps. Hem with front vent. Concealed zip fastening in the back seam."
+    },
+    {
+      "id": "2",
+      "name": "WOOL BLEND CAPE COAT",
+      "category": "Women",
+      "price": 12950,
+      "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+      "description": "Short coat made from a wool blend yarn. Featuring a round neck and long sleeves. Front patch pockets. Detachable cape detail with buttons in the same fabric. Front button fastening."
+    },
+    {
+      "id": "3",
+      "name": "WOOL COAT WITH FAUX FUR COLLAR",
+      "category": "Women",
+      "price": 13950,
+      "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+      "description": "Coat made from wool yarn. Featuring a lapel collar with a detachable faux fur trim. Long sleeves with vents and buttons. Front flap pockets. Front button fastening."
+    },
+    {
+      "id": "4",
+      "name": "OVERSIZED BOW-COLLAR BLOUSE",
+      "category": "Women",
+      "price": 5499,
+      "image": "https://image.hm.com/assets/hm/24/dc/24dc8af19c5d65d547bdd47ad9b94e109f4e6a0e.jpg?imwidth=2160",
+      "description": "Oversized blouse in a viscose weave with a bow collar and a deep slit opening with a hook-and-eye fastening at the front. Multiple, ruched frill trims at the front and a yoke with pleats at the back. Shoulder pads and long sleeves with a slit and buttons at the cuffs."
+    },
+    {
+      "id": "5",
+      "name": "LOOSE FIT ZIP-THROUGH HOODIE",
+      "category": "Men",
+      "price": 1399,
+      "image": "https://image.hm.com/assets/hm/27/1f/271f104866f01e07737b6a48dbce4330cb3a5746.jpg?imwidth=2160",
+      "description": "Zip-through hoodie in midweight sweatshirt fabric with a soft brushed inside. Hood with a drawstring, zip down the front and front pockets. Dropped shoulders, long sleeves and ribbing at the cuffs and hem. Loose fit for a generous but not oversized silhouette."
+    },
+    {
+      "id": "6",
+      "name": "REGULAR FIT ZIP-TOP JUMPER",
+      "category": "Men",
+      "price": 2999,
+      "image": "https://image.hm.com/assets/hm/72/c9/72c92bc247fff856e94da240d75a6397ed3e484f.jpg?imwidth=2160",
+      "description": "Jumper in a soft rib knit with a stand-up collar, zip at the top, long sleeves and a straight hem. Fine ribbing around the collar and at the cuffs and hem. Regular fit for comfortable wear and a classic silhouette."
+    },
+    {
+      "id": "7",
+      "name": "RELAXED FITTING FLOWING SHIRT",
+      "category": "Men",
+      "price": 4950,
+      "image": "https://static.zara.net/assets/public/71c8/3d24/9ebb44d9947e/558376909bf7/05948519505-e1/05948519505-e1.jpg?ts=1756121709054&w=750",
+      "description": "Relaxed fit shirt made from a modal blend fabric. Featuring a collared neckline, long sleeves with buttoned cuffs and a button-up front."
+    },
+    {
+      "id": "8",
+      "name": "OVERSIZED FLOWING TRENCH COAT",
+      "category": "Men",
+      "price": 11950,
+      "image": "https://static.zara.net/assets/public/2f2c/ca6a/8b8845cd8cb0/88f7714326d8/06861495832-e1/06861495832-e1.jpg?ts=1756293567389&w=750",
+      "description": "Oversize trench coat. Notched lapel collar and long sleeves with tab cuffs. Flap patch pockets at the hip. Inside pocket detail. Hem with a central back vent. Double-breasted front fastening."
+    },
+    {
+      "id": "9",
+      "name": "3D FLORAL DRESS",
+      "category": "kids",
+      "price": 2499,
+      "image": "https://static.zara.net/assets/public/46f5/526d/ca014adfb20f/e2a94d32f3d4/06693222644-e1/06693222644-e1.jpg?ts=1759301621070&w=1024",
+      "description": "Round neck, sleeveless dress. Features a buttoned teardrop opening at the back. With 3D flower appliqués on the chest and a matching inner lining."
+    },
+    {
+      "id": "10",
+      "name": "DRESS WITH BOW",
+      "category": "kids",
+      "price": 2999,
+      "image": "https://static.zara.net/assets/public/bc00/f3fd/e00140309c3f/c638baf74b84/06864492800-e1/06864492800-e1.jpg?ts=1760614476590&w=1024",
+      "description": "Round neck, sleeveless dress. Featuring a buttoned teardrop opening at the back. Front bow appliqué on the chest. Tonal inner lining."
+    },
+    {
+      "id": "11",
+      "name": "HOODED FAUX FUR ONE-PIECE SUIT",
+      "category": "kids",
+      "price": 3450,
+      "image": "https://static.zara.net/assets/public/f148/cd48/8ec14011a100/7dd4c24795f1/00248550710-e1/00248550710-e1.jpg?ts=1758033796918&w=1024",
+      "description": "One-piece suit with a hoodie and long sleeves. Front button fastening and snap-button fastening on the legs. Inner lining with a floral print."
+    },
+    {
+      "id": "12",
+      "name": "BASIC PIQUE POLO SHIRT",
+      "category": "kids",
+      "price": 999,
+      "image": "https://static.zara.net/assets/public/5788/a3b5/fd2745039963/b3a7c7d3a060/01887653507-e1/01887653507-e1.jpg?ts=1758618199135&w=1024",
+      "description": "Polo shirt with polo collar and long sleeves finished with cuffs."
+    },
+    {
+      "id": "13",
+      "name": "CRINKLED JERSEY BLOUSE",
+      "category": "Women",
+      "price": 1299,
+      "image": "https://image.hm.com/assets/hm/e3/48/e348ca9eba9a501d35524f1e4769fbbb7e3da378.jpg?imwidth=2160",
+      "description": "Blouse in crinkled jersey with a round neckline and a keyhole opening with tasselled ties at the front. Yoke at the front with an overlocked frill trim and gathers, and long balloon sleeves with overlocked frill trims around the elbows and narrow elastication at the cuffs."
+    },
+    {
+      "id": "14",
+      "name": "FLARED HIGH JEANS",
+      "category": "Women",
+      "price": 1799,
+      "image": "https://image.hm.com/assets/hm/0a/77/0a777f6ac99c657ca1080d8d3e84fbc38e532bfa.jpg?imwidth=2160",
+      "description": "Jeans in slightly stretchy denim with a high waist, zip fly and button and legs with wide, flared hems. Fake front pockets and real pockets at the back."
+    },
+    {
+      "id": "15",
+      "name": "COTTON MUSLIN PYJAMAS",
+      "category": "Women",
+      "price": 2999,
+      "image": "https://image.hm.com/assets/hm/48/6e/486eed369f341fb7414df13dc1bccfa6462501dc.jpg?imwidth=2160",
+      "description": "Pyjamas with a shirt and pair of bottoms in soft cotton muslin. Shirt with a collar, buttons down the front, a patch chest pocket, dropped shoulders and long sleeves. Bottoms with an elasticated, drawstring waist and straight legs."
+    },
+    {
+      "id": "16",
+      "name": "PRINTED T-SHIRT",
+      "category": "Women",
+      "price": 999,
+      "image": "https://image.hm.com/assets/hm/66/57/6657390a1eb736b09a4e338393abdf554f703536.jpg?imwidth=2160",
+      "description": "Loose-fit T-shirt in printed cotton jersey with a round, rib-trimmed neckline and gently dropped shoulders."
+    },
+    {
+      "id": "17",
+      "name": "RELAXED FIT PLEATED TROUSERS",
+      "category": "Men",
+      "price": 4999,
+      "image": "https://static.zara.net/assets/public/fd86/0fa2/cfec4ba5b701/7afa3d489bd1/08281760800-e1/08281760800-e1.jpg?ts=1756107376682&w=750",
+      "description": "Relaxed fit trousers made of a cotton, linen and lyocell blend. Waistband with front pleat detail. Side pockets and rear welt pockets. Front zip fly and button fastening."
+    },
+    {
+      "id": "18",
+      "name": "100% WOOL SWEATER",
+      "category": "Men",
+      "price": 7499,
+      "image": "https://static.zara.net/assets/public/1194/3ce3/2bcb47e18f36/13147790f9c4/02632316800-e1/02632316800-e1.jpg?ts=1755857943294&w=750",
+      "description": "Regular fit sweater in wool yarn. Featuring a round neck and long sleeves. Ribbed trims."
+    },
+    {
+      "id": "19",
+      "name": "SUPPER BAGGY JEANS",
+      "category": "Men",
+      "price": 2699,
+      "image": "https://image.hm.com/assets/hm/63/59/63591a40c92defdaf141d7ba3fc77fd76b07c1ee.jpg?imwidth=384",
+      "description": "Rounded leg and a baggy fit from the seat to the hem with plenty of room around the whole leg. Dropped crotch and stacked at the ankle. Regular waist and a zip fly. All you need to conquer the full denim look."
+    },
+    {
+      "id": "20",
+      "name": "FLOWING TIE-DYE PRINT SHIRT",
+      "category": "Men",
+      "price": 3499,
+      "image": "https://static.zara.net/assets/public/1c28/d78a/d43f45f7a7ee/15aff2350630/05666162605-e1/05666162605-e1.jpg?ts=1753351964760&w=750",
+      "description": "Relaxed fit shirt made from flowing lyocell and viscose fabric. Featuring a collared neck, short sleeves, side vents at the hem and a button-up front."
+    },
+    {
+      "id": "21",
+      "name": "SHINY SHIRT",
+      "category": "kids",
+      "price": 2150,
+      "image": "https://static.zara.net/assets/public/0898/c4e2/58944a428047/d786353f21ff/06697592620-e1/06697592620-e1.jpg?ts=1759332829692&w=1024",
+      "description": "Shirt with a V-neck and long sleeves with elasticated cuffs. Featuring a honeycomb detail on the yoke. Teardrop button fastening on the front. With shiny detailing."
+    },
+    {
+      "id": "22",
+      "name": "WIDE-LEG JEANS WITH SPARKLES",
+      "category": "kids",
+      "price": 2950,
+      "image": "https://static.zara.net/assets/public/bfae/df00/d70b445dacbd/98a0eb089070/00327715400-e1/00327715400-e1.jpg?ts=1761576188413&w=1125",
+      "description": "Wide-leg jeans with an adjustable inner waistband and front button fastening. Featuring front pockets and patch pockets on the back. With sparkly details."
+    },
+    {
+      "id": "23",
+      "name": "HOODIE AND JOGGER HEART SET",
+      "category": "kids",
+      "price": 2550,
+      "image": "https://static.zara.net/assets/public/2309/5f99/523c4964afff/7f64ea8e6f36/03402711406-e1/03402711406-e1.jpg?ts=1760537838825&w=1024",
+      "description": "Two-piece pack. Hoodie with long sleeves. Ribbed trims. Embossed heart detail on the chest. Jogger trousers with an elasticated waistband and front drawstring appliqué. Elasticated cuffs. Warm, soft brushed inner. 78% cotton fabric."
+    },
+    {
+      "id": "24",
+      "name": "KNIT SWEATER WITH ORGANZA FLOWERS",
+      "category": "kids",
+      "price": 2499,
+      "image": "https://static.zara.net/assets/public/bd01/9f9e/9fb945f29020/0323d4bbb717/02756718712-e1/02756718712-e1.jpg?ts=1759761909911&w=1024",
+      "description": "Knit sweater with a round neck and long sleeves. Featuring organza flower appliqués on the chest."
+    },
+    {
+      "id": "25",
+      "name": "PATTERNED CHIFFON DRESS",
+      "category": "Women",
+      "price": 2999,
+      "image": "https://image.hm.com/assets/hm/2b/c0/2bc0f8f7731e0141e8057a081eab75553d36ed5f.jpg?imwidth=2160",
+      "description": "Ankle-length, sleeveless dress in patterned chiffon with a round neckline and a keyhole opening with a concealed button at the front. Double-layered yoke with gathered seams at the shoulders and back. Elasticated seam at the waist and a gathered seam at the front of the skirt for a gently ruched effect. Concealed zip at one side. Lined."
+    },
+    {
+      "id": "26",
+      "name": "TWILL TROUSERS WITH BUTTONS",
+      "category": "Women",
+      "price": 2799,
+      "image": "https://static.zara.net/assets/public/3f78/fbb9/3478470ea5ca/a3234cdcee94/03644198730-e1/03644198730-e1.jpg?ts=1760373067014&w=750",
+      "description": "High-waist trousers with an elasticated inner waistband. Featuring embossed metal button detail on the front. Wide leg."
+    },
+    {
+      "id": "27",
+      "name": "FITTED BLAZER WITH BELT",
+      "category": "Women",
+      "price": 5999,
+      "image": "https://static.zara.net/assets/public/fc92/f11f/f5a944b5a602/f1f64e4f1d66/08585593741-e1/08585593741-e1.jpg?ts=1755846558638&w=750",
+      "description": "Round neck, long sleeve blazer with shoulder pads. Belt with metal buckle. Inner lining. Concealed snap-button fastening at the front."
+    },
+    {
+      "id": "28",
+      "name": "SATIN SHIRT WITH BOW",
+      "category": "Women",
+      "price": 3299,
+      "image": "https://static.zara.net/assets/public/14f1/81d1/b1f54b0b957f/c3289f09fc45/08946839612-e1/08946839612-e1.jpg?ts=1759155483246&w=750",
+      "description": "High neck shirt with a bow and long puff sleeves with shoulder pads. Fastens at the back with hidden buttons."
+    },
+    {
+      "id": "29",
+      "name": "FLORAL JACQUARD SHIRT",
+      "category": "Men",
+      "price": 1399,
+      "image": "https://static.zara.net/assets/public/349e/71e4/ade944aba7b9/af0372554a4d/01195255560-e1/01195255560-e1.jpg?ts=1751881897307&w=750",
+      "description": "Relaxed fit shirt made in cotton fabric. Camp collar and short sleeve. Patch pocket on the chest. Button-up front."
+    },
+    {
+      "id": "30",
+      "name": "RELAXED FIT LIMITED EDITION JEANS",
+      "category": "Men",
+      "price": 4999,
+      "image": "https://static.zara.net/assets/public/05a2/99eb/b79649bb820f/e47680f583de/03991393427-e1/03991393427-e1.jpg?ts=1753892272637&w=750",
+      "description": "Relaxed fit jeans crafted in cotton denim. Five pockets. Washed effect. Button-up fly."
+    },
+    {
+      "id": "31",
+      "name": "FAUX SUEDE REGULAR FIT JACKET",
+      "category": "Men",
+      "price": 7999,
+      "image": "https://static.zara.net/assets/public/d1a6/c96d/410641ec9c33/b16905aeb515/05070165207-e1/05070165207-e1.jpg?ts=1756293451706&w=750",
+      "description": "Regular fit jacket made in faux suede fabric. Lapel collar and long sleeves. Welt pockets at the hip. Button-up front."
+    },
+    {
+      "id": "32",
+      "name": "SLIM FIT COMFORT TROUSERS",
+      "category": "Men",
+      "price": 3250,
+      "image": "https://static.zara.net/assets/public/6a87/86bc/c38c48b8aad1/5166ece8eec3/06861441806-000-e1/06861441806-000-e1.jpg?ts=1754985897305&w=750",
+      "description": "Trousers made from highly elastic fabric. Featuring an elastic waistband, front pockets and rear welt pockets. Zip fly and top button fastening."
+    },
+    {
+      "id": "33",
+      "name": "GIRLS BOW APPLIQUE SWEATER",
+      "category": "kids",
+      "price": 899,
+      "image": "https://assets-jiocdn.ajio.com/medias/sys_master/root1/20250926/R3x2/68d6741b8bfb9009ac3af8b2/-473Wx593H-443081635-white-MODEL.jpg",
+      "description": "GIRLS BOW APPLIQUE SWEATER. 100% GOOD MATERIAL."
+    },
+    {
+      "id": "34",
+      "name": "PICUETA T-SHIRT AND LEGGINGS SET",
+      "category": "kids",
+      "price": 1750,
+      "image": "https://static.zara.net/assets/public/8e1c/0b1b/82e84a5bbf88/17ee470b11a6/04174577626-e1/04174577626-e1.jpg?ts=1755789543732&w=1024",
+      "description": "Two-piece set. V-neck, long sleeve T-shirt. Wrap-over fastening with snap buttons. Matching contrast trims. Leggings with an elastic waistband. 10% cotton fabric."
+    },
+    {
+      "id": "35",
+      "name": "EMBROIDERED TULLE DRESS",
+      "category": "kids",
+      "price": 2275,
+      "image": "https://static.zara.net/assets/public/b996/488b/704c4d1ea084/834605872751/04786566712-e1/04786566712-e1.jpg?ts=1759244687559&w=1024",
+      "description": "Dress featuring a peter pan collar, long sleeves with elasticated cuffs and button fastening at the back. Tonal inner lining."
+    },
+    {
+      "id": "36",
+      "name": "KNITTED JUMPSUIT WITH EMBROIDERED FLOWERS",
+      "category": "kids",
+      "price": 1599,
+      "image": "https://static.zara.net/assets/public/6e22/ba8d/53d244adbe20/e4b3317d3ddb/05536449052-e1/05536449052-e1.jpg?ts=1759734312685&w=1024",
+      "description": "Knitted jumpsuit with a round neck and long sleeves with wavy cuffs. Features a button fastening at the back and contrasting embroidered flower details on the chest."
+    },
+    {
+      "id": "37",
+      "name": "PLEATED MIDI DRESS WITH BELT",
+      "category": "Women",
+      "price": 3899,
+      "image": "https://static.zara.net/assets/public/faf8/f64f/2b0d482d833d/c8618d18c7ea/03897096713-e1/03897096713-e1.jpg?ts=1753367787237&w=750",
+      "description": "Dress with a round neck and long sleeves. Elasticated waist. Belt detail. Inner lining. Button-up front."
+    },
+    {
+      "id": "38",
+      "name": "SHIRT WITH WAIST KNOT",
+      "category": "Women",
+      "price": 2799,
+      "image": "https://static.zara.net/assets/public/9025/81ee/64c74f6780b2/774b3af7089f/03564167712-e1/03564167712-e1.jpg?ts=1759142381848&w=750",
+      "description": "Collared shirt with long sleeves. Featuring a front knot and a button-up front."
+    },
+    {
+      "id": "39",
+      "name": "COMBINED DENIM MIDI SKIRT",
+      "category": "Women",
+      "price": 2499,
+      "image": "https://static.zara.net/assets/public/de1f/2139/47894c15b676/9ff09498a31a/06164159427-e1/06164159427-e1.jpg?ts=1753177763961&w=750",
+      "description": "High-waist skirt with five front pockets. Features fabric detail with a combined wash. Hem with vent at the back and a seamless finish. Front zip and button fastening."
+    },
+    {
+      "id": "40",
+      "name": "TEXTURED FLORAL SHIRT",
+      "category": "Women",
+      "price": 3250,
+      "image": "https://static.zara.net/assets/public/0917/a849/317d4ae3a881/351aa565d303/03564162700-000-e1/03564162700-000-e1.jpg?ts=1757341591079&w=750",
+      "description": "Long sleeve collared shirt. Featuring a textured floral detail on the front and a button-up front."
+    },
+    {
+      "id": "41",
+      "name": "FLORAL PRINT SHIRT",
+      "category": "Men",
+      "price": 1199,
+      "image": "https://static.zara.net/assets/public/ad8b/bb31/d4234f74bc88/b8dfe02235a3/07545350711-e1/07545350711-e1.jpg?ts=1759996733134&w=750",
+      "description": "Relaxed fit shirt made from a viscose blend fabric. Featuring a classic collar, short sleeves, a button-up front, and a hem with side vents."
+    },
+    {
+      "id": "42",
+      "name": "BASIC MEDIUM WEIGHT T-SHIRT",
+      "category": "Men",
+      "price": 1250,
+      "image": "https://static.zara.net/assets/public/fcfe/daa5/8a6040e08a8f/4a42ca9f7367/01887420066-e1/01887420066-e1.jpg?ts=1754987519073&w=750",
+      "description": "Regular fit T-shirt with a round neck and short sleeves."
+    },
+    {
+      "id": "43",
+      "name": "SLIM FIT SHIRT",
+      "category": "Men",
+      "price": 1399,
+      "image": "https://image.hm.com/assets/hm/08/d9/08d969cad35ad29dc0aa7adc9bbe26d8e39286c6.jpg?imwidth=2160",
+      "description": "Shirt in woven fabric with an easy-iron finish. Turn-down collar, a classic front and a yoke at the back. Long sleeves with adjustable buttoning at the cuffs and a sleeve placket with a link button. Gently rounded hem. Slim fit that hugs the contours of your body, creating a fitted silhouette."
+    },
+    {
+      "id": "44",
+      "name": "OVERSIZED FIT T-SHIRT",
+      "category": "Men",
+      "price": 1199,
+      "image": "https://image.hm.com/assets/hm/66/20/6620eadd1bfe0141b0455ebaa8810a89f28b9747.jpg?imwidth=2160",
+      "description": "T-shirt in heavyweight cotton jersey with a round, rib-trimmed neckline, dropped shoulders and a straight-cut hem. Oversized fit for a baggy, extra-loose silhouette."
+    },
+    {
+      "id": "45",
+      "name": "WATER-REPELLENT QUILTED COAT WITH TIES",
+      "category": "kids",
+      "price": 3250,
+      "image": "https://static.zara.net/assets/public/bcd2/9567/c2ae4300bddc/3ad23247f0e8/00874577712-000-e1/00874577712-000-e1.jpg?ts=1759131615577&w=1024",
+      "description": "Coat made from a special water-repellent fabric, with a hood and long sleeves with elasticated cuffs. Featuring a concealed zip fastening with snap buttons and decorative ties on the front. Front pockets with snap button fastening. Faux fur inner lining."
+    },
+    {
+      "id": "46",
+      "name": "EMBROIDERED SHIRT WITH PETER PAN COLLAR",
+      "category": "kids",
+      "price": 1350,
+      "image": "https://static.zara.net/assets/public/3dc9/9305/85b143a99ceb/87e27ed5c7b9/08741740637-e1/08741740637-e1.jpg?ts=1759846163172&w=1024",
+      "description": "Shirt with a peter pan collar, embroidered detailing and long sleeves with elasticated cuffs. Button-up front fastening."
+    },
+    {
+      "id": "47",
+      "name": "COTTON STRIPES ROMPERS",
+      "category": "kids",
+      "price": 779,
+      "image": "https://assets-jiocdn.ajio.com/medias/sys_master/root1/20250922/EcCH/68d0daf63d468c61ab0efa18/-473Wx593H-702285983-green-MODEL.jpg",
+      "description": "Material Composition 100% Cotton."
+    },
+    {
+      "id": "48",
+      "name": "EMBROIDERED SHIRT DRESS",
+      "category": "kids",
+      "price": 599,
+      "image": "https://assets-jiocdn.ajio.com/medias/sys_master/root/20250625/m5HA/685bef522b1ad9265b69e5cf/-473Wx593H-443079631-ltpeach-MODEL.jpg",
+      "description": "100% Cotton."
+    }
+  ],
+  "users": [
+    {
+      "id": "87c4",
+      "name": "Sulthana",
+      "email": "sulthana@gmail.com",
+      "password": "sulthana123"
+    }
+  ]
+}
