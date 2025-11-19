@@ -290,14 +290,14 @@ const Profile = () => {
           )}
         </div>
       </div>
-
+{/* 
       <h2 className="text-xl font-semibold mt-10">My Orders</h2>
 
       {loadingOrders ? (
         <p className="mt-4">Loading orders...</p>
       ) : orders.length === 0 ? (
-        <p className="mt-4">No orders yet.</p>
-      ) : (
+        <p className="mt-4">No orders yet.</p> */}
+     
         <div className="mt-4 w-full max-w-xl space-y-4">
           {orders.map((order) => (
             <div key={order.id} className="border p-4 rounded shadow bg-white">
@@ -333,7 +333,7 @@ const Profile = () => {
               </div>
           ))}
         </div>  
-      )}
+      
     </div>
   );
 };

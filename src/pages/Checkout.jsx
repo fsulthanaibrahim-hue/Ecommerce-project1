@@ -1,7 +1,5 @@
 
 
-
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -65,7 +63,6 @@ const Checkout = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">Checkout</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Billing Info */}
         <div className="border p-4 rounded-lg shadow-sm">
           <h3 className="text-xl font-semibold mb-4">Billing Information</h3>
           <input

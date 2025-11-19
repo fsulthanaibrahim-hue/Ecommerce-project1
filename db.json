@@ -408,5 +408,106 @@
     }
   ],
   "cart": [],
-  "order": []
+  "order": [
+    {
+      "id": 1763503389164,
+      "userId": "87c4",
+      "products": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "quantity": 1,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750"
+        }
+      ],
+      "address": {
+        "name": "Sulthana",
+        "street": "ABC Street",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "2345",
+        "country": "India",
+        "phone": "8783826579"
+      },
+      "total": 12950,
+      "date": "2025-11-18T22:03:09.164Z",
+      "status": "pending"
+    },
+    {
+      "id": 1763509760073,
+      "userId": "87c4",
+      "products": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "quantity": 1,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750"
+        }
+      ],
+      "address": {
+        "name": "Sulthana",
+        "street": "ABC Street",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "2345",
+        "country": "India",
+        "phone": "8783826579"
+      },
+      "total": 13950,
+      "date": "2025-11-18T23:49:20.073Z",
+      "status": "pending"
+    },
+    {
+      "id": 1763510153344,
+      "userId": "87c4",
+      "products": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "quantity": 1,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750"
+        }
+      ],
+      "address": {
+        "name": "Sulthana",
+        "street": "ABC Street",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "2345",
+        "country": "India",
+        "phone": "8783826579"
+      },
+      "total": 13950,
+      "date": "2025-11-18T23:55:53.344Z",
+      "status": "pending"
+    },
+    {
+      "id": 1763511251981,
+      "userId": "87c4",
+      "products": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "quantity": 1,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750"
+        }
+      ],
+      "address": {
+        "name": "Sulthana",
+        "street": "ABC Street",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "2345",
+        "country": "India",
+        "phone": "8783826579"
+      },
+      "total": 12950,
+      "date": "2025-11-19T00:14:11.981Z",
+      "status": "pending"
+    }
+  ]
 }
