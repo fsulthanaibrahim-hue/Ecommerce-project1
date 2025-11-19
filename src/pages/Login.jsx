@@ -8,8 +8,6 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
 
     const handleChange = (e) => {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,12 +43,6 @@ const Login = () => {
           return;
         }
 
-        // const user = users.find(
-        //   (u) => u.email === form.email && u.password === form.password
-        // );
-
-        // if(user) {
-        //   alert("Login successful!");
 
           localStorage.setItem("isLoggedIn", "true"); 
           localStorage.setItem("loggedInUser", JSON.stringify(user));
@@ -65,12 +57,7 @@ const Login = () => {
         } 
     };
 
-    // const handleLogin = (e) => { 
-    //     e.preventDefault();
-    //     console.log("Logging in with:", email, password);
-    //      alert("Login successfully!");
-    // };
-
+  
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
           <div className="bg-white p-8 rounded-2xl shadow-lg w-[90%] sm:w-[400px]">
@@ -79,8 +66,6 @@ const Login = () => {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-               {/* <div> */}
-                {/* <label className="block text-gray-600 mb-1">Email</label> */}
                 <input 
                   type="email"
                   name="email"
@@ -90,10 +75,8 @@ const Login = () => {
                   onChange={handleChange}
                   required
                 />  
-               {/* </div> */}
 
                <div className="relative">
-                {/* <label className="block text-gray-600 mb-1">Password</label> */}
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"

@@ -4,19 +4,11 @@ import { Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 
 const Register = () => {
-    // const [name, setName] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
     const [form ,setForm] = useState({ name: "", email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    // const handleRegister = (e) => {
-    //     e.preventDefault();
-    //     console.log("Registered:", name, email, password);
-    //     alert("Registered successfully!");
-    // };
     const handleChange = (e) => {
       setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
@@ -62,58 +54,7 @@ const Register = () => {
         console.error("Error registering user:", err);
         toast.error("Something went wrong!")
       }
-    };
-
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-    //   // setLoading(true);
-
-    //     const { name, email, password } = form;
-
-
-    //     if(!name || !email || !password) {
-    //       toast.error("Please fill all fields");
-    //       setLoading(false);
-    //       return;
-    //     }
-
-    //   try{  
-    //     const res = await fetch(`http://localhost:5000/users?email=${email}`);
-    //     const existingUsers = await res.json();
-
-    //     if(existingUsers.length > 0) {
-    //       toast.error("User already exists!");
-    //       // setLoading(false);
-    //       return;
-    //     }
-
-    //     const postRes = await fetch("http://localhost:5000/users", {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ name, email, password }),
-    //     });
-
-    //     if(!postRes.ok) {
-    //       // const text = await res.text();
-    //       // console.error("Server responded with error:", res.status, text);
-    //       throw new Error("Failed to register user");
-    //     }
-
-    //     const newUser = await postRes.json();
-    //     // console.log("Registered user:", data);
-
-    //     localStorage.setItem("user", JSON.stringify(newUser));
-    //     localStorage.setItem("isLoggedIn", "true");
-
-    //     toast.success("Registered successfully!");
-    //     navigate("/login");
-    //   } catch (err) {
-    //     console.error("Registration failed:", err);
-    //     toast.error("Something went wrong!   Please try again.");
-    //   } finally {
-    //     setLoading(false);
-    //   } 
-    // };  
+    }; 
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50">

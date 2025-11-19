@@ -1,18 +1,15 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart, increaseQty, decreaseQty, setCart, clearCart } from "../redux/CartSlice";
+import { increaseQty, decreaseQty, removeFromCart } from "../redux/CartSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { syncCartToDB } from "../redux/CartSlice";
 
 const Cart = () => {
-  const cart = useSelector(state => state.cart?.items || []);
+  const cart = useSelector((state) => state.cart?.items || []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userFromRedux = useSelector(state => state.user?.currentUser);
-  const user = userFromRedux || JSON.parse(localStorage.getItem("loggedInUser"));
-
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
   useEffect(() => {
     if (!user) {
@@ -25,74 +22,33 @@ const Cart = () => {
 
   const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
 
-  const syncCart = async (userId, updatedCart) => {
-    await fetch(`http://localhost:5000/cart${userId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: updatedCart })
-    });
-    // if (user?.id) syncCartToDB(user.id, updatedCart);
-  };
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    const updatedCart = [...cart];
-    syncCartToDB(updatedCart);
-  };
-
   const handleIncrease = (item) => {
     dispatch(increaseQty(item.id));
-    const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i);
-    syncCart(updatedCart);
   };
-  
+
   const handleDecrease = (item) => {
-    if (item.quantity === 1) return;
-    dispatch(decreaseQty(item.id));
-    const updatedCart = cart.map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1} : i);
-    syncCart(updatedCart);
+    if (item.quantity > 1) {
+      dispatch(decreaseQty(item.id));
+    }
   };
 
   const handleRemove = (item) => {
     dispatch(removeFromCart(item.id));
-    const updatedCart = cart.filter(i => i.id !== item.id);
-    syncCart(updatedCart);
   };
 
-  const handleCheckout = async  () => {
+  const handleCheckout = () => {
     if (cart.length === 0) {
       toast.error("Your cart is empty!");
       return;
     }
 
-    const order = {
-      userId: user.id,
-      items: cart,
-      total: cart.reduce((sum, i) => sum + (i.price * i.quantity), 0),
-      status: "pending",
-      createAt: new Date().toISOString()
-    };
+    if (!user.address) {
+      toast.error("Please add your address in profile before checkout!");
+      navigate("/profile");
+      return;
+    }
 
-    try {
-      await fetch("http://localhost:5000/order", {
-        method: "POST",
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify(order)
-      });
-
-      await syncCartToDB(user.id, []);
-      dispatch(clearCart());
-
-    // cart.forEach(item => dispatch(removeFromCart(item.id)));
-    // syncCart([]);
-    toast.success("Order placed successfully! Thank you for shopping.");
-
-    setTimeout(() => navigate("/orders"), 1500);
-
-    } catch (error) {
-      console.error("Checkout error:", error);
-      toast.error("Something went wrong. Please try again!");
-    } 
+    navigate("/checkout");
   };
 
   return (
@@ -111,7 +67,7 @@ const Cart = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {cart.map(item => (
+          {cart.map((item) => (
             <div
               key={item.id}
               className="flex justify-between items-center border-b pb-3"
@@ -127,22 +83,23 @@ const Cart = () => {
                   <p className="text-gray-600">₹{item.price}</p>
                 </div>
               </div>
+
               <div className="flex items-center gap-4">
                 <button
-                  onClick={() => dispatch(decreaseQty(item.id))}
+                  onClick={() => handleDecrease(item)}
                   className="cursor-pointer px-2 py-1 border rounded hover:bg-gray-100"
                 >
                   -
                 </button>
                 <span>{item.quantity}</span>
                 <button
-                  onClick={() => dispatch(increaseQty(item.id))}
+                  onClick={() => handleIncrease(item)}
                   className="cursor-pointer px-2 py-1 border rounded hover:bg-gray-100"
                 >
                   +
                 </button>
                 <button
-                  onClick={() => dispatch(removeFromCart(item.id))}
+                  onClick={() => handleRemove(item)}
                   className="text-red-600 cursor-pointer"
                 >
                   Remove
@@ -158,7 +115,7 @@ const Cart = () => {
           <div className="text-right mt-6">
             <button
               onClick={handleCheckout}
-              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition cursor-pointer"
             >
               Checkout
             </button>
@@ -170,3 +127,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

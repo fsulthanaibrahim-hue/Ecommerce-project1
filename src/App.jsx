@@ -11,7 +11,8 @@ import Cart from "./pages/Cart";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Orders from "./pages/Order";
 import Wishlist from "./pages/Wishlist";
-// import { Toaster } from "react-hot-toast";
+import Checkout from "./pages/Checkout";
+import OrderDetails from "./pages/OrderDetails";
 
 function Layout({ children }) {
   const location = useLocation();
@@ -29,7 +30,6 @@ function Layout({ children }) {
 function App() {
   return (
     <Router>
-      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -37,11 +37,15 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={
           <ProtectedRoute>
             <Orders />
           </ProtectedRoute>
           } />
+
+          <Route path="order-details/:id" element={<OrderDetails />} />
+          
         <Route path="/wishlist" element={
           <ProtectedRoute>
              <Wishlist />

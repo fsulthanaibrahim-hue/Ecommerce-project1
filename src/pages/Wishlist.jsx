@@ -4,7 +4,6 @@ import { removeFromWishlist } from "../redux/WishlistSlice";
 import { addToCart } from "../redux/CartSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-// import { Heart, ShoppingBag } from "lucide-react";
 
 const Wishlist = () => {
     const wishlist = useSelector(state => state.wishlist?.items || []);

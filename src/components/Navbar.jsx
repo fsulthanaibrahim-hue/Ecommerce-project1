@@ -15,7 +15,6 @@ const Navbar = () => {
       setIsLoggedIn(loggedIn);
     }, []);
 
-    //Logout handler...
     const handleLogout = () => {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
@@ -34,12 +33,6 @@ const Navbar = () => {
        <nav className="flex justify-between items-center px-8 py-4 bg-white shadow-md relative z-50">
             <Link to="/" className="text-2xl font-bold tracking-wide text-gray-800">Trendora</Link>
 
-            {/* <div className="hidden md:flex space-x-8 text-gray-700 font-medium mr-190"> */}
-               {/* <Link to="/" className="hover:text-black transition">Home</Link> */}
-               {/* <Link to="/products?category=Men" className="hover:text-black transition">Men</Link> */}
-               {/* <Link to="/products?category=women" className="hover:text-black transition">Women</Link> */}
-               {/* <Link to="/products?category=kids" className="hover:text-black transition">Kids</Link> */}
-            {/* </div> */}
 
             <div className="flex items-center space-x-5">
           
