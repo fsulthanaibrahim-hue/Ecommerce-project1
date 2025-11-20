@@ -1,26 +1,35 @@
-
-
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import toast, { Toaster } from "react-hot-toast";
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const location = useLocation(); 
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
 
+  const profileAddress = location.state?.address || loggedUser.address || {};
+
   const [formData, setFormData] = useState({
-    name: loggedUser.name || "",
+    fullname: loggedUser.name || "",
     email: loggedUser.email || "",
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "",
+    address: profileAddress.address || "",
+    city: profileAddress.city || "",
+    state: profileAddress.state || "",
+    pinCode: profileAddress.pincode || "",
+    country: profileAddress.country || "India",
     paymentMethod: "cod",
   });
+
+  useEffect(() => {
+    if (!loggedUser?.id) {
+      toast.error("Please login first!");
+      navigate("/login");
+    }
+  }, [loggedUser, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,24 +41,34 @@ const Checkout = () => {
       return;
     }
 
-    // Create new order with unique UUID
     const newOrder = {
       id: uuidv4(),
       userId: loggedUser.id,
       products: cartItems,
       status: "Pending",
-      date: new Date().toLocaleDateString(),
+      date: new Date().toLocaleString(),
+      timestamps: { Pending: new Date().toLocaleString() },
+      total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+
+      ShippingAddress: { 
+        fullname: formData.fullname,
+        email: formData.email,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        pinCode: formData.pinCode,
+        country: formData.country,  
+      }, 
     };
 
-    // Save to localStorage
     const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
     localStorage.setItem("orders", JSON.stringify([...existingOrders, newOrder]));
 
-    // Clear cart
     localStorage.removeItem("cartItems");
+    setCartItems([]);
 
     toast.success("Order placed successfully!");
-    navigate("/orders");
+    setTimeout(() => navigate("/orders"), 1000);
   };
 
   const totalAmount = cartItems.reduce(
@@ -63,14 +82,16 @@ const Checkout = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">Checkout</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
         <div className="border p-4 rounded-lg shadow-sm">
           <h3 className="text-xl font-semibold mb-4">Billing Information</h3>
+
           <input
             type="text"
-            name="name"
+            name="fullname"
             placeholder="Full Name"
             className="w-full p-2 border rounded mb-3"
-            value={formData.name}
+            value={formData.fullname}
             onChange={handleChange}
           />
           <input
@@ -81,7 +102,8 @@ const Checkout = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          <textarea
+          <input
+            type="text"
             name="address"
             placeholder="Address"
             className="w-full p-2 border rounded mb-3"
@@ -96,12 +118,20 @@ const Checkout = () => {
             value={formData.city}
             onChange={handleChange}
           />
+          <input 
+            type="text"
+            name="state"
+            placeholder="State"
+            className="w-full p-2 border rounded mb-3"
+            value={formData.state}
+            onChange={handleChange}
+          />  
           <input
             type="text"
-            name="postalCode"
-            placeholder="Postal Code"
+            name="pinCode"
+            placeholder="Pin Code"
             className="w-full p-2 border rounded mb-3"
-            value={formData.postalCode}
+            value={formData.pinCode}
             onChange={handleChange}
           />
           <input
@@ -116,6 +146,7 @@ const Checkout = () => {
 
         <div className="border p-4 rounded-lg shadow-sm">
           <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+
           {cartItems.length === 0 ? (
             <p className="text-gray-500">Your cart is empty.</p>
           ) : (
@@ -144,8 +175,8 @@ const Checkout = () => {
               className="w-full p-2 border rounded"
             >
               <option value="cod">Cash on Delivery</option>
-              <option value="card">Credit/Debit Card (Dummy)</option>
-              <option value="upi">UPI (Dummy)</option>
+              <option value="card">Credit/Debit Card</option>
+              <option value="upi">UPI</option>
             </select>
           </div>
 
@@ -155,6 +186,7 @@ const Checkout = () => {
           >
             Place Order
           </button>
+
         </div>
       </div>
     </div>

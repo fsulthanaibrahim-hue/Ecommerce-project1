@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, clearCart } from "../redux/CartSlice";
+import { addToWishlist, removeFromWishlist } from "../redux/WishlistSlice";
 import toast from "react-hot-toast";
 import fetchProducts from "../services/api";
-import { addToWishlist, removeFromWishlist } from "../redux/WishlistSlice";
 import { Heart, Plus, Minus } from "lucide-react";
 
 const ProductDetail = () => {
@@ -22,6 +22,7 @@ const ProductDetail = () => {
 
   const sizes = ["S", "M", "L", "XL"];
 
+  // Load product on page load
   useEffect(() => {
     const loadProduct = async () => {
       try {
@@ -39,25 +40,13 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
-
-    if (!user) {
-      toast.error("Please login first!");
-      return;
-    }
-
-    if (!selectedSize) {
-      toast.error("Please select a size!");
-      return;
-    }
+    if (!user) return toast.error("Please login first!");
+    if (!selectedSize) return toast.error("Please select a size!");
 
     const exists = cart.find(
       (item) => item.id === product.id && item.size === selectedSize
     );
-
-    if (exists) {
-      toast.error("Already in cart!");
-      return;
-    }
+    if (exists) return toast.error("Already in cart!");
 
     dispatch(addToCart({ ...product, size: selectedSize, quantity }));
     toast.success("Added to cart!");
@@ -66,32 +55,26 @@ const ProductDetail = () => {
 
   const handleBuyNow = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) return toast.error("Please login first!");
+    if (!selectedSize) return toast.error("Please select a size!");
 
-    if (!user) {
-      toast.error("Please login first!");
-      return;
-    }
+    // Ensure quantity is at least 1
+    const finalQuantity = quantity > 0 ? quantity : 1;
 
-    if (!selectedSize) {
-      toast.error("Please select a size!");
-      return;
-    }
-
+    // Clear current cart
     dispatch(clearCart());
-    dispatch(addToCart({ ...product, size: selectedSize, quantity }));
+
+    // Add current product with latest size and quantity
+    dispatch(addToCart({ ...product, size: selectedSize, quantity: finalQuantity }));
+
     navigate("/checkout");
   };
 
   const handleWishlist = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
-
-    if (!user) {
-      toast.error("Please login first!");
-      return;
-    }
+    if (!user) return toast.error("Please login first!");
 
     const exists = wishlist.find((item) => item.id === product.id);
-
     if (exists) {
       dispatch(removeFromWishlist(product.id));
       toast.success("Removed from wishlist");
@@ -107,57 +90,53 @@ const ProductDetail = () => {
   if (!product) return <p className="text-center mt-10">Product Not Found</p>;
 
   return (
-    <div className="p-10 max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
-      
-  
+    <div className="p-6 max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+      {/* Product Image */}
       <div className="relative w-full md:w-1/2">
         <img
           src={product.image}
-          className="w-full rounded-lg shadow-lg"
           alt={product.name}
+          className="w-full rounded-lg shadow-lg object-cover"
         />
-
         <button
           onClick={handleWishlist}
-          className="absolute top-4 right-4 bg-white/80 p-2 rounded-full"
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/80 hover:bg-white"
         >
-          {isWishlisted ? (
-            <Heart fill="red" className="text-red-500" size={24} />
-          ) : (
-            <Heart className="text-gray-700" size={24} />
-          )}
+          <Heart
+            size={24}
+            fill={isWishlisted ? "red" : "none"}
+            className={isWishlisted ? "text-red-500" : "text-gray-700"}
+          />
         </button>
       </div>
 
+      {/* Product Details */}
+      <div className="md:w-1/2 flex flex-col gap-5">
+        <h1 className="text-4xl font-bold">{product.name}</h1>
+        <p className="text-xl text-blue-600 font-semibold">₹{product.price}</p>
+        <p className="text-gray-600">{product.description || "No description available."}</p>
 
-      <div className="md:w-1/2 flex flex-col">
-        <h1 className="text-4xl font-bold mb-3">{product.name}</h1>
-        <p className="text-xl text-blue-600 font-semibold mb-2">₹{product.price}</p>
-        <p className="text-gray-600 mb-5">{product.description}</p>
-
-
-        <div className="mb-5">
-          <p className="font-medium mb-1">Select Size:</p>
+        {/* Size Selector */}
+        <div>
+          <p className="font-medium mb-2">Select Size:</p>
           <div className="flex gap-3">
-            {sizes.map((s) => (
+            {sizes.map((size) => (
               <button
-                key={s}
-                onClick={() => setSelectedSize(s)}
+                key={size}
+                onClick={() => setSelectedSize(size)}
                 className={`px-4 py-2 border rounded-md ${
-                  selectedSize === s
-                    ? "bg-black text-white"
-                    : "bg-white text-black"
+                  selectedSize === size ? "bg-black text-white" : "bg-white text-black"
                 }`}
               >
-                {s}
+                {size}
               </button>
             ))}
           </div>
         </div>
 
-
-        <div className="mb-5">
-          <p className="font-medium mb-1">Quantity:</p>
+        {/* Quantity Selector */}
+        <div>
+          <p className="font-medium mb-2">Quantity:</p>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -165,9 +144,7 @@ const ProductDetail = () => {
             >
               <Minus size={18} />
             </button>
-
             <span className="px-4 py-2 border rounded-md">{quantity}</span>
-
             <button
               onClick={() => setQuantity((q) => q + 1)}
               className="p-2 border rounded-md"
@@ -177,17 +154,17 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-4">
+        {/* Buttons */}
+        <div className="flex flex-col md:flex-row gap-4 mt-4">
           <button
             onClick={handleAddToCart}
-            className="bg-black text-white px-6 py-3 rounded-lg"
+            className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
           >
             Add to Cart
           </button>
-
           <button
             onClick={handleBuyNow}
-            className="border px-6 py-3 rounded-lg"
+            className="border px-6 py-3 rounded-lg hover:bg-gray-100"
           >
             Buy Now
           </button>

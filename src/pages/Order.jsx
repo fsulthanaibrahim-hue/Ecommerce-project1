@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Truck, Package, CheckCircle, XCircle, Calendar } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
@@ -6,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Orders = () => {
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
   const [orders, setOrders] = useState([]);
-  const [animateOrders, setAnimateOrders] = useState([]);
+  const [expandedOrders, setExpandedOrders] = useState({});
 
   const stages = ["Pending", "Packed", "Shipped", "Delivered"];
   const stageIcons = {
@@ -29,12 +28,6 @@ const Orders = () => {
       }));
 
     setOrders(userOrders);
-
-    userOrders.forEach((order, index) => {
-      setTimeout(() => {
-        setAnimateOrders((prev) => [...prev, order]);
-      }, index * 200);
-    });
   }, [loggedUser.id]);
 
   useEffect(() => {
@@ -57,7 +50,6 @@ const Orders = () => {
           };
         });
 
-        setAnimateOrders(updatedOrders);
         localStorage.setItem("orders", JSON.stringify(updatedOrders));
         return updatedOrders;
       });
@@ -80,11 +72,18 @@ const Orders = () => {
             }
           : order
       );
-      setAnimateOrders(updatedOrders);
+
       localStorage.setItem("orders", JSON.stringify(updatedOrders));
       toast.success("Order Cancelled!");
       return updatedOrders;
     });
+  };
+
+  const toggleExpand = (orderId) => {
+    setExpandedOrders((prev) => ({
+      ...prev,
+      [orderId]: !prev[orderId],
+    }));
   };
 
   return (
@@ -95,51 +94,49 @@ const Orders = () => {
       {orders.length === 0 ? (
         <p className="text-center text-gray-500">No orders found.</p>
       ) : (
-        animateOrders.map((order) => {
+        orders.map((order) => {
           const lastCompletedIndex =
             order.status === "Cancelled"
               ? -1
               : stages.indexOf(order.status);
+
+          const totalAmount = order.products.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          );
 
           return (
             <div
               key={order.id}
               className="border p-6 rounded-xl mb-10 shadow-sm bg-white"
             >
-              <div className="flex flex-col md:flex-row gap-6 mb-6 items-center">
-                <img
-                  src={order.products[0].image}
-                  alt={order.products[0].name}
-                  className="w-24 h-24 object-cover rounded-md border"
-                />
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold">
-                    {order.products[0].name}
-                  </h3>
-                  <p className="text-gray-600">
-                    ₹{order.products[0].price.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Order ID: <span className="font-medium">{order.id}</span>
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Ordered At: <span className="font-medium">{order.date}</span>
-                  </p>
-                  {order.timestamps.Delivered && (
-                    <p className="text-sm text-gray-500">
-                      Delivered At:{" "}
-                      <span className="font-medium">
-                        {order.timestamps.Delivered}
-                      </span>
+              <div className="flex flex-col md:flex-row gap-6 mb-4 items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={order.products[0].image}
+                    alt={order.products[0].name}
+                    className="w-24 h-24 object-cover rounded-md border"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold">
+                      {order.products[0].name} {order.products.length > 1 && `+${order.products.length - 1} more`}
+                    </h3>
+                    <p className="text-gray-600">₹{totalAmount.toLocaleString()}</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Order ID: <span className="font-medium">{order.id}</span>
                     </p>
-                  )}
-                  <p className="text-sm text-gray-500 mt-2">
-                    Status: <span className="font-medium">{order.status}</span>
-                  </p>
+                  </div>
                 </div>
+
+                <button
+                  onClick={() => toggleExpand(order.id)}
+                  className="text-purple-700 font-semibold"
+                >
+                  {expandedOrders[order.id] ? "Hide Details" : "View Details"}
+                </button>
               </div>
 
-              <div className="relative flex flex-col md:flex-row items-center justify-between mb-6">
+              <div className="relative flex flex-col md:flex-row items-center justify-between mb-4">
                 <div className="absolute md:top-1/2 md:left-6 md:right-6 h-1 bg-gray-300 hidden md:block"></div>
                 <div className="absolute left-6 top-12 bottom-0 w-1 bg-gray-300 md:hidden"></div>
 
@@ -188,7 +185,7 @@ const Orders = () => {
                               : "text-gray-300"
                           } transition-colors duration-500`}
                         />
-                        {current && (
+                        {current && completed && (
                           <span className="absolute w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
                         )}
                       </div>
@@ -219,11 +216,45 @@ const Orders = () => {
 
               {order.status !== "Delivered" && order.status !== "Cancelled" && (
                 <button
-                  className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg w-full hover:bg-red-600"
+                  className="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg w-full hover:bg-red-600"
                   onClick={() => cancelOrder(order.id)}
                 >
                   Cancel Order
                 </button>
+              )}
+
+              {expandedOrders[order.id] && (
+                <div className="mt-4 border-t pt-4 space-y-3">
+                  <p className="font-semibold">Shipping Address:</p>
+                  <p className="text-gray-600">
+                    {order.address
+                      ? `${order.address.street}, ${order.address.city}, ${order.address.state}, ${order.address.zip}, ${order.address.country}`
+                      : "N/A"}
+                  </p>
+
+                  {order.products.map((p, idx) => (
+                    <div key={idx} className="flex justify-between items-center p-2 border rounded">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                        <div>
+                          <p>{p.name}</p>
+                          <p className="text-sm text-gray-500">
+                            Qty: {p.quantity} x ₹{p.price}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="font-medium">₹{(p.price * p.quantity).toLocaleString()}</p>
+                    </div>
+                  ))}
+
+                  <p className="font-semibold text-right mt-2">
+                    Total: ₹{totalAmount.toLocaleString()}
+                  </p>
+                </div>
               )}
             </div>
           );
