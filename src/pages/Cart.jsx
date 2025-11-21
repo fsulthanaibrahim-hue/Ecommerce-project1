@@ -23,17 +23,17 @@ const Cart = () => {
   const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
 
   const handleIncrease = (item) => {
-    dispatch(increaseQty(item.id));
+    dispatch(increaseQty({ id: item.id, size: item.size }));
   };
 
   const handleDecrease = (item) => {
     if (item.quantity > 1) {
-      dispatch(decreaseQty(item.id));
+      dispatch(decreaseQty({ id: item.id, size: item.size}));
     }
   };
 
   const handleRemove = (item) => {
-    dispatch(removeFromCart(item.id));
+    dispatch(removeFromCart({ id: item.id, size: item.size }));
   };
 
   const handleCheckout = () => {

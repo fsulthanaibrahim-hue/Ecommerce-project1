@@ -38,6 +38,7 @@ const ProductDetail = () => {
     loadProduct();
   }, [id]);
 
+
   const handleAddToCart = () => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if (!user) return toast.error("Please login first!");
@@ -90,7 +91,7 @@ const ProductDetail = () => {
   if (!product) return <p className="text-center mt-10">Product Not Found</p>;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
+    <div className="p-6 max-w-6xl mx-auto flex flex-col md:flex-row gap-10 m-16">
       {/* Product Image */}
       <div className="relative w-full md:w-1/2">
         <img
@@ -112,7 +113,7 @@ const ProductDetail = () => {
 
       {/* Product Details */}
       <div className="md:w-1/2 flex flex-col gap-5">
-        <h1 className="text-4xl font-bold">{product.name}</h1>
+        <h1 className="text-4xl font-bold">{product.name || product.title || "Product Name"}</h1>
         <p className="text-xl text-blue-600 font-semibold">₹{product.price}</p>
         <p className="text-gray-600">{product.description || "No description available."}</p>
 

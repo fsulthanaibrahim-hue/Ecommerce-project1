@@ -14,6 +14,7 @@ import Wishlist from "./pages/Wishlist";
 import Checkout from "./pages/Checkout";
 import OrderDetails from "./pages/OrderDetails";
 
+
 function Layout({ children }) {
   const location = useLocation();
   const hideLayout = ["/login", "/register"].includes(location.pathname);
@@ -70,6 +71,7 @@ function App() {
         <Route path="/men" element={<Products category="Men" />} />
         <Route path="/women" element={<Products category="Women" />} />
         <Route path="/kids" element={<Products category="Kids" />} />
+
       </Routes>
       </Layout>
     </Router>

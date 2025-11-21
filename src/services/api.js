@@ -6,3 +6,6 @@ const fetchProducts = async () => {
     return data;
 };
 export default fetchProducts;
+
+
+

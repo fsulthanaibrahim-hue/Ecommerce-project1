@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { User, MapPin } from "lucide-react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [loadingOrders, setLoadingOrders] = useState(true);
-
   const [userData, setUserData] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [orders, setOrders] = useState([]);
-  const [expandedOrders, setExpandedOrders] = useState({});
-
+  const [toast, setToast] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    profileImage: "",
     address: {
       street: "",
       city: "",
@@ -27,12 +22,18 @@ const Profile = () => {
       country: "India",
     },
   });
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
     if (!storedUser || !storedUser.id) {
-      toast.error("Please login first!");
+      showToast("Please login first!", "error");
       navigate("/login");
       return;
     }
@@ -41,14 +42,14 @@ const Profile = () => {
       try {
         const res = await fetch(`http://localhost:5000/users/${storedUser.id}`);
         if (!res.ok) throw new Error("User not found!");
-
         const data = await res.json();
-        setUserData(data);
 
+        setUserData(data);
         setFormData({
           name: data.name || "",
           email: data.email || "",
           phone: data.phone || "",
+          profileImage: data.profileImage || "",
           address: data.address || {
             street: "",
             city: "",
@@ -57,28 +58,15 @@ const Profile = () => {
             country: "India",
           },
         });
-
-      } catch (e) {
-        toast.error("Failed to load profile!");
+        setImagePreview(data.profileImage || null);
+      } catch {
+        showToast("Failed to load profile!", "error");
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch(`http://localhost:5000/order?userId=${storedUser.id}`);
-        const data = await res.json();
-        setOrders(data || []);
-      } catch (error) {
-        toast.error("Failed to load orders!");
-      } finally {
-        setLoadingOrders(false);
-      }
-    };
-
     fetchUser();
-    fetchOrders();
   }, [navigate]);
 
   const handleChange = (e) => {
@@ -94,8 +82,38 @@ const Profile = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        showToast("Image size should be less than 5MB", "error");
+        return;
+      }
+
+      // Check file type
+      if (!file.type.startsWith("image/")) {
+        showToast("Please select an image file", "error");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setImagePreview(base64String);
+        setFormData((prev) => ({ ...prev, profileImage: base64String }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImagePreview(null);
+    setFormData((prev) => ({ ...prev, profileImage: "" }));
+  };
+
   const handleSave = async () => {
-    if (!userData?.id) return toast.error("Invalid user!");
+    if (!userData?.id) return showToast("Invalid user!", "error");
 
     try {
       const updatedUser = { ...userData, ...formData };
@@ -109,238 +127,355 @@ const Profile = () => {
       const data = await res.json();
 
       setUserData(data);
+      setImagePreview(data.profileImage || null);
       localStorage.setItem("loggedInUser", JSON.stringify(data));
 
       setEditMode(false);
-      toast.success("Profile updated!");
+      showToast("Profile updated successfully!");
     } catch {
-      toast.error("Save failed!");
+      showToast("Save failed!", "error");
     }
-  };  
-
-  const toggleProducts = (id) => {
-    setExpandedOrders((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
   };
 
-  if (loading) return <p className="text-center mt-10">Loading profile...</p>;
-
-  return (
-    <div className="flex flex-col items-center mt-10 px-4 pb-20">
-      <h2 className="text-2xl font-bold flex items-center gap-2">
-        <User className="text-purple-700" /> My Profile
-      </h2>
-
-      <div className="border p-6 mt-6 rounded-md w-full max-w-md shadow-md bg-white">
-        <div className="space-y-3">
-
-          <div>
-            <label className="font-semibold">Name:</label>
-            {editMode ? (
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="border rounded w-full p-1 mt-1"
-                placeholder="Enter your name"
-              />
-            ) : (
-              <p>{userData.name}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="font-semibold">Email:</label>
-            {editMode ? (
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="border rounded w-full p-1 mt-1"
-                placeholder="Enter your email"
-              />
-            ) : (
-              <p>{userData.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="font-semibold">Phone:</label>
-            {editMode ? (
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="border rounded w-full p-1 mt-1"
-                placeholder="Enter phone number"
-              />
-            ) : (
-              <p>{userData.phone || "Not added"}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="font-semibold flex items-center gap-1">
-              <MapPin size={16} /> Address:
-            </label>
-
-            {editMode ? (
-              <>
-                <input
-                  type="text"
-                  name="street"
-                  value={formData.address.street}
-                  onChange={handleChange}
-                  placeholder="Street"
-                  className="border rounded w-full p-1 mt-1"
-                />
-
-                <div className="flex gap-2 mt-1">
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.address.city}
-                    onChange={handleChange}
-                    placeholder="City"
-                    className="flex-1 border rounded p-1 w-full"
-                  />
-
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.address.state}
-                    onChange={handleChange}
-                    placeholder="State"
-                    className="flex-1 border rounded p-1 w-full"
-                  />
-                </div>
-
-                <div className="flex gap-2 mt-1">
-                  <input
-                    type="text"
-                    name="zip"
-                    value={formData.address.zip}
-                    onChange={handleChange}
-                    placeholder="ZIP"
-                    className="flex-1 border rounded p-1 w-full"
-                  />
-
-                  <input
-                    type="text"
-                    name="country"
-                    value={formData.address.country}
-                    onChange={handleChange}
-                    placeholder="Country"
-                    className="flex-1 border rounded p-1 w-full"
-                  />
-                </div>
-              </>
-            ) : (
-              <p>
-                {`${userData.address?.street || ""}, ${
-                  userData.address?.city || ""
-                }, ${userData.address?.state || ""}, ${
-                  userData.address?.zip || ""
-                }, ${userData.address?.country || "India"}`}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="flex justify-between mt-6">
-          {editMode ? (
-            <>
-              <button
-                onClick={handleSave}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              >
-                Save
-              </button>
-
-              <button
-                onClick={() => setEditMode(false)}
-                className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-600"
-              >
-                Cancel
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => setEditMode(true)}
-                className="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800"
-              >
-                Edit Profile
-              </button>
-
-              <button
-                onClick={() =>
-                  navigate("/checkout", { state: { address: formData.address } })
-                }
-                className="bg-black text-white px-4 py-2 rounded hover:bg-gray-900"
-              >
-                Go to Checkout
-              </button>
-            </>
-          )}
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
-{/* 
-      <h2 className="text-xl font-semibold mt-10">My Orders</h2>
+    );
+  }
 
-      {loadingOrders ? (
-        <p className="mt-4">Loading orders...</p>
-      ) : orders.length === 0 ? (
-        <p className="mt-4">No orders yet.</p> */}
-     
-        <div className="mt-4 w-full max-w-xl space-y-4">
-          {orders.map((order) => (
-            <div key={order.id} className="border p-4 rounded shadow bg-white">
-              <div className="flex justify-between items-center">
-                <p>
-                  <strong>Order ID:</strong> {order.id}
-                </p>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Toast Notification */}
+      {toast && (
+        <div
+          className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+            toast.type === "error"
+              ? "bg-red-500 text-white"
+              : "bg-green-500 text-white"
+          }`}
+        >
+          {toast.message}
+        </div>
+      )}
 
-                <button 
-                  onClick={() => toggleProducts(order.id)}
-                  className="text-purple-700 font-semibold"
-                >
-                  {expandedOrders[order.id] ? "Hide" : "View"}
-                </button>
-              </div>   
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white pt-24 pb-32">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col items-center text-center">
+            <div className="relative">
+              <img
+                src={
+                  imagePreview ||
+                  userData?.profileImage ||
+                  "https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                }
+                className="w-32 h-32 rounded-full border-4 border-white shadow-2xl object-cover"
+                alt="profile"
+              />
+              
+              <label
+                htmlFor="profileImageInput"
+                className="absolute bottom-0 right-0 w-10 h-10 bg-purple-600 hover:bg-purple-700 rounded-full flex items-center justify-center cursor-pointer shadow-lg transition-all transform hover:scale-110 border-4 border-white"
+              >
+                <span className="text-white text-xl">📷</span>
+              </label>
+              <input
+                id="profileImageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </div>
+            
+            {imagePreview && imagePreview !== "https://cdn-icons-png.flaticon.com/512/3177/3177440.png" && (
+              <button
+                onClick={removeImage}
+                className="mt-3 px-4 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded-full transition"
+              >
+                Remove Photo
+              </button>
+            )}
+            
+            <h1 className="text-4xl font-bold mt-6">{userData?.name}</h1>
+            <p className="text-purple-100 mt-2 text-lg">{userData?.email}</p>
+          </div>
+        </div>
+      </div>
 
-              <p className="mt-2 text-sm text-gray-700">
-                <strong>Total:</strong> ₹{order.total}
-              </p>
-
-                  {expandedOrders[order.id] && (
-                    <div className="mt-3">
-                      {order.products?.map((item, index) => (
-                        <div key={index} className="border-b py-2">
-                          <p>{item.name}</p>
-                          <p className="text-sm text-gray-600">
-                            Qty: {item.quantity} - ₹{item.price}
-                          </p>
-                        </div>  
-                      ))}
-                    </div>
-                  )}
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 -mt-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Left Sidebar - Quick Stats */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Stats</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+                  <span className="text-sm text-gray-600">Member Since</span>
+                  <span className="font-semibold text-purple-600">2024</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                  <span className="text-sm text-gray-600">Total Orders</span>
+                  <span className="font-semibold text-blue-600">0</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                  <span className="text-sm text-gray-600">Account Status</span>
+                  <span className="font-semibold text-green-600">Active</span>
+                </div>
               </div>
-          ))}
-        </div>  
-      
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+              <div className="space-y-3">
+                <button
+                  onClick={() => navigate("/orders")}
+                  className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition flex items-center gap-3"
+                >
+                  <span className="text-xl">📦</span>
+                  <span className="text-sm font-medium text-gray-700">View Orders</span>
+                </button>
+                <button
+                  onClick={() => navigate("/checkout")}
+                  className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition flex items-center gap-3"
+                >
+                  <span className="text-xl">🛒</span>
+                  <span className="text-sm font-medium text-gray-700">Go to Cart</span>
+                </button>
+                <button
+                  onClick={() => navigate("/")}
+                  className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition flex items-center gap-3"
+                >
+                  <span className="text-xl">🏠</span>
+                  <span className="text-sm font-medium text-gray-700">Home</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right - Profile Details */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800">Profile Information</h2>
+                {!editMode && (
+                  <button
+                    onClick={() => setEditMode(true)}
+                    className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm font-medium"
+                  >
+                    ✏️ Edit Profile
+                  </button>
+                )}
+              </div>
+
+              <div className="space-y-6">
+                {/* Personal Information Section */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                    Personal Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Name */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Full Name
+                      </label>
+                      {editMode ? (
+                        <input
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Enter your name"
+                        />
+                      ) : (
+                        <p className="text-gray-900 py-2">{userData?.name || "Not provided"}</p>
+                      )}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      {editMode ? (
+                        <input
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Enter your email"
+                        />
+                      ) : (
+                        <p className="text-gray-900 py-2">{userData?.email || "Not provided"}</p>
+                      )}
+                    </div>
+
+                    {/* Phone */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number
+                      </label>
+                      {editMode ? (
+                        <input
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Enter your phone number"
+                        />
+                      ) : (
+                        <p className="text-gray-900 py-2">{userData?.phone || "Not provided"}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Address Section */}
+                <div className="pt-6 border-t">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span>📍</span> Address Information
+                  </h3>
+                  <div className="space-y-4">
+                    {/* Street */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Street Address
+                      </label>
+                      {editMode ? (
+                        <input
+                          name="street"
+                          value={formData.address.street}
+                          onChange={handleChange}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Enter street address"
+                        />
+                      ) : (
+                        <p className="text-gray-900 py-2">
+                          {userData?.address?.street || "Not provided"}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* City & State */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          City
+                        </label>
+                        {editMode ? (
+                          <input
+                            name="city"
+                            value={formData.address.city}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            placeholder="City"
+                          />
+                        ) : (
+                          <p className="text-gray-900 py-2">
+                            {userData?.address?.city || "Not provided"}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          State
+                        </label>
+                        {editMode ? (
+                          <input
+                            name="state"
+                            value={formData.address.state}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            placeholder="State"
+                          />
+                        ) : (
+                          <p className="text-gray-900 py-2">
+                            {userData?.address?.state || "Not provided"}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* ZIP & Country */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          ZIP Code
+                        </label>
+                        {editMode ? (
+                          <input
+                            name="zip"
+                            value={formData.address.zip}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            placeholder="ZIP"
+                          />
+                        ) : (
+                          <p className="text-gray-900 py-2">
+                            {userData?.address?.zip || "Not provided"}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Country
+                        </label>
+                        {editMode ? (
+                          <input
+                            name="country"
+                            value={formData.address.country}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            placeholder="Country"
+                          />
+                        ) : (
+                          <p className="text-gray-900 py-2">
+                            {userData?.address?.country || "Not provided"}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                {editMode && (
+                  <div className="flex gap-4 pt-6 border-t">
+                    <button
+                      onClick={handleSave}
+                      className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium"
+                    >
+                      💾 Save Changes
+                    </button>
+                    <button
+                      onClick={() => setEditMode(false)}
+                      className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium"
+                    >
+                      ✕ Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Spacing */}
+      <div className="h-20"></div>
     </div>
   );
 };
 
 export default Profile;
-
-
-
-
-

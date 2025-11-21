@@ -39,7 +39,7 @@ const Wishlist = () => {
     }
 
     return (
-        <div className="p-8">
+        <div className="p-20">
           <h2 className="text-2xl font-bold mb-6">My Wishlist</h2>
 
           {wishlist.length === 0 ? (
@@ -64,14 +64,14 @@ const Wishlist = () => {
 
                   <button 
                     onClick={() => handleMoveTocart(item)}
-                    className="text-sm text-white bg-green-500 px-3 py-1 rounded hover:bg-green-600 w-full mt-2"
+                    className="text-sm text-white bg-gray-500 px-3 py-1 rounded hover:bg-gray-600 w-full mt-2"
                   >
                     Move to Cart
                   </button>  
 
                   <button
                     onClick={() => dispatch(removeFromWishlist(item.id))}
-                    className="text-sm text-white bg-red-500 px-3 py-1 rounded hover:bg-red-600 w-full mt-3"
+                    className="text-sm text-white bg-gray-700 px-3 py-1 rounded hover:bg-gray-500 w-full mt-3"
                   >
                     Remove
                   </button>   

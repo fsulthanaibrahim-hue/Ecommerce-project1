@@ -52,10 +52,10 @@ const Home = () => {
 
   return (
     <div className="text-center bg-gradient-to-b from-gray-50 to-white">
-      <div className="relative w-360 h-190 flex items-center justify-center bg-cover bg-center overflow-hidden">
+      <div className="relative w-full h-[110vh]  flex items-center justify-center bg-cover bg-center overflow-hidden">
         <img
-        src="https://images.ctfassets.net/brzb6u29244a/4EyL7ySyPYnBhH59pYIUJG/7212f68c30821bfcad02fd0291916a4f/LandscapeXL_Gucci-CRUISE-OCT25-02-GUCCI-0191_001_Default.png?w=2880&fm=avif&q=50"
-          alt="fashion store"
+        src="https://t4.ftcdn.net/jpg/10/60/14/69/240_F_1060146919_SW9OLFAHgxypx5znoBr4zeBV2nsgISPU.jpg"  
+        alt="fashion store"
           className="absolute inset-0 w-full h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-transparent"></div>
@@ -192,13 +192,12 @@ const Home = () => {
                     </div>
 
                     <div className="p-4">
-                      <h3 className="font-semibold text-sm mb-2 line-clamp-2 h-10">{item.name}</h3>
-
-                      {/* <div className="flex items-center gap-1 mb-2">
+                      <h3 className="font-semibold text-sm mb-2 line-clamp-2 h-10">{item.name}</h3> 
+                      <div className="flex items-center gap-1 mb-2">
                         <Star size={14} className="fill-yellow-400 text-yellow-400" />
                         <span className="text-sm font-medium">{item.rating ?? "4.5"}</span>
                         <span className="text-xs text-gray-500">(120+ reviews)</span>
-                      </div> */}
+                      </div> 
 
                       <div className="flex items-center justify-between">
                         <p className="text-gray-900 font-bold text-lg">₹{item.price}</p>
