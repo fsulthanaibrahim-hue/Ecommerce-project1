@@ -85,13 +85,11 @@ const Profile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         showToast("Image size should be less than 5MB", "error");
         return;
       }
 
-      // Check file type
       if (!file.type.startsWith("image/")) {
         showToast("Please select an image file", "error");
         return;
@@ -150,7 +148,6 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Toast Notification */}
       {toast && (
         <div
           className={`fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
@@ -163,7 +160,6 @@ const Profile = () => {
         </div>
       )}
 
-      {/* Hero Section */}
       <div className="bg-gradient-to-r from-gray-600 to-gray-600 text-white pt-24 pb-32">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col items-center text-center">
@@ -208,11 +204,9 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 -mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          {/* Left Sidebar - Quick Stats */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Stats</h3>
@@ -232,7 +226,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Quick Actions */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -257,6 +250,13 @@ const Profile = () => {
                   <span className="text-xl">🏠</span>
                   <span className="text-sm font-medium text-gray-700">Home</span>
                 </button>
+                <button
+                  onClick={() => navigate("/products")}
+                  className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition flex items-center gap-3"
+                >
+                  <span className="text-xl">🛍️</span>
+                  <span className="text-sm font-medium text-gray-700">Products</span>
+                </button>  
               </div>
             </div>
           </div>
