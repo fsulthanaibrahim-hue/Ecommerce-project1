@@ -20,7 +20,10 @@ const Cart = () => {
 
   if (!user) return <p className="text-center mt-10">Redirecting to login...</p>;
 
-  const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+  const total = cart.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+    0
+  );
 
   const handleIncrease = (item) => {
     dispatch(increaseQty({ id: item.id, size: item.size }));
@@ -28,7 +31,7 @@ const Cart = () => {
 
   const handleDecrease = (item) => {
     if (item.quantity > 1) {
-      dispatch(decreaseQty({ id: item.id, size: item.size}));
+      dispatch(decreaseQty({ id: item.id, size: item.size }));
     }
   };
 
@@ -42,8 +45,11 @@ const Cart = () => {
       return;
     }
 
-    if (!user.address) {
-      toast.error("Please add your address in profile before checkout!");
+    // Updated address check
+    const addr = user.address || {};
+
+    if (!addr.street || !addr.city || !addr.state || !addr.zip) {
+      toast.error("Please complete your address in your profile before checkout!");
       navigate("/profile");
       return;
     }
@@ -53,7 +59,7 @@ const Cart = () => {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">🛒 Your Cart</h1>
+      <h1 className="text-2xl font-bold mb-6 mt-14">🛒 Your Cart</h1>
 
       {cart.length === 0 ? (
         <div className="text-center mt-10 text-gray-600">
@@ -127,4 +133,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

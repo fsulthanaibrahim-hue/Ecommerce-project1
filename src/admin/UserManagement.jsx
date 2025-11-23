@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const API = "http://localhost:5000";
+const API = "http://localhost:5000/users";
 
 const UsersManagement = ({ onRefresh }) => {
   const [users, setUsers] = useState([]);

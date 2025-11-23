@@ -5,6 +5,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [expandedOrders, setExpandedOrders] = useState({});
   const [toast, setToast] = useState(null);
+  const [animateProgress, setAnimateProgress] = useState({});
 
   const stages = ["Pending", "Packed", "Shipped", "Delivered"];
 
@@ -37,6 +38,35 @@ const Orders = () => {
       });
 
     setOrders([...userOrders].reverse());
+
+    const storedAnimate = JSON.parse(localStorage.getItem("ordersAnimation")) || {};
+    const initialAnimate = {};
+    userOrders.forEach(order => {
+      initialAnimate[order.id] = storedAnimate[order.id] || false;
+    });
+    setAnimateProgress(initialAnimate);
+
+    setTimeout(() => {
+      const updatedAnimate = {};
+      userOrders.forEach(order => (updatedAnimate[order.id] = true));
+      setAnimateProgress(updatedAnimate);
+    });
+    setAnimateProgress(initialAnimate);
+
+    const updatedAnimate = {};
+    userOrders.forEach(order => {
+      if (!initialAnimate[order.id]) {
+        updatedAnimate[order.id] = true;
+      }
+    });
+
+    setTimeout(() => {
+      setAnimateProgress((prev) => {
+        const newState = { ...prev, ...updatedAnimate };
+        localStorage.setItem("ordersAnimation", JSON.stringify(newState));
+        return newState;
+      });
+    }, 50);
   }, [loggedUser?.id]);
 
   useEffect(() => {
@@ -183,7 +213,6 @@ const Orders = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 mt-8">
-      {/* Custom Toast Notification */}
       {toast && (
         <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse">
           {toast}
@@ -252,8 +281,12 @@ const Orders = () => {
                       <div className="absolute left-6 right-6 top-1/2 h-1 bg-gray-200 rounded-full -translate-y-1/2"></div>
 
                       <div
-                        className="absolute left-6 top-1/2 h-1 bg-green-500 rounded-full transition-all duration-700 ease-in-out -translate-y-1/2"
-                        style={{ width: `${progressPct}%` }}
+                        className="absolute left-6 top-1/2 h-1 bg-green-500 rounded-full -translate-y-1/2"
+                        style={{ width: `${progressPct}%`,
+                        transition: animateProgress[order.id]
+                          ? "width 0.7s ease-in-out"
+                          : "none", 
+                        }}
                       />
 
                       <div className="relative z-10 flex justify-between">

@@ -14,7 +14,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Get cart and wishlist data from Redux
+// Get cart and wishlist data from Redux
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist.items);
 
@@ -39,16 +39,15 @@ const Navbar = () => {
     <nav className="w-full shadow-md bg-white fixed top-0 left-0 z-50">
       <div className="flex justify-between items-center px-6 py-4">
 
-        {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-wide text-gray-800">
           <img src={logo} alt="TRENDORA logo" className="h-6 w-auto" />
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
           {isLoggedIn && (
             <>
-              {/* Wishlist with count */}
+            
+             {/* Wishlist with count */}
               <Link to="/wishlist" className="relative text-gray-600 hover:text-black">
                 <Heart className="w-6 h-6" />
                 {wishlistItems.length > 0 && (

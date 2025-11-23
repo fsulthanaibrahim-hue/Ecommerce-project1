@@ -7,7 +7,6 @@ const ProtectedRoute = ({ children }) => {
   const user = useSelector((state)  => state.user.currentUser);
   const isLoggedIn = user || localStorage.getItem("isLoggedIn");
   const location = useLocation();
-  // const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   if (!isLoggedIn) {
     toast.error("Please login first!");

@@ -230,7 +230,7 @@ const Home = () => {
           <p className="text-xl mb-6 font-light">Elegance. Comfort. Confidence.</p>
           <Link
             to="/products"
-            className="bg-white text-black font-semibold px-8 py-4 rounded-full hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-2xl"
+            className="bg-white text-black font-semibold px-8 py-4 rounded-full hover:bg-gray-300 transition-all duration-300 transform hover:scale-105 shadow-2xl"
           >
             Explore Now
           </Link>
@@ -279,7 +279,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-gold-700 via-orange-800 to-black text-white py-16 px-6 my-16">
+      <div className="bg-gradient-to-r from-gray-300 via-gray-700 to-black text-white py-16 px-6 my-16">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay Updated</h2>
           <p className="text-lg mb-8 opacity-90">Subscribe to get exclusive deals and early access to new collections</p>

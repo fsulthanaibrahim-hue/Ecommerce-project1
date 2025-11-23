@@ -415,6 +415,21 @@
       "email": "admin@gmail.com",
       "blocked": false,
       "status": "active"
+    },
+    {
+      "id": "7c1a",
+      "name": "Shahana",
+      "email": "shahana@gmail.com",
+      "password": "shahana123",
+      "phone": "8783826579",
+      "profileImage": "",
+      "address": {
+        "street": "ABC Street",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "270307",
+        "country": "India"
+      }
     }
   ],
   "cart": [],

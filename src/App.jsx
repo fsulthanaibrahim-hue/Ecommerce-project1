@@ -42,7 +42,7 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          {/* User Routes */}
+          
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -19,8 +19,8 @@ const wishlistSlice = createSlice({
     },
 
     removeFromWishlist: (state, action) => {
-      const id = action.payload;
-      state.items = state.items.filter(item => item.id !== id);
+      const id = Number (action.payload);
+      state.items = state.items.filter(item => Number(item.id) !== id);
      
       localStorage.setItem("wishlistItems", JSON.stringify(state.items));
     },

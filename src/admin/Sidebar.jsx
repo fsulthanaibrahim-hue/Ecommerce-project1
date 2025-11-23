@@ -1,4 +1,3 @@
-// src/admin/Sidebar.jsx
 import React from "react";
 import { Users, Box, DollarSign, BarChart3 } from "lucide-react";
 

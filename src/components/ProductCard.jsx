@@ -57,7 +57,6 @@
               <p className="text-gray-500">{product.category}</p> 
               <p className="text-blue-600 font-bold mt-1">₹{product.price}</p>
 
-
           </div>
       );
   };
