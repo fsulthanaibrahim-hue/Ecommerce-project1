@@ -399,7 +399,8 @@
         "zip": "670307",
         "country": "India"
       },
-      "profileImage": ""
+      "profileImage": "",
+      "blocked": false
     },
     {
       "id": "3ca1",
@@ -441,7 +442,7 @@
       },
       "total": 12950,
       "date": "2025-11-18T22:03:09.164Z",
-      "status": "pending"
+      "status": "delivered"
     },
     {
       "id": "1763509760073",

@@ -164,7 +164,7 @@ const Profile = () => {
       )}
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white pt-24 pb-32">
+      <div className="bg-gradient-to-r from-gray-600 to-gray-600 text-white pt-24 pb-32">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col items-center text-center">
             <div className="relative">
@@ -180,7 +180,7 @@ const Profile = () => {
               
               <label
                 htmlFor="profileImageInput"
-                className="absolute bottom-0 right-0 w-10 h-10 bg-purple-600 hover:bg-purple-700 rounded-full flex items-center justify-center cursor-pointer shadow-lg transition-all transform hover:scale-110 border-4 border-white"
+                className="absolute bottom-0 right-0 w-10 h-10 bg-gray-500 hover:bg-gray-300 rounded-full flex items-center justify-center cursor-pointer shadow-lg transition-all transform hover:scale-110 border-4 border-white"
               >
                 <span className="text-white text-xl">📷</span>
               </label>
@@ -261,7 +261,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Right - Profile Details */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-lg p-8">
               <div className="flex justify-between items-center mb-6">
@@ -277,13 +276,11 @@ const Profile = () => {
               </div>
 
               <div className="space-y-6">
-                {/* Personal Information Section */}
                 <div>
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                     Personal Information
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Name */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name
@@ -301,7 +298,6 @@ const Profile = () => {
                       )}
                     </div>
 
-                    {/* Email */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Email Address
@@ -319,7 +315,6 @@ const Profile = () => {
                       )}
                     </div>
 
-                    {/* Phone */}
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Phone Number
@@ -339,13 +334,11 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Address Section */}
                 <div className="pt-6 border-t">
                   <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <span>📍</span> Address Information
                   </h3>
                   <div className="space-y-4">
-                    {/* Street */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Street Address
@@ -365,7 +358,6 @@ const Profile = () => {
                       )}
                     </div>
 
-                    {/* City & State */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -406,7 +398,6 @@ const Profile = () => {
                       </div>
                     </div>
 
-                    {/* ZIP & Country */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -449,7 +440,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 {editMode && (
                   <div className="flex gap-4 pt-6 border-t">
                     <button
@@ -472,7 +462,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Bottom Spacing */}
       <div className="h-20"></div>
     </div>
   );
