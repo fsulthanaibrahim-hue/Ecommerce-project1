@@ -389,11 +389,11 @@
     {
       "id": "87c4",
       "name": "Sulthana",
-      "email": "suthana@gmail.com",
+      "email": "sulthana@gmail.com",
       "password": "sulthana123",
       "phone": "8783826579",
       "address": {
-        "street": "ABC Street",
+        "street": "Zaitoon Internatinal Campus",
         "city": "Payyannur",
         "state": "Kerala",
         "zip": "670307",
@@ -411,10 +411,11 @@
     {
       "id": "1",
       "role": "admin",
-      "password": "admin123",
+      "password": "Adminn321",
       "email": "admin@gmail.com",
       "blocked": false,
-      "status": "active"
+      "status": "active",
+      "isAdmin": true
     },
     {
       "id": "7c1a",

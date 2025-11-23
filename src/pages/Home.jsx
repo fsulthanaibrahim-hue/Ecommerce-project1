@@ -149,7 +149,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="mb-10 shadow-md">
+          <div className="mb-10">
             <div className="flex items-center justify-center gap-3 mb-8">
               <TrendingUp className="text-pink-600" size={32} />
               <h2 className="text-3xl md:text-4xl font-bold">Trending Now</h2>

@@ -39,7 +39,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
 //stop if validation fails
     if (!validate()) return; 
 
@@ -47,6 +47,7 @@ const Login = () => {
 
     try {
       const { email, password } = form;
+       console.log(email, password)
 
       const res = await fetch(`http://localhost:5000/users?email=${email}`);
       const users = await res.json();
@@ -68,11 +69,13 @@ const Login = () => {
       // Save user info
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("loggedInUser", JSON.stringify(user));
+      console.log(user)
+      toast.success(`Welcome back, ${user?.name}!`);
 
-      toast.success(`Welcome back, ${user.name}!`);
 
       // Role-based redirection
       if (user.role === "admin") {
+        console.log("Hello")
         navigate("/admin");
       } else {
         navigate("/products");
@@ -140,6 +143,14 @@ const Login = () => {
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
+
+              <p 
+                className="text-sm text-blue-600 cursor-pointer mt-2"
+                onClick={() => navigate("/forgot-password")}
+              >
+                Forgot Password?
+              </p>
+
             </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>

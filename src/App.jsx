@@ -24,6 +24,10 @@ import OrdersManagement from "./admin/OrdersManagement";
 import ProductsManagement from "./admin/ProductsManagement";
 import UsersManagement from "./admin/UserManagement";
 
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import OTP from "./pages/Otp";
+
 function Layout({ children }) {
   const location = useLocation();
   const hideLayout = ["/login", "/register"].includes(location.pathname);
@@ -42,13 +46,17 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          
+
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
+
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="otp" element={<OTP />} />
 
           <Route
             path="/orders"
@@ -92,7 +100,7 @@ function App() {
           <Route path="/kids" element={<Products category="Kids" />} />
  
           <Route
-            path="/admin/*"
+            path="/admin"
             element={
               <AdminProtectedRoute>
                 <AdminDashboard />
