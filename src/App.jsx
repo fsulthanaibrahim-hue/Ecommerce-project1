@@ -27,6 +27,10 @@ import UsersManagement from "./admin/UserManagement";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import OTP from "./pages/Otp";
+import OrderSuccess from "./pages/OrderSuccess";
+import { Sidebar } from "lucide-react";
+import DashboardContent from "./admin/DashboardContent";
+import Topbar from "./admin/Topbar.jsx";
 
 function Layout({ children }) {
   const location = useLocation();
@@ -57,6 +61,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="otp" element={<OTP />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
 
           <Route
             path="/orders"
@@ -113,6 +118,9 @@ function App() {
             <Route path="orders" element={<OrdersManagement />} />
             <Route path="products" element={<ProductsManagement />} />
             <Route path="users" element={<UsersManagement />} />
+            <Route path="sidebar" element={<Sidebar />} />
+            <Route path="dashboard-content" element={<DashboardContent />} />
+            <Route path="topbar" element={<Topbar />} />
           </Route>
 
           <Route path="*" element={<h1 className="text-center mt-10">404 - Page Not Found</h1>} />

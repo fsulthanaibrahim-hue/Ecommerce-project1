@@ -213,15 +213,25 @@ const Profile = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                   <span className="text-sm text-gray-600">Member Since</span>
-                  <span className="font-semibold text-purple-600">2024</span>
+                  <span className="font-semibold text-purple-600">
+                    {userData?.createAt ? new Date(userData.createAt).getFullYear() : "N/A"}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <span className="text-sm text-gray-600">Total Orders</span>
-                  <span className="font-semibold text-blue-600">0</span>
+                  <span className="font-semibold text-blue-600">
+                    {userData?.orders ? userData.orders.length : 0}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                   <span className="text-sm text-gray-600">Account Status</span>
-                  <span className="font-semibold text-green-600">Active</span>
+                  <span
+                    className={`font-semibold ${
+                      userData?.status === "active" ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                   {userData?.status ? userData.status.charAt(0).toUpperCase() + userData.status.slice(1) : "N/A"}
+                  </span>
                 </div>
               </div>
             </div>

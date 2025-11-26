@@ -1,85 +1,80 @@
+
 import React, { useEffect, useState } from "react";
+import { Truck, Package, CheckCircle, XCircle, Calendar } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const Orders = () => {
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
   const [orders, setOrders] = useState([]);
-  const [expandedOrders, setExpandedOrders] = useState({});
-  const [toast, setToast] = useState(null);
-  const [animateProgress, setAnimateProgress] = useState({});
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const stages = ["Pending", "Packed", "Shipped", "Delivered"];
-
-  const showToast = (message) => {
-    setToast(message);
-    setTimeout(() => setToast(null), 3000);
+  const returnStages = ["Return Requested", "Return Picked Up", "Return Received", "Refund Processed"];
+  
+  const stageIcons = {
+    Pending: Calendar,
+    Packed: Package,
+    Shipped: Truck,
+    Delivered: CheckCircle,
+    Cancelled: XCircle,
+    Returned: XCircle,
+    "Return Requested": XCircle,
+    "Return Picked Up": Truck,
+    "Return Received": Package,
+    "Refund Processed": CheckCircle,
   };
 
+  // Load orders from localStorage (DESCENDING ORDER FIXED ✓)
   useEffect(() => {
     if (!loggedUser?.id) return;
+
     const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
 
     const userOrders = allOrders
-      .filter((o) => o.userId === loggedUser.id)
-      .map((o) => {
-        const normalizedStatus =
-          (o.status || "Pending").trim().toLowerCase();
+      .filter((o) => o.userId === loggedUser.id && o.items?.length > 0)
+      .map((o) => ({
+        ...o,
+        id: o.id || `order-${Date.now()}-${Math.random()}`,
+        products: o.items,
+        date: o.orderDate || o.date || new Date().toLocaleString(),
+        status: o.status || "Pending",
+        isReturning: o.isReturning || false,
+        timestamps:
+          o.timestamps || {
+            Pending: o.orderDate || o.date || new Date().toLocaleString(),
+          },
+      }))
+      .sort((a, b) => new Date(b.date) - new Date(a.date)); // DESCENDING 🔥
 
-        const fixedStatus =
-          normalizedStatus.charAt(0).toUpperCase() +
-          normalizedStatus.slice(1);
+    setOrders(userOrders);
+  }, [loggedUser.id]);
 
-        return {
-          ...o,
-          status: fixedStatus,
-          timestamps: o.timestamps || { Pending: o.date },
-          products: o.products || [],
-          ShippingAddress: o.ShippingAddress || o.address || {},
-        };
-      });
-
-    setOrders([...userOrders].reverse());
-
-    const storedAnimate = JSON.parse(localStorage.getItem("ordersAnimation")) || {};
-    const initialAnimate = {};
-    userOrders.forEach(order => {
-      initialAnimate[order.id] = storedAnimate[order.id] || false;
-    });
-    setAnimateProgress(initialAnimate);
-
-    setTimeout(() => {
-      const updatedAnimate = {};
-      userOrders.forEach(order => (updatedAnimate[order.id] = true));
-      setAnimateProgress(updatedAnimate);
-    });
-    setAnimateProgress(initialAnimate);
-
-    const updatedAnimate = {};
-    userOrders.forEach(order => {
-      if (!initialAnimate[order.id]) {
-        updatedAnimate[order.id] = true;
-      }
-    });
-
-    setTimeout(() => {
-      setAnimateProgress((prev) => {
-        const newState = { ...prev, ...updatedAnimate };
-        localStorage.setItem("ordersAnimation", JSON.stringify(newState));
-        return newState;
-      });
-    }, 50);
-  }, [loggedUser?.id]);
-
+  // Auto-progress status every 3 sec
   useEffect(() => {
     const interval = setInterval(() => {
-      setOrders((prev) =>
-        prev.map((order) => {
-          if (
-            order.status === "Cancelled" ||
-            order.status === "Delivered" ||
-            order.status === "Returned"
-          )
+      setOrders((prevOrders) => {
+        const updatedOrders = prevOrders.map((order) => {
+          if (["Cancelled", "Refund Processed"].includes(order.status))
             return order;
 
+          // Handle return process (ORANGE LINE)
+          if (order.isReturning) {
+            const returnIndex = returnStages.indexOf(order.status);
+            const nextReturn = returnStages[returnIndex + 1];
+            if (!nextReturn) return order;
+
+            return {
+              ...order,
+              status: nextReturn,
+              timestamps: {
+                ...order.timestamps,
+                [nextReturn]: new Date().toLocaleString(),
+              },
+            };
+          }
+
+          // Handle normal delivery process (GREEN LINE)
           const index = stages.indexOf(order.status);
           const next = stages[index + 1];
           if (!next) return order;
@@ -92,351 +87,441 @@ const Orders = () => {
               [next]: new Date().toLocaleString(),
             },
           };
-        })
-      );
-    }, 4000);
+        });
+
+        localStorage.setItem("orders", JSON.stringify(updatedOrders));
+        return updatedOrders;
+      });
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const toggleExpand = (id) => {
-    setExpandedOrders((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
+  // Cancel Order
   const cancelOrder = (orderId) => {
-    const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    const updatedAllOrders = allOrders.map((o) =>
-      o.id === orderId
-        ? {
-            ...o,
-            status: "Cancelled",
-            timestamps: {
-              ...o.timestamps,
-              Cancelled: new Date().toLocaleString(),
-            },
-          }
-        : o
-    );
-
-    localStorage.setItem("orders", JSON.stringify(updatedAllOrders));
-
-    setOrders((prevOrders) =>
-      prevOrders.map((o) =>
-        o.id === orderId
+    setOrders((prev) => {
+      const updated = prev.map((order) =>
+        order.id === orderId
           ? {
-              ...o,
+              ...order,
               status: "Cancelled",
               timestamps: {
-                ...o.timestamps,
+                ...order.timestamps,
                 Cancelled: new Date().toLocaleString(),
               },
             }
-          : o
-      )
-    );
-
-    showToast("Order Cancelled Successfully!");
+          : order
+      );
+      localStorage.setItem("orders", JSON.stringify(updated));
+      toast.error("Order Cancelled!");
+      return updated;
+    });
   };
 
+  // Return Order (START ORANGE TIMELINE)
   const returnOrder = (orderId) => {
-    const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    const updatedAllOrders = allOrders.map((o) =>
-      o.id === orderId
-        ? {
-            ...o,
-            status: "Returned",
-            timestamps: {
-              ...o.timestamps,
-              Returned: new Date().toLocaleString(),
-            },
-          }
-        : o
-    );
-
-    localStorage.setItem("orders", JSON.stringify(updatedAllOrders));
-
-    setOrders((prevOrders) =>
-      prevOrders.map((o) =>
-        o.id === orderId
+    setOrders((prev) => {
+      const updated = prev.map((order) =>
+        order.id === orderId
           ? {
-              ...o,
-              status: "Returned",
+              ...order,
+              status: "Return Requested",
+              isReturning: true,
               timestamps: {
-                ...o.timestamps,
-                Returned: new Date().toLocaleString(),
+                ...order.timestamps,
+                "Return Requested": new Date().toLocaleString(),
               },
             }
-          : o
-      )
-    );
-
-    showToast("Return Initiated Successfully!");
+          : order
+      );
+      localStorage.setItem("orders", JSON.stringify(updated));
+      toast.success("Return Initiated!");
+      return updated;
+    });
   };
 
-  const computeProgress = (status) => {
-    if (status === "Cancelled") return 0;
-    if (status === "Returned") return 100;
-    const idx = Math.max(0, stages.indexOf(status));
-    return ((idx + 1) / stages.length) * 100;
-  };
-
-  const getStatusBadge = (status) => {
-    const statusStyles = {
-      Pending: "bg-yellow-100 text-yellow-800",
-      Packed: "bg-blue-100 text-blue-800",
-      Shipped: "bg-purple-100 text-purple-800",
-      Delivered: "bg-green-100 text-green-800",
-      Cancelled: "bg-red-100 text-red-800",
-      Returned: "bg-orange-100 text-orange-800",
-    };
-
-    return (
-      <span
-        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-          statusStyles[status] || "bg-gray-100 text-gray-800"
-        }`}
-      >
-        {status}
-      </span>
-    );
-  };
-
-  const getStageIcon = (stage) => {
-    const icons = {
-      Pending: "📅",
-      Packed: "📦",
-      Shipped: "🚚",
-      Delivered: "✅",
-    };
-    return icons[stage] || "•";
+  // Clear Cancelled Orders
+  const clearCancelledOrders = () => {
+    const updated = orders.filter((o) => o.status !== "Cancelled");
+    setOrders(updated);
+    localStorage.setItem("orders", JSON.stringify(updated));
+    toast.success("Cancelled Orders Cleared!");
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 mt-8">
-      {toast && (
-        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse">
-          {toast}
+    <div className="p-6 max-w-6xl mx-auto bg-gray-50 min-h-screen">
+      <Toaster position="top-right" />
+      
+      <div className="mb-8 mt-20">
+        <h2 className="text-4xl font-bold text-gray-900 mb-2">📦 My Orders</h2>
+        <p className="text-gray-600">View and manage your order history</p>
+      </div>
+
+      <div className="flex justify-end mb-6">
+        <button
+          onClick={clearCancelledOrders}
+          className="bg-red-600 text-white px-6 py-2.5 rounded-lg hover:bg-red-700 transition-colors shadow-sm font-medium"
+        >
+          Clear Cancelled Orders
+        </button>
+      </div>
+
+      {orders.length === 0 ? (
+        <div className="text-center py-20 bg-white rounded-xl shadow-sm">
+          <Package size={64} className="mx-auto text-gray-300 mb-4" />
+          <p className="text-gray-500 text-lg">No orders found.</p>
         </div>
-      )}
+      ) : (
+        orders.map((order) => {
+          const isReturning = order.isReturning;
+          const currentStages = isReturning ? returnStages : stages;
+          const lastIndex =
+            order.status === "Cancelled"
+              ? -1
+              : currentStages.indexOf(order.status);
+          const progressColor = isReturning ? "orange" : "green";
 
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">📦 My Orders</h1>
-        {orders.length === 0 ? (
-          <p className="text-center text-gray-500">No orders yet.</p>
-        ) : (
-          orders.map((order) => {
-            const products = order.products || [];
-            const totalAmount = products.reduce(
-              (sum, p) => sum + p.price * p.quantity,
-              0
-            );
-            const progressPct = computeProgress(order.status);
-
-            return (
-              <div
-                key={order.id}
-                className="bg-white border rounded-xl shadow-sm mb-10"
-              >
-                <div className="md:flex justify-between items-center p-6">
-                  <div className="flex items-start gap-4">
-                    <img
-                      src={products[0]?.image}
-                      alt="image"
-                      className="w-20 h-20 object-cover rounded-lg border"
-                    />
-
-                    <div>
-                      <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <h3 className="text-lg font-semibold">
-                          {products[0]?.name}
-                          {products.length > 1 && (
-                            <span className="text-sm text-gray-500 ml-2">
-                              +{products.length - 1} more
-                            </span>
-                          )}
-                        </h3>
-                        {getStatusBadge(order.status)}
-                      </div>
-
-                      <p className="font-medium mt-1">
-                        ₹{totalAmount.toLocaleString()}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Order ID: {order.id}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => toggleExpand(order.id)}
-                    className="border px-3 py-2 rounded-md text-sm text-purple-700 hover:bg-purple-50 mt-4 md:mt-0"
-                  >
-                    {expandedOrders[order.id] ? "Hide Details" : "View Details"}
-                  </button>
+          return (
+            <div
+              key={order.id}
+              className="border border-gray-200 p-8 rounded-2xl mb-8 shadow-sm bg-white hover:shadow-md transition-shadow"
+            >
+         {/* Header Section */}
+              <div className="flex justify-between items-start mb-6 pb-4 border-b border-gray-100">
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Order ID: {order.id}</p>
+                  <p className="text-sm text-gray-500">Placed on {order.date}</p>
                 </div>
+                <div className="text-right">
+                  <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-semibold ${
+                    order.status === "Delivered" 
+                      ? "bg-green-100 text-green-700"
+                      : order.status === "Cancelled"
+                      ? "bg-red-100 text-red-700"
+                      : isReturning
+                      ? "bg-orange-100 text-orange-700"
+                      : "bg-blue-100 text-blue-700"
+                  }`}>
+                    {order.status}
+                  </span>
+                </div>
+              </div>
 
-                <div className="px-6 pb-4">
-                  {order.status !== "Cancelled" && order.status !== "Returned" && (
-                    <div className="relative py-6">
-                      <div className="absolute left-6 right-6 top-1/2 h-1 bg-gray-200 rounded-full -translate-y-1/2"></div>
-
-                      <div
-                        className="absolute left-6 top-1/2 h-1 bg-green-500 rounded-full -translate-y-1/2"
-                        style={{ width: `${progressPct}%`,
-                        transition: animateProgress[order.id]
-                          ? "width 0.7s ease-in-out"
-                          : "none", 
-                        }}
-                      />
-
-                      <div className="relative z-10 flex justify-between">
-                        {stages.map((stage, index) => {
-                          const completed =
-                            progressPct >= ((index + 1) / stages.length) * 100;
-                          const isCurrent =
-                            stages.indexOf(order.status) === index;
-
-                          return (
-                            <div key={stage} className="text-center">
-                              <div
-                                className={`w-12 h-12 rounded-full flex items-center justify-center border-2 text-xl
-                                ${
-                                  completed
-                                    ? "bg-green-500 border-green-500 text-white"
-                                    : isCurrent
-                                    ? "bg-green-100 border-green-500 text-green-600"
-                                    : "bg-white border-gray-300 text-gray-300"
-                                }`}
-                              >
-                                {getStageIcon(stage)}
-                              </div>
-
-                              <p className="text-sm mt-2">{stage}</p>
-
-                              {order.timestamps?.[stage] && (
-                                <p className="text-xs text-gray-400 mt-1">
-                                  {order.timestamps[stage]}
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
+              {/* Product Section */}
+              <div className="flex flex-col md:flex-row gap-6 mb-8 items-start">
+                <div className="relative">
+                  <img
+                    src={order.products[0].image}
+                    alt={order.products[0].name}
+                    className="w-32 h-32 object-cover rounded-xl border border-gray-200 shadow-sm"
+                  />
                   {order.status === "Cancelled" && (
-                    <div className="py-6 text-center">
-                      <div className="flex items-center justify-center gap-2 text-red-600">
-                        <span className="text-2xl">❌</span>
-                        <p className="font-semibold">Order Cancelled</p>
-                      </div>
-                      {order.timestamps?.Cancelled && (
-                        <p className="text-sm text-gray-500 mt-2">
-                          Cancelled on {order.timestamps.Cancelled}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {order.status === "Returned" && (
-                    <div className="py-6 text-center">
-                      <div className="flex items-center justify-center gap-2 text-orange-600">
-                        <span className="text-2xl">🔄</span>
-                        <p className="font-semibold">Return Initiated</p>
-                      </div>
-                      {order.timestamps?.Returned && (
-                        <p className="text-sm text-gray-500 mt-2">
-                          Returned on {order.timestamps.Returned}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {order.status !== "Delivered" &&
-                    order.status !== "Cancelled" &&
-                    order.status !== "Returned" && (
-                      <div className="flex justify-end pr-2">
-                        <button
-                          onClick={() => cancelOrder(order.id)}
-                          className="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700 transition"
-                        >
-                          Cancel Order
-                        </button>
-                      </div>
-                    )}
-
-                  {order.status === "Delivered" && (
-                    <div className="flex justify-end pr-2">
-                      <button
-                        onClick={() => returnOrder(order.id)}
-                        className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm hover:bg-orange-700 transition flex items-center gap-2"
-                      >
-                        <span>🔄</span>
-                        Return Order
-                      </button>
+                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-xl flex items-center justify-center">
+                      <XCircle className="text-white" size={40} />
                     </div>
                   )}
                 </div>
+                <div className="flex-1">
+                  <h3
+                    className={`text-xl font-bold mb-2 ${
+                      order.status === "Cancelled"
+                        ? "line-through text-gray-400"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    {order.products[0].name}
+                  </h3>
 
-                <div
-                  className="px-6 overflow-hidden transition-all duration-500"
-                  style={{
-                    maxHeight: expandedOrders[order.id] ? "1200px" : "0px",
+                  <p className="text-2xl font-bold text-gray-900 mb-3">
+                    ₹{order.products[0].price.toLocaleString()}
+                  </p>
+
+                  {order.timestamps.Delivered && !isReturning && (
+                    <p className="text-sm text-green-600 font-medium mb-1">
+                      ✓ Delivered on {order.timestamps.Delivered}
+                    </p>
+                  )}
+
+                  {order.timestamps.Cancelled && (
+                    <p className="text-sm text-red-600 font-medium">
+                      ✗ Cancelled on {order.timestamps.Cancelled}
+                    </p>
+                  )}
+
+                  {order.timestamps["Refund Processed"] && (
+                    <p className="text-sm text-orange-600 font-medium">
+                      ✓ Refund Processed on {order.timestamps["Refund Processed"]}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Timeline Section - ORANGE for Return, GREEN for Delivery */}
+              {order.status !== "Cancelled" && (
+                <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-6 uppercase tracking-wide">
+                    {isReturning ? "🔄 Return Progress" : "📦 Order Progress"}
+                  </h4>
+                  <div className="relative flex flex-col md:flex-row items-center justify-between">
+                    {/* Progress Line Background - Desktop */}
+                    <div className="absolute top-6 left-8 right-8 h-1 bg-gray-200 hidden md:block rounded-full"></div>
+                    
+                    {/* Progress Line Active - Desktop */}
+                    <div
+                      className={`absolute top-6 left-8 h-1 ${
+                        progressColor === "orange" ? "bg-orange-500" : "bg-green-500"
+                      } hidden md:block rounded-full transition-all duration-500`}
+                      style={{
+                        width: `calc(${
+                          lastIndex >= 0
+                            ? (lastIndex / (currentStages.length - 1)) * 100
+                            : 0
+                        }% - 2rem)`,
+                      }}
+                    ></div>
+
+                    {/* Progress Line Background - Mobile */}
+                    <div className="absolute left-6 top-0 bottom-0 w-1 bg-gray-200 md:hidden rounded-full"></div>
+                    
+                    {/* Progress Line Active - Mobile */}
+                    <div
+                      className={`absolute left-6 top-0 w-1 ${
+                        progressColor === "orange" ? "bg-orange-500" : "bg-green-500"
+                      } md:hidden rounded-full transition-all duration-500`}
+                      style={{
+                        height: `${
+                          lastIndex >= 0
+                            ? ((lastIndex + 1) / currentStages.length) * 100
+                            : 0
+                        }%`,
+                      }}
+                    ></div>
+
+                    {currentStages.map((stage, idx) => {
+                      const Icon = stageIcons[stage];
+                      const completed = idx <= lastIndex;
+                      const current = idx === lastIndex;
+
+                      return (
+                        <div
+                          key={idx}
+                          className="flex flex-row md:flex-col items-center md:items-center mb-8 md:mb-0 relative z-10 gap-4 md:gap-0"
+                        >
+                          <div
+                            className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-300 shadow-sm ${
+                              completed
+                                ? progressColor === "orange"
+                                  ? "bg-orange-500 border-orange-500"
+                                  : "bg-green-500 border-green-500"
+                                : current
+                                ? progressColor === "orange"
+                                  ? "bg-orange-100 border-orange-500 animate-pulse"
+                                  : "bg-green-100 border-green-500 animate-pulse"
+                                : "bg-white border-gray-300"
+                            }`}
+                          >
+                            <Icon
+                              size={24}
+                              className={`${
+                                completed
+                                  ? "text-white"
+                                  : current
+                                  ? progressColor === "orange"
+                                    ? "text-orange-600"
+                                    : "text-green-600"
+                                  : "text-gray-400"
+                              }`}
+                            />
+                          </div>
+                          <div className="text-left md:text-center mt-0 md:mt-3">
+                            <span className={`text-sm font-semibold block ${
+                              completed || current ? "text-gray-900" : "text-gray-400"
+                            }`}>
+                              {stage}
+                            </span>
+                            {order.timestamps[stage] && (
+                              <span className="text-xs text-gray-500 mt-1 block">
+                                {order.timestamps[stage]}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm flex-1"
+                  onClick={() => {
+                    setSelectedOrder(order);
+                    setShowModal(true);
                   }}
                 >
-                  <div className="pt-0 pb-6 mt-2">
-                    <div className="bg-gray-50 p-4 rounded-lg border">
-                      <h3 className="font-semibold mb-2">Shipping Address</h3>
-                      <p>{order.ShippingAddress?.fullname}</p>
-                      <p>{order.ShippingAddress?.address}</p>
-                      <p>
-                        {order.ShippingAddress?.city} -{" "}
-                        {order.ShippingAddress?.pinCode}
-                      </p>
-                      <p>
-                        {order.ShippingAddress?.state},{" "}
-                        {order.ShippingAddress?.country}
-                      </p>
-                    </div>
+                  View Details
+                </button>
 
-                    <div className="mt-4 space-y-3">
-                      {products.map((p, i) => (
-                        <div
-                          key={i}
-                          className="flex justify-between items-center p-3 border rounded-md"
-                        >
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={p.image}
-                              className="w-14 h-14 object-cover rounded"
-                              alt={p.name}
-                            />
-                            <div>
-                              <p className="font-medium">{p.name}</p>
-                              <p className="text-sm text-gray-500">
-                                Qty: {p.quantity} × ₹{p.price}
-                              </p>
-                            </div>
-                          </div>
+                {order.status !== "Delivered" &&
+                  order.status !== "Cancelled" &&
+                  !isReturning && (
+                    <button
+                      className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors font-medium shadow-sm flex-1"
+                      onClick={() => cancelOrder(order.id)}
+                    >
+                      Cancel Order
+                    </button>
+                  )}
 
-                          <p className="font-semibold">
-                            ₹{(p.price * p.quantity).toLocaleString()}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
+                {order.status === "Delivered" && !isReturning && (
+                  <button
+                    className="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors font-medium shadow-sm flex-1"
+                    onClick={() => returnOrder(order.id)}
+                  >
+                    Return Order
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })
+      )}
 
-                    <p className="text-right font-bold text-lg mt-4">
-                      Total: ₹{totalAmount.toLocaleString()}
+      {/* MODAL */}
+      {showModal && selectedOrder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-8 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+              <h2 className="text-2xl font-bold text-gray-900">Order Details</h2>
+              <button
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+                onClick={() => setShowModal(false)}
+              >
+                <XCircle size={28} />
+              </button>
+            </div>
+
+            {/* Order Status Badge */}
+            <div className="mb-6">
+              <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${
+                selectedOrder.status === "Delivered" 
+                  ? "bg-green-100 text-green-700"
+                  : selectedOrder.status === "Cancelled"
+                  ? "bg-red-100 text-red-700"
+                  : selectedOrder.isReturning
+                  ? "bg-orange-100 text-orange-700"
+                  : "bg-blue-100 text-blue-700"
+              }`}>
+                {selectedOrder.status}
+              </span>
+            </div>
+   {/* Products List */}
+            <div className="space-y-4 mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Items</h3>
+              {selectedOrder.products.map((prod, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-4 border border-gray-200 p-4 rounded-xl hover:shadow-md transition-shadow bg-gray-50"
+                >
+                  <img
+                    src={prod.image}
+                    alt={prod.name}
+                    className="w-20 h-20 object-cover rounded-lg border border-gray-200"
+                  />
+                  <div className="flex-1">
+                    <p className="font-semibold text-gray-900 mb-1">{prod.name}</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      ₹{prod.price.toLocaleString()}
                     </p>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Order Information */}
+            <div className="bg-gray-50 rounded-xl p-6 space-y-3">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Information</h3>
+              <div className="grid grid-cols-1 gap-3 text-sm">
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600 font-medium">Order ID:</span>
+                  <span className="text-gray-900 font-mono">{selectedOrder.id}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600 font-medium">Placed On:</span>
+                  <span className="text-gray-900">{selectedOrder.date}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200">
+                  <span className="text-gray-600 font-medium">Status:</span>
+                  <span className="text-gray-900 font-semibold">{selectedOrder.status}</span>
+                </div>
+
+                {selectedOrder.timestamps.Delivered && (
+                  <div className="flex justify-between py-2 border-b border-gray-200">
+                    <span className="text-gray-600 font-medium">Delivered On:</span>
+                    <span className="text-green-600 font-semibold">
+                      {selectedOrder.timestamps.Delivered}
+                    </span>
+                  </div>
+                )}
+                
+                {selectedOrder.timestamps.Cancelled && (
+                  <div className="flex justify-between py-2 border-b border-gray-200">
+                    <span className="text-gray-600 font-medium">Cancelled On:</span>
+                    <span className="text-red-600 font-semibold">
+                      {selectedOrder.timestamps.Cancelled}
+                    </span>
+                  </div>
+                )}
+
+                {selectedOrder.timestamps["Return Requested"] && (
+                  <div className="flex justify-between py-2 border-b border-gray-200">
+                    <span className="text-gray-600 font-medium">Return Requested:</span>
+                    <span className="text-orange-600 font-semibold">
+                      {selectedOrder.timestamps["Return Requested"]}
+                    </span>
+                  </div>
+                )}
+
+                {selectedOrder.timestamps["Return Picked Up"] && (
+                  <div className="flex justify-between py-2 border-b border-gray-200">
+                    <span className="text-gray-600 font-medium">Return Picked Up:</span>
+                    <span className="text-orange-600 font-semibold">
+                      {selectedOrder.timestamps["Return Picked Up"]}
+                    </span>
+                  </div>
+                )}
+
+                {selectedOrder.timestamps["Return Received"] && (
+                  <div className="flex justify-between py-2 border-b border-gray-200">
+                    <span className="text-gray-600 font-medium">Return Received:</span>
+                    <span className="text-orange-600 font-semibold">
+                      {selectedOrder.timestamps["Return Received"]}
+                    </span>
+                  </div>
+                )}
+
+                {selectedOrder.timestamps["Refund Processed"] && (
+                  <div className="flex justify-between py-2">
+                    <span className="text-gray-600 font-medium">Refund Processed:</span>
+                    <span className="text-orange-600 font-semibold">
+                      {selectedOrder.timestamps["Refund Processed"]}
+                    </span>
+                  </div>
+                )}
               </div>
-            );
-          })
-        )}
-      </div>
+            </div>
+
+            <button
+              className="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold shadow-sm"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

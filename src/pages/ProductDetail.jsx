@@ -97,28 +97,28 @@
       toast.success("Added to cart!");
     };
 
-    const handleBuyNow = () => {
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (!user) return toast.error("Please login first!");
-      if (!selectedSize) return toast.error("Please select a size!");
+   const handleBuyNow = () => {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!user) return toast.error("Please login first!");
+  if (!selectedSize) return toast.error("Please select a size!");
 
-      dispatch(clearCart());
-      dispatch(addToCart({ ...product, size: selectedSize, quantity }));
+  // Store the single Buy Now product temporarily
+  const buyNowProduct = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.image,
+    size: selectedSize,
+    quantity,
+  };
 
-      dispatch(clearCart());
+  // Save to localStorage
+  localStorage.setItem("buyNowItem", JSON.stringify(buyNowProduct));
 
-      dispatch(
-        addToCart({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          size: selectedSize,
-          quantity,
-        })
-      );
-      navigate("/checkout");
-    };
+  // Redirect to checkout
+  navigate("/checkout");
+};
+
 
 
     const handleWishlist = () => {
@@ -326,3 +326,4 @@
   };
 
   export default ProductDetail;
+
