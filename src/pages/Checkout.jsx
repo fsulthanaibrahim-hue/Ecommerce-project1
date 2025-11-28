@@ -269,7 +269,7 @@ const Checkout = () => {
               <Shield size={16} /> Secure Checkout
             </div>
             <div className="mt-4 text-sm text-gray-600 flex gap-2 items-center">
-              <Truck size={16} /> Free shipping
+              <Truck size={16} /> Free shipping 
             </div>
 
           </div>

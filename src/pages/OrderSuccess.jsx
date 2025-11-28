@@ -9,7 +9,7 @@ const Success = () => {
   };
 
   const handleContinueShopping = () => {
-    navigate("/"); // Go to home/shop page
+    navigate("/"); 
   };
 
   return (

@@ -6,12 +6,21 @@ const AdminProducts = () => {
   const [form, setForm] = useState({ name: "", price: "", category: "" });
 
   useEffect(() => {
-    fetchProducts();
+    console.log("Hello");
+    async function fetchData () { 
+      console.log("Hii")
+      await fetchProducts();
+    }
+    fetchData();
   }, []);
 
+
   const fetchProducts = async () => {
-    const res = await axios.get("http://localhost:5000/products");
+    console.log("Hello");
+          const res = await fetch("http://localhost:5000/products");
+      console.log(res);
     setProducts(res.data);
+  
   };
 
   const handleAddProduct = async () => {
@@ -25,11 +34,16 @@ const AdminProducts = () => {
     fetchProducts();
   };
 
+  const handleEdit = async(id) => {
+    await axios.edit(`http://localhost:5000/products/${id}`);
+    fetchProducts();
+  }
+
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Manage Products</h2>
 
-      <div className="mb-6 flex gap-2">
+      <div className="mb-6 flex gap-2 text-white">
         <input
           type="text"
           placeholder="Name"
@@ -75,6 +89,12 @@ const AdminProducts = () => {
                 >
                   Delete
                 </button>
+                <button
+                  onClick={() => handleEdit(p.id)}
+                  className="bg-red-600 text-white px-2 py-1"
+                >
+                 Edit
+                </button>
               </td>
             </tr>
           ))}
@@ -85,8 +105,6 @@ const AdminProducts = () => {
 };
 
 export default AdminProducts;
-
-
 
 
 

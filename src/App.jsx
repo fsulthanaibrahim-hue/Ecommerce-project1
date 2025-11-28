@@ -1,3 +1,148 @@
+// import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+// import Navbar from "./components/Navbar";
+// import Footer from "./components/Footer";
+// import Home from "./pages/Home";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+// import Products from "./pages/Products";
+// import Profile from "./pages/Profile";
+// import ProductDetail from "./pages/ProductDetail";
+// import Cart from "./pages/Cart";
+// import ProtectedRoute from "./components/ProtectedRoute";
+// import Orders from "./pages/Order";
+// import Wishlist from "./pages/Wishlist";
+// import Checkout from "./pages/Checkout";
+// import OrderDetails from "./pages/OrderDetails";
+// import ResetPassword from "./pages/ResetPassword";
+// import ForgotPassword from "./pages/ForgotPassword";
+// import OTP from "./pages/Otp";
+// import OrderSuccess from "./pages/OrderSuccess";
+
+
+// // Admin Pages 
+// import AdminDashboard from "./admin/AdminDashboard";
+// import AdminProducts from "./admin/AdminProducts";
+// import AdminUsers from "./admin/AdminUsers";
+// import RevenueChart from "./admin/RevenueChart";
+// import AdminProtectedRoute from "./admin/AdminProtectedRoute";
+// import OrdersManagement from "./admin/OrdersManagement";
+// import ProductsManagement from "./admin/ProductsManagement";
+// import UsersManagement from "./admin/UserManagement";
+// import AdminLayout from "./admin/AdminLayout.jsx";
+
+// import { Sidebar } from "lucide-react";
+// import DashboardContent from "./admin/DashboardContent";
+// import Topbar from "./admin/Topbar.jsx";
+
+// function Layout({ children }) {
+//   const location = useLocation();
+//   const hideLayout = ["/login", "/register"].includes(location.pathname);
+
+//   return (
+//     <>
+//       {!hideLayout && <Navbar />}
+//       <main className="min-h-screen">{children}</main>
+//         {!hideLayout && <Footer />}
+//     </>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <Router>
+//       <Layout>
+//         <Routes>
+
+//           <Route path="/" element={<Home />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/register" element={<Register />} />
+//           <Route path="/products" element={<Products />} />
+//           <Route path="/product/:id" element={<ProductDetail />} />
+//           <Route path="/checkout" element={<Checkout />} />
+
+//           <Route path="/reset-password" element={<ResetPassword />} />
+//           <Route path="/forgot-password" element={<ForgotPassword />} />
+//           <Route path="otp" element={<OTP />} />
+//           <Route path="/order-success" element={<OrderSuccess />} />
+
+//           <Route
+//             path="/orders"
+//             element={
+//               <ProtectedRoute>
+//                 <Orders />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route path="/order-details/:id" element={<OrderDetails />} />
+
+//           <Route
+//             path="/wishlist"
+//             element={
+//               <ProtectedRoute>
+//                 <Wishlist />
+//               </ProtectedRoute>
+//             }
+//           />
+
+//           <Route
+//             path="/cart"
+//             element={
+//               <ProtectedRoute>
+//                 <Cart />
+//               </ProtectedRoute>
+//             }
+//           />
+
+//           <Route
+//             path="/profile"
+//             element={
+//               <ProtectedRoute>
+//                 <Profile />
+//               </ProtectedRoute>
+//             }
+//           />
+
+//           <Route path="/men" element={<Products category="Men" />} />
+//           <Route path="/women" element={<Products category="Women" />} />
+//           <Route path="/kids" element={<Products category="Kids" />} />
+ 
+//      {/* Admin Routes */}
+//           <Route
+//             path="/admin"
+//             element={
+//               <AdminProtectedRoute>
+//                 <AdminDashboard />
+//               </AdminProtectedRoute>
+//             }
+//           >
+//             <Route path="/admin" element={<AdminProtectedRoute><AdminLayout /></AdminProtectedRoute>}>
+//             <Route index element={<RevenueChart />} />
+//             <Route path="/admin/products" element={<AdminProducts />} />
+//             <Route path="/admin/users" element={<AdminUsers />} />
+//             <Route path="/admin/orders" element={<OrdersManagement />} /> 
+//             {/* <Route path="/products" element={<ProductsManagement />} /> */}
+//             <Route path="/admin/users" element={<UsersManagement />} />
+//             {/* <Route path="sidebar" element={<Sidebar />} /> */}
+//             <Route path="dashboard-content" element={<DashboardContent />} />
+//             <Route path="topbar" element={<Topbar />} /> 
+
+//           </Route>
+
+//           <Route path="*" element={<h1 className="text-center mt-10">404 - Page Not Found</h1>} />
+//         </Routes>
+//       </Layout>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,29 +158,28 @@ import Orders from "./pages/Order";
 import Wishlist from "./pages/Wishlist";
 import Checkout from "./pages/Checkout";
 import OrderDetails from "./pages/OrderDetails";
-
-// Admin Pages 
-import AdminDashboard from "./admin/AdminDashboard";
-import AdminProducts from "./admin/AdminProducts";
-import AdminUsers from "./admin/AdminUsers";
-import RevenueChart from "./admin/RevenueChart";
-import AdminProtectedRoute from "./admin/AdminProtectedRoute";
-import OrdersManagement from "./admin/OrdersManagement";
-import ProductsManagement from "./admin/ProductsManagement";
-import UsersManagement from "./admin/UserManagement";
-
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import OTP from "./pages/Otp";
 import OrderSuccess from "./pages/OrderSuccess";
-import { Sidebar } from "lucide-react";
+
+// Admin Pages
+import AdminProtectedRoute from "./admin/AdminProtectedRoute";
+import AdminDashboard from "./admin/AdminDashboard";
+import AdminOrders from "./admin/AdminOrders";
+import AdminProducts from "./admin/AdminProducts";
+import AdminUsers from "./admin/AdminUser";
 import DashboardContent from "./admin/DashboardContent";
-import Topbar from "./admin/Topbar.jsx";
+import OrdersManagement from "./admin/OrdersManagement";
+import ProductsManagement from "./admin/ProductsManagement";
+import RevenueChart from "./admin/RevenueChart";
+import Sidebar from "./admin/Sidebar";
+import Topbar from "./admin/Topbar";
+import UserManagement from "./admin/UserManagement";
 
 function Layout({ children }) {
   const location = useLocation();
   const hideLayout = ["/login", "/register"].includes(location.pathname);
-
   return (
     <>
       {!hideLayout && <Navbar />}
@@ -50,19 +194,19 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
-
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="otp" element={<OTP />} />
+          <Route path="/otp" element={<OTP />} />
           <Route path="/order-success" element={<OrderSuccess />} />
 
+          {/* Protected User Routes */}
           <Route
             path="/orders"
             element={
@@ -72,7 +216,6 @@ function App() {
             }
           />
           <Route path="/order-details/:id" element={<OrderDetails />} />
-
           <Route
             path="/wishlist"
             element={
@@ -81,7 +224,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/cart"
             element={
@@ -90,7 +232,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/profile"
             element={
@@ -103,27 +244,33 @@ function App() {
           <Route path="/men" element={<Products category="Men" />} />
           <Route path="/women" element={<Products category="Women" />} />
           <Route path="/kids" element={<Products category="Kids" />} />
- 
-          <Route
-            path="/admin"
-            element={
+
+          {/* Admin Routes */}
+           <Route 
+             path="/admin"
+             element={
               <AdminProtectedRoute>
                 <AdminDashboard />
               </AdminProtectedRoute>
-            }
-          >
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="users" element={<AdminUsers />} />
-            <Route index element={<RevenueChart />} />
-            <Route path="orders" element={<OrdersManagement />} />
-            <Route path="products" element={<ProductsManagement />} />
-            <Route path="users" element={<UsersManagement />} />
-            <Route path="sidebar" element={<Sidebar />} />
-            <Route path="dashboard-content" element={<DashboardContent />} />
-            <Route path="topbar" element={<Topbar />} />
-          </Route>
+             }
+            />
 
-          <Route path="*" element={<h1 className="text-center mt-10">404 - Page Not Found</h1>} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/products" element={<AdminProducts />} /> 
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/dashboard-content" element={<DashboardContent />} />
+            <Route path="/admin/orders-management" element={<OrdersManagement />} />
+            <Route path="/admin/products-management" element={<ProductsManagement />} />
+            <Route path="/admin/revenue-chart" element={<RevenueChart />} />
+            <Route path="/admin/sidebar" element={<Sidebar />} />
+            <Route path="/admin/topbar" element={<Topbar />} />
+            <Route path="/admin/user-management" element={<UserManagement />} />
+
+          {/* 404 Fallback */}
+          <Route
+            path="*"
+            element={<h1 className="text-center mt-10 text-white">404 - Page Not Found</h1>}
+          />
         </Routes>
       </Layout>
     </Router>

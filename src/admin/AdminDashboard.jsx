@@ -1,400 +1,6 @@
-// import React, { useState, useMemo } from 'react';
-// import { Users, Box, DollarSign, BarChart3, TrendingUp, ShoppingCart, Activity, IndianRupee } from 'lucide-react';
-// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell, PieChart, Pie, Legend } from 'recharts';
-
-
-// const salesData = [
-//   { name: 'Mon', Visits: 25, Sales: 32 },
-//   { name: 'Tue', Visits: 38, Sales: 22 },
-//   { name: 'Wed', Visits: 22, Sales: 45 },
-//   { name: 'Thu', Visits: 48, Sales: 35 },
-//   { name: 'Fri', Visits: 30, Sales: 42 },
-//   { name: 'Sat', Visits: 45, Sales: 38 },
-//   { name: 'Sun', Visits: 35, Sales: 55 },
-// ];
-
-// const ordersData = [
-//   { name: 'Jan', Orders: 10, pv: 2400, amt: 2400 },
-//   { name: 'Feb', Orders: 14, pv: 1398, amt: 2210 },
-//   { name: 'Mar', Orders: 12, pv: 9800, amt: 2290 },
-//   { name: 'Apr', Orders: 16, pv: 3908, amt: 2000 },
-//   { name: 'May', Orders: 18, pv: 4800, amt: 2181 },
-//   { name: 'Jun', Orders: 15, pv: 3800, amt: 2500 },
-// ];
-
-// const productCategoryData = [
-//     { name: 'Nokia', value: 30, color: '#f59e0b' },
-//     { name: 'Apple', value: 45, color: '#3b82f6' },
-//     { name: 'Samsung', value: 25, color: '#10b981' },
-// ];
-
-
-// const Topbar = () => (
-//   <header className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 shadow-md">
-//     <div className="text-xl font-semibold text-yellow-400">Rocker Admin</div>
-//     <div className="relative">
-//       <input
-//         type="text"
-//         placeholder="Search..."
-//         className="py-2 px-4 w-64 bg-gray-700 border border-gray-600 rounded-full text-sm text-white focus:ring-yellow-500 focus:border-yellow-500 transition duration-150"
-//       />
-//       <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-//     </div>
-//     <div className="flex items-center space-x-4">
-//       <div className="h-8 w-8 bg-purple-500 rounded-full flex items-center justify-center text-xs font-bold">PB</div>
-//       <span className="text-sm">Pauline Seitz</span>
-//     </div>
-//   </header>
-// );
-
-// const Sidebar = ({ activeTab, setActiveTab }) => {
-//     const NavItem = ({ tabKey, icon: Icon, label }) => (
-//         <button
-//             onClick={() => setActiveTab(tabKey)}
-//             className={`flex items-center w-full gap-3 p-3 rounded-lg transition duration-200
-//                 ${activeTab === tabKey
-//                     ? 'bg-yellow-600 text-white shadow-lg'
-//                     : 'text-gray-300 hover:bg-gray-700 hover:text-yellow-400'
-//                 }`}
-//         >
-//           <Icon className="w-5 h-5" />
-//           <span className="font-medium">{label}</span>
-//         </button>
-//     );
-
-//     return (
-//         <aside className="w-64 p-4 border-r border-gray-800 bg-gray-800 flex-shrink-0 shadow-2xl">
-//             <h2 className="text-2xl font-extrabold mb-8 text-white">Rocker Admin</h2>
-            
-//             <div className="space-y-2">
-//                 <NavItem tabKey="dashboard" icon={BarChart3} label="Dashboard" />
-//                 <NavItem tabKey="products" icon={Box} label="Products" />
-//                 <NavItem tabKey="users" icon={Users} label="Users" />
-//             </div>
-            
-//             <div className="mt-8 pt-4 border-t border-gray-700">
-//                 <h3 className="text-xs uppercase font-semibold text-gray-500 mb-2">Reports</h3>
-//                 <div className="space-y-2">
-//                     <button className="flex items-center w-full gap-3 p-3 text-gray-400 hover:bg-gray-700 rounded-lg transition duration-200">
-//                         <DollarSign className="w-5 h-5" />
-//                         <span className="font-medium">Revenue</span>
-//                     </button>
-//                 </div>
-//             </div>
-//         </aside>
-//     );
-// };
-
-
-// const StatsCard = ({ title, value, change, icon: Icon, colorClass, bgColor }) => (
-//   <div className={`p-4 rounded-xl shadow-lg ${bgColor} bg-opacity-30 border border-gray-700 backdrop-blur-sm`}>
-//     <div className="flex justify-between items-start">
-//       <div>
-//         <p className="text-sm font-medium text-gray-300">{title}</p>
-//         <p className="text-3xl font-bold text-white mt-1">{value}</p>
-//       </div>
-//       <div className={`p-3 rounded-full ${colorClass} bg-opacity-70 shadow-xl`}>
-//         <Icon className="w-6 h-6 text-white" />
-//       </div>
-//     </div>
-//     <div className={`mt-3 text-sm flex items-center ${change.includes('+') ? 'text-green-400' : 'text-red-400'}`}>
-//       <TrendingUp className={`w-4 h-4 mr-1 ${change.includes('+') ? 'rotate-0' : 'rotate-180'}`} />
-//       {change} this month
-//     </div>
-//   </div>
-// );
-
-// const StatsCards = () => (
-//   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-//     <StatsCard
-//       title="Total Orders"
-//       value="8,052"
-//       change="+25%"
-//       icon={ShoppingCart}
-//       colorClass="bg-yellow-500"
-//       bgColor="bg-yellow-900"
-//     />
-//     <StatsCard
-//       title="Total Revenue"
-//       value="$6.2K"
-//       change="+15%"
-//       icon={IndianRupee}
-//       colorClass="bg-green-500"
-//       bgColor="bg-green-900"
-//     />
-//     <StatsCard
-//       title="New Users"
-//       value="1.3K"
-//       change="-16%"
-//       icon={Users}
-//       colorClass="bg-blue-500"
-//       bgColor="bg-blue-900"
-//     />
-//     <StatsCard
-//       title="Total Returns"
-//       value="170"
-//       change="-4%"
-//       icon={Activity}
-//       colorClass="bg-red-500"
-//       bgColor="bg-red-900"
-//     />
-//   </div>
-// );
-
-// const SalesOverviewChart = () => (
-//   <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 h-96">
-//     <h3 className="text-lg font-semibold mb-4 text-white">Sales Overview</h3>
-//     <ResponsiveContainer width="100%" height="85%">
-//       <AreaChart
-//         data={salesData}
-//         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-//       >
-//         <defs>
-//           <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-//             <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-//             <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-//           </linearGradient>
-//           <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-//             <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8}/>
-//             <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
-//           </linearGradient>
-//         </defs>
-//         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-//         <XAxis dataKey="name" stroke="#9ca3af" />
-//         <YAxis stroke="#9ca3af" />
-//         <Tooltip
-//           contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', borderRadius: '8px' }}
-//           labelStyle={{ color: '#f59e0b' }}
-//         />
-//         <Area type="monotone" dataKey="Visits" stroke="#3b82f6" fillOpacity={1} fill="url(#colorVisits)" />
-//         <Area type="monotone" dataKey="Sales" stroke="#f59e0b" fillOpacity={1} fill="url(#colorSales)" />
-//       </AreaChart>
-//     </ResponsiveContainer>
-//   </div>
-// );
-
-// const OrdersChart = () => (
-//   <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 h-96">
-//     <h3 className="text-lg font-semibold mb-4 text-white">Order Status</h3>
-//     <ResponsiveContainer width="100%" height="85%">
-//       <BarChart
-//         data={ordersData}
-//         margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-//         barSize={30}
-//       >
-//         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-//         <XAxis dataKey="name" stroke="#9ca3af" />
-//         <YAxis stroke="#9ca3af" />
-//         <Tooltip
-//           contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', borderRadius: '8px' }}
-//           labelStyle={{ color: '#f59e0b' }}
-//         />
-//         <Bar dataKey="Orders">
-//           {ordersData.map((entry, index) => (
-//             <Cell key={`cell-${index}`} fill={'#ec4899'} /> // Pink color for the bars
-//           ))}
-//         </Bar>
-//       </BarChart>
-//     </ResponsiveContainer>
-//   </div>
-// );
-
-// const ProductCategoryChart = () => (
-//     <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 flex flex-col justify-center items-center h-96">
-//         <h3 className="text-lg font-semibold mb-4 text-white">Product Category Share</h3>
-//         <ResponsiveContainer width="100%" height="85%">
-//             <PieChart>
-//                 <Pie
-//                     data={productCategoryData}
-//                     cx="50%"
-//                     cy="45%"
-//                     innerRadius={60}
-//                     outerRadius={90}
-//                     fill="#8884d8"
-//                     paddingAngle={5}
-//                     dataKey="value"
-//                     labelLine={false}
-//                     label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-//                 >
-//                     {productCategoryData.map((entry, index) => (
-//                         <Cell key={`cell-${index}`} fill={entry.color} />
-//                     ))}
-//                 </Pie>
-//                 <Tooltip
-//                     contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #4b5563', borderRadius: '8px' }}
-//                     labelStyle={{ color: '#f59e0b' }}
-//                 />
-//                 <Legend layout="horizontal" verticalAlign="bottom" align="center" wrapperStyle={{ color: '#9ca3af' }} />
-//             </PieChart>
-//         </ResponsiveContainer>
-//     </div>
-// );
-
-
-// const DashboardContent = () => (
-//     <div className="space-y-6">
-//         <StatsCards />
-        
-//         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-//             <div className="lg:col-span-2">
-//                 <SalesOverviewChart />
-//             </div>
-            
-//             <div className="lg:col-span-1">
-//                 <OrdersChart />
-//             </div>
-//         </div>
-
-//         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-//             <div className="lg:col-span-1">
-//                 <ProductCategoryChart />
-//             </div>
-//             <div className="lg:col-span-2">
-//                  <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 h-96 flex items-center justify-center">
-//                     <div className="text-center">
-//                         <p className="text-5xl font-extrabold text-white">45,321</p>
-//                         <p className="text-gray-400 text-xl mt-2">Total Visits</p>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     </div>
-// );
-
-// const ProductsManagement = () => (
-//   <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 min-h-[70vh]">
-//     <h2 className="text-2xl font-bold mb-6 text-yellow-400">Product Management</h2>
-//     <p className="text-gray-400 mb-4">A list of all products in your inventory. Use this view to edit, add, or remove products.</p>
-    
-//     <div className="overflow-x-auto">
-//         <table className="min-w-full divide-y divide-gray-700">
-//             <thead>
-//                 <tr>
-//                     {['Product Name', 'Category', 'Stock', 'Price', 'Status'].map(header => (
-//                         <th key={header} className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider bg-gray-700 rounded-t-lg">
-//                             {header}
-//                         </th>
-//                     ))}
-//                 </tr>
-//             </thead>
-//             <tbody className="bg-gray-800 divide-y divide-gray-700">
-//                 {[
-//                     { name: 'Wireless Headphones', cat: 'Electronics', stock: 150, price: '$79.99', status: 'In Stock' },
-//                     { name: 'Mechanical Keyboard', cat: 'Peripherals', stock: 0, price: '$120.00', status: 'Out of Stock' },
-//                     { name: '4K Monitor', cat: 'Displays', stock: 45, price: '$450.00', status: 'Low Stock' },
-//                     { name: 'Gaming Mouse', cat: 'Peripherals', stock: 200, price: '$49.99', status: 'In Stock' },
-//                 ].map((product, index) => (
-//                     <tr key={index} className="hover:bg-gray-700 transition duration-150">
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{product.name}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.cat}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{product.stock}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-400">{product.price}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-//                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-//                                 product.status === 'In Stock' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-//                                 product.status === 'Out of Stock' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' :
-//                                 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-//                             }`}>
-//                                 {product.status}
-//                             </span>
-//                         </td>
-//                     </tr>
-//                 ))}
-//             </tbody>
-//         </table>
-//     </div>
-//   </div>
-// );
-
-// const UsersManagement = () => (
-//   <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 min-h-[70vh]">
-//     <h2 className="text-2xl font-bold mb-6 text-yellow-400">User Management</h2>
-//     <p className="text-gray-400 mb-4">View and manage all registered users. You can edit roles or suspend accounts here.</p>
-    
-//     <div className="overflow-x-auto">
-//         <table className="min-w-full divide-y divide-gray-700">
-//             <thead>
-//                 <tr>
-//                     {['Name', 'Email', 'Role', 'Status', 'Date Joined'].map(header => (
-//                         <th key={header} className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider bg-gray-700 rounded-t-lg">
-//                             {header}
-//                         </th>
-//                     ))}
-//                 </tr>
-//             </thead>
-//             <tbody className="bg-gray-800 divide-y divide-gray-700">
-//                 {[
-//                     { name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active', joined: '2023-01-15' },
-//                     { name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Active', joined: '2023-03-22' },
-//                     { name: 'Pauline Seitz', email: 'pauline@example.com', role: 'Designer', status: 'Suspended', joined: '2024-05-10' },
-//                     { name: 'Mark Wilson', email: 'mark@example.com', role: 'User', status: 'Active', joined: '2023-11-01' },
-//                 ].map((user, index) => (
-//                     <tr key={index} className="hover:bg-gray-700 transition duration-150">
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{user.name}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{user.email}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-400">{user.role}</td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-//                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-//                                 user.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-//                                 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-//                             }`}>
-//                                 {user.status}
-//                             </span>
-//                         </td>
-//                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{user.joined}</td>
-//                     </tr>
-//                 ))}
-//             </tbody>
-//         </table>
-//     </div>
-//   </div>
-// );
-
-
-// const AdminDashboard = () => {
-//   const [activeTab, setActiveTab] = useState("dashboard");
-
-//   const renderContent = useMemo(() => {
-//     switch (activeTab) {
-//       case "dashboard":
-//         return <DashboardContent />;
-//       case "products":
-//         return <ProductsManagement />;
-//       case "users":
-//         return <UsersManagement />;
-//       default:
-//         return <DashboardContent />;
-//     }
-//   }, [activeTab]);
-
-//   return (
-//     <div className="flex min-h-screen bg-gray-900 font-sans">
-      
-//       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-
-
-//       <div className="flex-1 flex flex-col overflow-y-auto">
-//         <Topbar />
-//         <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-900">
-//             <h1 className="text-3xl font-bold mb-8 text-white capitalize">{activeTab} Overview</h1>
-//             {renderContent}
-//         </main>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminDashboard;
-
-
-
-
-
-
-
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  Users,
+  Users as UsersIcon,
   Box,
   ShoppingCart,
   LogOut,
@@ -405,50 +11,71 @@ import {
   TrendingDown,
   Search,
   Menu,
-  X
+  X,
+  Sun,
+  Moon,
+  Trash2,
+  Edit2,
 } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
-// ------------------- Topbar -------------------
-const Topbar = ({ onLogout, toggleSidebar, isMobile }) => (
-  <header className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 shadow-lg">
-    <div className="flex items-center gap-3">
-      {isMobile && (
-        <button onClick={toggleSidebar} className="text-gray-300 hover:text-yellow-400">
-          <Menu className="w-6 h-6" />
+/*
+  Notes about API:
+  - Base URL: http://localhost:5000
+  - Expected collections in db.json: products, users, order
+    (you provided `order` not `orders` — this file uses that exact key)
+*/
+
+const API = "http://localhost:5000";
+
+// ---------- Helpers ----------
+const safeLocale = (n) => (typeof n === "number" ? n.toLocaleString() : String(n || 0));
+const fmtDate = (iso) => {
+  try { return new Date(iso).toLocaleString(); } catch { return iso || "-"; }
+};
+
+// ---------- Topbar ----------
+function Topbar({ isMobile, toggleSidebar, onLogout, dark, setDark }) {
+  return (
+    <header className="flex items-center justify-between p-4 bg-gray-800 border-b border-gray-700 shadow">
+      <div className="flex items-center gap-3">
+        {isMobile && (
+          <button onClick={toggleSidebar} className="text-gray-300 hover:text-yellow-400">
+            <Menu className="w-6 h-6" />
+          </button>
+        )}
+        <div className="text-xl font-bold text-yellow-400">Rocker Admin</div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="hidden sm:flex items-center bg-gray-700 px-3 py-1 rounded">
+          <Search className="w-4 h-4 text-gray-300 mr-2" />
+          <input placeholder="Search..." className="bg-transparent outline-none text-sm text-gray-200" />
+        </div>
+
+        <button
+          onClick={() => setDark((d) => !d)}
+          className="p-2 rounded hover:bg-gray-700 text-gray-300"
+          title="Toggle theme"
+        >
+          {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </button>
-      )}
-      <div className="text-xl font-bold text-yellow-400">Rocker Admin</div>
-    </div>
-    <div className="flex items-center space-x-4">
-      <span className="text-gray-300 hidden sm:block">Hello, Admin</span>
-      <button
-        onClick={onLogout}
-        className="flex items-center gap-2 text-red-400 hover:text-red-300 transition"
-      >
-        <LogOut className="w-5 h-5" />
-        <span className="hidden sm:inline">Logout</span>
-      </button>
-    </div>
-  </header>
-);
 
-// ------------------- Sidebar -------------------
-const Sidebar = ({ activeTab, setActiveTab, onLogout, isOpen, toggleSidebar, isMobile }) => {
-  const NavItem = ({ tabKey, icon: Icon, label }) => (
+        <button onClick={onLogout} className="flex items-center gap-2 text-red-400 hover:text-red-300 transition px-2 py-1 rounded">
+          <LogOut className="w-5 h-5" />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
+      </div>
+    </header>
+  );
+}
+
+// ---------- Sidebar ----------
+function Sidebar({ activeTab, setActiveTab, isOpen, toggleSidebar, isMobile }) {
+  const NavItem = ({ keyName, Icon, label }) => (
     <button
-      onClick={() => {
-        if (tabKey === "logout") {
-          onLogout();
-        } else {
-          setActiveTab(tabKey);
-          if (isMobile) toggleSidebar();
-        }
-      }}
-      className={`flex items-center w-full gap-3 p-3 rounded-lg transition duration-200
-        ${activeTab === tabKey && tabKey !== "logout"
-          ? "bg-yellow-500 text-white shadow-lg"
-          : "text-gray-300 hover:bg-gray-700 hover:text-yellow-400"
-        }`}
+      onClick={() => { setActiveTab(keyName); if (isMobile) toggleSidebar(); }}
+      className={`flex items-center gap-3 w-full p-3 rounded-lg transition ${activeTab === keyName ? "bg-yellow-500 text-white shadow-lg" : "text-gray-300 hover:bg-gray-700 hover:text-yellow-400"}`}
     >
       <Icon className="w-5 h-5" />
       <span className="font-medium">{label}</span>
@@ -458,13 +85,7 @@ const Sidebar = ({ activeTab, setActiveTab, onLogout, isOpen, toggleSidebar, isM
   return (
     <>
       {isMobile && isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={toggleSidebar} />}
-      <aside
-        className={`${
-          isMobile
-            ? `fixed top-0 left-0 h-full z-50 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
-            : 'relative'
-        } w-64 p-4 border-r border-gray-700 bg-gray-800 flex-shrink-0 shadow-2xl flex flex-col justify-between`}
-      >
+      <aside className={`${isMobile ? `fixed top-0 left-0 h-full z-50 transform transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}` : 'relative'} w-64 p-4 border-r border-gray-700 bg-gray-800 flex-shrink-0 shadow-2xl flex flex-col justify-between`}>
         <div>
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-extrabold text-white">Rocker Admin</h2>
@@ -474,24 +95,29 @@ const Sidebar = ({ activeTab, setActiveTab, onLogout, isOpen, toggleSidebar, isM
               </button>
             )}
           </div>
+
           <div className="space-y-2">
-            <NavItem tabKey="dashboard" icon={BarChart3} label="Dashboard" />
-            <NavItem tabKey="products" icon={Box} label="Products" />
-            <NavItem tabKey="users" icon={Users} label="Users" />
-            <NavItem tabKey="orders" icon={ShoppingCart} label="Orders" />
-            <NavItem tabKey="logout" icon={LogOut} label="Logout" />
+            <NavItem keyName="dashboard" Icon={BarChart3} label="Dashboard" />
+            <NavItem keyName="products" Icon={Box} label="Products" />
+            <NavItem keyName="users" Icon={UsersIcon} label="Users" />
+            <NavItem keyName="orders" Icon={ShoppingCart} label="Orders" />
+            <button onClick={() => { toast('Logging out'); }} className="flex items-center gap-3 w-full p-3 rounded-lg text-gray-300 hover:bg-gray-700 hover:text-yellow-400">
+              <LogOut className="w-5 h-5" /> <span className="font-medium">Logout</span>
+            </button>
           </div>
         </div>
+
+        <div className="text-xs text-gray-400 mt-6">© {new Date().getFullYear()} Rocker</div>
       </aside>
     </>
   );
-};
+}
 
-// ------------------- Stats Card -------------------
-const StatsCard = ({ title, value, change, icon: Icon, colorClass, bgColor }) => {
-  const isPositive = change?.includes("+");
+// ---------- StatsCard ----------
+function StatsCard({ title, value, change, Icon, colorClass, bgColor }) {
+  const positive = typeof change === "string" && change.includes("+");
   return (
-    <div className={`p-6 rounded-xl shadow-xl ${bgColor} bg-opacity-20 border border-gray-700 backdrop-blur-sm hover:shadow-2xl transition duration-300`}>
+    <div className={`p-6 rounded-xl shadow-xl ${bgColor} bg-opacity-20 border border-gray-700 backdrop-blur-sm hover:shadow-2xl transition`}>
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm font-medium text-gray-400 uppercase tracking-wide">{title}</p>
@@ -501,75 +127,59 @@ const StatsCard = ({ title, value, change, icon: Icon, colorClass, bgColor }) =>
           <Icon className="w-6 h-6 text-white" />
         </div>
       </div>
+
       {change && (
-        <div className={`mt-4 text-sm flex items-center font-semibold ${isPositive ? "text-green-400" : "text-red-400"}`}>
-          {isPositive ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
+        <div className={`mt-4 text-sm flex items-center font-semibold ${positive ? "text-green-400" : "text-red-400"}`}>
+          {positive ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
           {change} this month
         </div>
       )}
     </div>
   );
-};
+}
 
-// ------------------- Dashboard Content -------------------
-const DashboardContent = () => {
-  const [stats, setStats] = useState(null);
-  const [recentOrders, setRecentOrders] = useState([]);
-  const [topProducts, setTopProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/products");
-        // if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-        const data = await res.json();
-        setStats(data.stats);
-        setRecentOrders(data.recentOrders);
-        setTopProducts(data.topProducts);
-      } catch (err) {
-        console.error("Dashboard fetch error:", err);
-        // Fallback data to prevent crash
-        setStats({
-          totalOrders: 0,
-          ordersChange: "+0%",
-          totalRevenue: 0,
-          revenueChange: "+0%",
-          newUsers: 0,
-          usersChange: "+0%",
-          returns: 0,
-          returnsChange: "+0%"
-        });
-        setRecentOrders([]);
-        setTopProducts([]);
-      }
+// ---------- DashboardContent (uses real db.json data) ----------
+function DashboardContent({ products, users, orders }) {
+  // compute stats from data
+  const stats = useMemo(() => {
+    const totalOrders = Array.isArray(orders) ? orders.length : 0;
+    const totalRevenue = Array.isArray(orders) ? orders.reduce((s, o) => s + (Number(o.total) || 0), 0) : 0;
+    const newUsers = Array.isArray(users) ? users.length : 0;
+    const returns = 0; // your db.json doesn't have returns - placeholder
+    // simple percent changes are not available, show 0%
+    return {
+      totalOrders,
+      ordersChange: "+0%",
+      totalRevenue,
+      revenueChange: "+0%",
+      newUsers,
+      usersChange: "+0%",
+      returns,
+      returnsChange: "+0%",
     };
-    fetchDashboard();
-  }, []);
-
-  if (!stats) return <p className="text-white">Loading...</p>;
+  }, [products, users, orders]);
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard title="Total Orders" value={stats.totalOrders} change={stats.ordersChange} icon={ShoppingCart} colorClass="bg-yellow-500" bgColor="bg-yellow-900" />
-        <StatsCard title="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} change={stats.revenueChange} icon={IndianRupee} colorClass="bg-green-500" bgColor="bg-green-900" />
-        <StatsCard title="New Users" value={stats.newUsers} change={stats.usersChange} icon={Users} colorClass="bg-blue-500" bgColor="bg-blue-900" />
-        <StatsCard title="Total Returns" value={stats.returns} change={stats.returnsChange} icon={Activity} colorClass="bg-red-500" bgColor="bg-red-900" />
+        <StatsCard title="Total Orders" value={stats.totalOrders} change={stats.ordersChange} Icon={ShoppingCart} colorClass="bg-yellow-500" bgColor="bg-yellow-900" />
+        <StatsCard title="Total Revenue" value={`₹${safeLocale(stats.totalRevenue)}`} change={stats.revenueChange} Icon={IndianRupee} colorClass="bg-green-500" bgColor="bg-green-900" />
+        <StatsCard title="New Users" value={stats.newUsers} change={stats.usersChange} Icon={UsersIcon} colorClass="bg-blue-500" bgColor="bg-blue-900" />
+        <StatsCard title="Total Returns" value={stats.returns} change={stats.returnsChange} Icon={Activity} colorClass="bg-red-500" bgColor="bg-red-900" />
       </div>
 
-      {/* Recent Orders */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <div className="bg-gray-800 p-6 rounded-xl shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold text-yellow-400 mb-4">Recent Orders</h3>
-          <div className="space-y-3">
-            {Array.isArray(recentOrders) && recentOrders.length > 0 ? recentOrders.map((order, idx) => (
-              <div key={idx} className="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
+          <div className="space-y-3 max-h-96 overflow-auto">
+            {Array.isArray(orders) && orders.length > 0 ? orders.slice(0, 8).map((order) => (
+              <div key={order.id} className="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
                 <div>
                   <p className="text-white font-medium">{order.id}</p>
-                  <p className="text-gray-400 text-sm">{order.userName}</p>
+                  <p className="text-gray-400 text-sm">{order.address?.name || order.userId || "-"}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-yellow-400 font-bold">₹{order.total.toLocaleString()}</p>
+                  <p className="text-yellow-400 font-bold">₹{safeLocale(Number(order.total) || 0)}</p>
                   <p className="text-sm text-gray-400">{order.status}</p>
                 </div>
               </div>
@@ -577,66 +187,322 @@ const DashboardContent = () => {
           </div>
         </div>
 
-        {/* Top Products */}
         <div className="bg-gray-800 p-6 rounded-xl shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold text-yellow-400 mb-4">Top Products</h3>
-          <div className="space-y-3">
-            {Array.isArray(topProducts) && topProducts.length > 0 ? topProducts.map((product, idx) => (
-              <div key={idx} className="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
+          <div className="space-y-3 max-h-96 overflow-auto">
+            {Array.isArray(products) && products.length > 0 ? products.slice(0, 12).map((p) => (
+              <div key={p.id} className="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
                 <div>
-                  <p className="text-white font-medium">{product.name}</p>
-                  <p className="text-gray-400 text-sm">{product.category}</p>
+                  <p className="text-white font-medium">{p.name}</p>
+                  <p className="text-gray-400 text-sm">{p.category || "-"}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-yellow-400 font-bold">₹{product.price.toLocaleString()}</p>
-                  <p className="text-sm text-gray-400">Stock: {product.stock}</p>
+                  <p className="text-yellow-400 font-bold">₹{safeLocale(Number(p.price) || 0)}</p>
+                  <p className="text-sm text-gray-400">Stock: {String(p.stock ?? "-")}</p>
                 </div>
               </div>
-            )) : <p className="text-gray-400">No top products</p>}
+            )) : <p className="text-gray-400">No products</p>}
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
-// ------------------- Admin Dashboard -------------------
-const AdminDashboard = () => {
+// ---------- Users Management ----------
+function UsersPage({ users, onDelete, onToggleBlock }) {
+  if (!Array.isArray(users)) return <p className="text-white">Loading users...</p>;
+
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold mb-4 text-white">Users</h2>
+      <div className="overflow-x-auto bg-gray-800 p-3 rounded">
+        <table className="w-full text-left">
+          <thead className="text-sm text-gray-400">
+            <tr>
+              <th className="p-3">ID</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">Email</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((u) => (
+              <tr key={u.id} className="border-t border-gray-700">
+                <td className="p-3 text-sm">{u.id}</td>
+                <td className="p-3 text-sm">{u.name}</td>
+                <td className="p-3 text-sm">{u.email}</td>
+                <td className="p-3 text-sm">{u.status ?? (u.blocked ? "blocked" : "active")}</td>
+                <td className="p-3 text-sm">
+                  <div className="flex gap-2">
+                    <button onClick={() => onToggleBlock(u.id)} className="px-2 py-1 rounded bg-indigo-600 text-white text-sm"><Edit2 className="w-4 h-4 inline-block mr-1"/>Toggle</button>
+                    <button onClick={() => onDelete(u.id)} className="px-2 py-1 rounded bg-red-600 text-white text-sm"><Trash2 className="w-4 h-4 inline-block mr-1"/>Delete</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Products Management ----------
+function ProductsPage({ products, onDeleteProduct, onAddProduct }) {
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ name: "", price: "", stock: "", image: "", description: "" });
+
+  if (!Array.isArray(products)) return <p className="text-white">Loading products...</p>;
+
+  const submit = (e) => {
+    e.preventDefault();
+    // minimal validation
+    if (!form.name || !form.price) return toast.error("Name and price required");
+    onAddProduct({ ...form, price: Number(form.price), stock: Number(form.stock || 0) });
+    setForm({ name: "", price: "", stock: "", image: "", description: "" });
+    setShowForm(false);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-semibold text-white">Products</h2>
+        <button onClick={() => setShowForm((s) => !s)} className="px-3 py-1 rounded bg-green-600 text-white">{showForm ? "Close" : "Add product"}</button>
+      </div>
+
+      {showForm && (
+        <form onSubmit={submit} className="bg-gray-800 p-4 rounded mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <input value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="Name" className="p-2 bg-gray-700 rounded" />
+            <input value={form.price} onChange={(e) => setForm({...form, price: e.target.value})} placeholder="Price" className="p-2 bg-gray-700 rounded" />
+            <input value={form.stock} onChange={(e) => setForm({...form, stock: e.target.value})} placeholder="Stock" className="p-2 bg-gray-700 rounded" />
+          </div>
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <input value={form.image} onChange={(e) => setForm({...form, image: e.target.value})} placeholder="Image URL" className="p-2 bg-gray-700 rounded" />
+            <input value={form.description} onChange={(e) => setForm({...form, description: e.target.value})} placeholder="Short description" className="p-2 bg-gray-700 rounded" />
+          </div>
+          <div className="mt-2">
+            <button className="px-3 py-1 bg-indigo-600 rounded text-white">Save</button>
+          </div>
+        </form>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {products.map((p) => (
+          <div key={p.id} className="p-3 bg-gray-800 rounded">
+            <div className="flex justify-between items-center mb-2">
+              <div className="font-semibold text-white">{p.name}</div>
+              <div className="text-yellow-400 font-bold">₹{safeLocale(Number(p.price) || 0)}</div>
+            </div>
+            <div className="text-sm text-gray-400 mb-2">Stock: {String(p.stock ?? "-")}</div>
+            <div className="flex gap-2">
+              <button onClick={() => onDeleteProduct(p.id)} className="px-2 py-1 rounded bg-red-600 text-white text-sm">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------- Orders Management ----------
+function OrdersPage({ orders, onAdvanceOrder }) {
+  if (!Array.isArray(orders)) return <p className="text-white">Loading orders...</p>;
+
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold mb-4 text-white">Orders</h2>
+      <div className="space-y-2">
+        {orders.map((o) => (
+          <div key={o.id} className="flex items-center justify-between p-3 bg-gray-800 rounded">
+            <div>
+              <div className="font-medium text-white">{o.id} — {o.address?.name || o.userId}</div>
+              <div className="text-sm text-gray-400">{fmtDate(o.date)}</div>
+            </div>
+            <div className="text-right">
+              <div className="font-semibold text-yellow-400">₹{safeLocale(Number(o.total) || 0)}</div>
+              <div className="text-sm text-gray-400">{o.status}</div>
+              <div className="mt-2">
+                <button onClick={() => onAdvanceOrder(o.id)} className="px-2 py-1 bg-indigo-600 text-white rounded text-sm">Advance</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------- Settings ----------
+function SettingsPage() {
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold mb-4 text-white">Settings</h2>
+      <div className="bg-gray-800 p-4 rounded">
+        <p className="text-gray-300">General app settings can be added here.</p>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Main Admin Dashboard (connects to db.json) ----------
+export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
+  const [dark, setDark] = useState(true);
 
+  // data
+  const [products, setProducts] = useState(null);
+  const [users, setUsers] = useState(null);
+  const [orders, setOrders] = useState(null);
+
+  // fetch helpers
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const handleLogout = () => alert("Logged out successfully!");
+  // load data once
+  useEffect(() => {
+    fetchAll();
+  }, []);
 
+  async function fetchAll() {
+    fetchProducts();
+    fetchUsers();
+    fetchOrders();
+  }
+
+  async function fetchProducts() {
+    try {
+      const res = await fetch(`${API}/products`);
+      const data = await res.json();
+      setProducts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("fetchProducts:", err);
+      setProducts([]);
+    }
+  }
+
+  async function fetchUsers() {
+    try {
+      const res = await fetch(`${API}/users`);
+      const data = await res.json();
+      setUsers(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("fetchUsers:", err);
+      setUsers([]);
+    }
+  }
+
+  async function fetchOrders() {
+    try {
+      // your db.json key is "order"
+      const res = await fetch(`${API}/order`);
+      const data = await res.json();
+      setOrders(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("fetchOrders:", err);
+      setOrders([]);
+    }
+  }
+
+  // CRUD-ish operations (use json-server endpoints)
+  async function deleteProduct(id) {
+    try {
+      await fetch(`${API}/products/${id}`, { method: "DELETE" });
+      toast.success("Product deleted");
+      fetchProducts();
+    } catch (err) {
+      toast.error("Failed to delete product");
+    }
+  }
+
+  async function addProduct(payload) {
+    try {
+      // json-server will assign id if missing; but we provide
+      await fetch(`${API}/products`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      toast.success("Product added");
+      fetchProducts();
+    } catch (err) {
+      toast.error("Failed to add product");
+    }
+  }
+
+  async function deleteUser(id) {
+    try {
+      await fetch(`${API}/users/${id}`, { method: "DELETE" });
+      toast.success("User deleted");
+      fetchUsers();
+    } catch (err) {
+      toast.error("Failed to delete user");
+    }
+  }
+
+  async function toggleBlockUser(id) {
+    try {
+      // fetch user, toggle blocked/status, then PUT
+      const res = await fetch(`${API}/users/${id}`);
+      const user = await res.json();
+      const updated = { ...user, blocked: !user.blocked, status: user.blocked ? "active" : "blocked" };
+      await fetch(`${API}/users/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updated) });
+      toast.success("User updated");
+      fetchUsers();
+    } catch (err) {
+      toast.error("Failed to update user");
+    }
+  }
+
+  async function advanceOrder(id) {
+    try {
+      const res = await fetch(`${API}/order/${id}`);
+      const order = await res.json();
+      const nextStatus = order.status === "Packed" ? "Shipped" : order.status === "Shipped" ? "Delivered" : order.status;
+      const updated = { ...order, status: nextStatus };
+      await fetch(`${API}/order/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(updated) });
+      toast.success("Order advanced");
+      fetchOrders();
+    } catch (err) {
+      toast.error("Failed to advance order");
+    }
+  }
+
+  // UI state
+  const toggleSidebar = () => setSidebarOpen((s) => !s);
+  const handleLogout = () => toast("Logged out (demo)");
+
+  // Render content switch
   const renderContent = useMemo(() => {
     switch (activeTab) {
-      case "dashboard": return <DashboardContent />;
-      case "products": return <p className="text-white">Products Management (fetch from API)</p>;
-      case "users": return <p className="text-white">Users Management (fetch from API)</p>;
-      case "orders": return <p className="text-white">Orders Management (fetch from API)</p>;
-      default: return <DashboardContent />;
+      case "dashboard":
+        return <DashboardContent products={products} users={users} orders={orders} />;
+      case "products":
+        return <ProductsPage products={products} onDeleteProduct={deleteProduct} onAddProduct={addProduct} />;
+      case "users":
+        return <UsersPage users={users} onDelete={deleteUser} onToggleBlock={toggleBlockUser} />;
+      case "orders":
+        return <OrdersPage orders={orders} onAdvanceOrder={advanceOrder} />;
+      case "settings":
+        return <SettingsPage />;
+      default:
+        return <DashboardContent products={products} users={users} orders={orders} />;
     }
-  }, [activeTab]);
+  }, [activeTab, products, users, orders]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
   return (
     <div className="flex min-h-screen bg-gray-900 font-sans">
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onLogout={handleLogout}
-        isOpen={sidebarOpen}
-        toggleSidebar={toggleSidebar}
-        isMobile={isMobile}
-      />
+      <Toaster />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isOpen={sidebarOpen} toggleSidebar={toggleSidebar} isMobile={isMobile} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Topbar onLogout={handleLogout} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+        <Topbar isMobile={isMobile} toggleSidebar={toggleSidebar} onLogout={handleLogout} dark={dark} setDark={setDark} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-gray-900 overflow-y-auto">
           <h1 className="text-3xl font-bold mb-8 text-white capitalize">{activeTab} Overview</h1>
           {renderContent}
@@ -644,6 +510,14 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
-};
+}
 
-export default AdminDashboard;
+
+
+
+
+
+
+
+
+
