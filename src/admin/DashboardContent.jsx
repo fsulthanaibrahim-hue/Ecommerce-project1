@@ -194,83 +194,11 @@ function StatCard({ title, value, icon }) {
   );
 }
 
-const DashboardContent = ({ orders = [], users = [], products = [] }) => {
-  // Calculate stats
-  const totalOrders = orders.length;
-  const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
-  const totalReturns = orders.filter(o => o.status && o.status.toLowerCase() === "returned").length;
+const DashboardContent = ({ orders, users, products }) => {
+  if (!orders || !users || !products) {
+    return <p className="text-white">Loading...</p>
+  }
+}
 
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-  const newUsersCount = users.filter(user => user.createAt && new Date(user.createAt) >= oneMonthAgo).length;
-
-  // Prepare sales data for chart (aggregate by month)
-  const salesDataMap = {};
-  orders.forEach(order => {
-    let date = new Date(order.date || order.orderDate);
-    if (isNaN(date)) return;
-    const month = date.toLocaleString("default", { month: "short" });
-    if (!salesDataMap[month]) salesDataMap[month] = { month, sales: 0, returns: 0 };
-    salesDataMap[month].sales += order.total || 0;
-    if (order.status && order.status.toLowerCase() === "returned") salesDataMap[month].returns += 1;
-  });
-  // Convert map to array and sort by month order (Jan to Dec)
-  const monthOrder = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const salesData = Object.values(salesDataMap).sort(
-    (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
-  ).map(item => ({
-    month: item.month,
-    sales: +(item.sales / 1000).toFixed(1), // in thousands
-    returns: item.returns,
-  }));
-
-  // Prepare product stock data (top 5 by stock)
-  const productData = products
-    .sort((a, b) => b.stock - a.stock)
-    .slice(0, 5)
-    .map(p => ({ name: p.name, stock: p.stock }));
-
-  return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4 text-white">Dashboard Overview</h2>
-
-      <div className="grid grid-cols-4 gap-6">
-        <StatCard title="Total Orders" value={totalOrders} icon="🛒" />
-        <StatCard title="Total Revenue" value={`₹${(totalRevenue / 1000).toFixed(1)}K`} icon="₹" />
-        <StatCard title="New Users" value={`${newUsersCount}`} icon="👤" />
-        <StatCard title="Total Returns" value={totalReturns} icon="↩️" />
-      </div>
-
-      <div className="flex space-x-6">
-        <div className="flex-1 bg-gray-800 rounded p-4 text-white h-96">
-          <h3 className="font-semibold mb-4">Sales Overview</h3>
-          <ResponsiveContainer width="100%" height="85%">
-            <LineChart data={salesData}>
-              <CartesianGrid stroke="#444" />
-              <XAxis dataKey="month" stroke="#ccc" />
-              <YAxis stroke="#ccc" />
-              <Tooltip />
-              <Line type="monotone" dataKey="sales" stroke="#facc15" strokeWidth={3} />
-              <Line type="monotone" dataKey="returns" stroke="#ef4444" strokeWidth={3} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="flex-1 bg-gray-800 rounded p-4 text-white h-96">
-          <h3 className="font-semibold mb-4">Top Products Stock</h3>
-          <ResponsiveContainer width="100%" height="85%">
-            <BarChart data={productData} layout="vertical" margin={{ left: 20 }}>
-              <CartesianGrid stroke="#444" />
-              <XAxis type="number" stroke="#ccc" />
-              <YAxis dataKey="name" type="category" stroke="#ccc" />
-              <Tooltip />
-              <Bar dataKey="stock" fill="#facc15" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default DashboardContent;

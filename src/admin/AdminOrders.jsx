@@ -422,7 +422,10 @@ export default function AdminOrders() {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => setOrders(data))
+      .then((data) => {
+        const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setOrders(sorted);
+      })
       .catch((err) => console.error(err));
   }, []);
 

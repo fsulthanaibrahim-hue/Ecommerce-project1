@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FaEye } from "react-icons/fa";
 
 const API = "http://localhost:5000";
 
@@ -8,6 +9,7 @@ const UsersManagement = ({ onRefresh }) => {
   const [users, setUsers] = useState([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // Load all users
   const loadUsers = async () => {
@@ -49,6 +51,7 @@ const UsersManagement = ({ onRefresh }) => {
 
   return (
     <div className="bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700 min-h-[70vh]">
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold text-yellow-400">Users Management</h2>
         <input
@@ -77,6 +80,7 @@ const UsersManagement = ({ onRefresh }) => {
                 ))}
               </tr>
             </thead>
+
             <tbody className="bg-gray-800 divide-y divide-gray-700">
               {filteredUsers.length === 0 ? (
                 <tr>
@@ -106,17 +110,25 @@ const UsersManagement = ({ onRefresh }) => {
                         {user.blocked ? "Yes" : "No"}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+
+                    <td className="px-4 py-3 flex items-center gap-3">
                       <button
+                        onClick={() => setSelectedUser(user)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+                      >
+                        <FaEye size={20} />
+                      </button>
+
+                      <button 
                         onClick={() => toggleBlock(user)}
                         className={`px-3 py-1 rounded-md text-sm font-medium ${
                           user.blocked
-                            ? "bg-green-600 hover:bg-green-700 text-white"
-                            : "bg-red-600 hover:bg-red-700 text-white"
-                        } transition`}
+                           ? "bg-green-600 hover:bg-green-700 text-white"
+                           : "bg-red-600 hover:bg-red-700 text-white"
+                        } transtion`}
                       >
                         {user.blocked ? "Unblock" : "Block"}
-                      </button>
+                      </button>  
                     </td>
                   </tr>
                 ))
@@ -124,6 +136,27 @@ const UsersManagement = ({ onRefresh }) => {
             </tbody>
           </table>
         </div>
+      )}
+
+      {selectedUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70">
+          <div className="bg-gray-900 p-6 rounded-xl w-96 border border-gray-700">
+            <h3 className="text-xl font-bold text-yellow-400 mb-4">User Details</h3>
+            <p className="text-gray-300"><b>Name:</b> {selectedUser.name}</p>
+            <p className="text-gray-300"><b>Email:</b> {selectedUser.email}</p>
+            <p className="text-gray-300"><b>Role:</b> {selectedUser.role || "User"}</p>
+            <p className="text-gray-300">
+              <b>Status:</b> {selectedUser.blocked ? "Blocked" : "Active"}
+            </p>
+
+            <button 
+              onClick={() => setSelectedUser(null)}
+              className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md w-full"
+            >
+              Close
+            </button>  
+          </div>
+        </div>  
       )}
     </div>
   );
