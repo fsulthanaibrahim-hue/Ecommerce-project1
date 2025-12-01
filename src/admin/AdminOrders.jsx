@@ -1,202 +1,458 @@
-import { useEffect, useState } from "react";
-import { FaTrash, FaEye, FaEyeSlash } from "react-icons/fa";
+// import { useEffect, useState } from "react";
+// import { FaTrash, FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa";
+// import toast from "react-hot-toast";
+
+// const API_URL = "http://localhost:5000/order";
+
+// export default function AdminOrders() {
+//   const [orders, setOrders] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [expanded, setExpanded] = useState(null);
+
+//   useEffect(() => {
+//     fetchOrders();
+//   }, []);
+
+//   const fetchOrders = async () => {
+//     setLoading(true);
+//     try {
+//       const res = await fetch(API_URL);
+//       const data = await res.json();
+//       setOrders(Array.isArray(data) ? data.reverse() : []);
+//     } catch (error) {
+//       console.error("Error fetching orders:", error);
+//       toast.error("Failed to load orders!");
+//     } 
+//       setLoading(false);
+//   };
+
+//   const nextStatus = {
+//     pending: "shipped",
+//     shipped: "delivered",
+//     delivered: null,
+//   };
+
+//   const handleAdvance = async (id) => {
+//     const order = orders.find((o) => o.id === id);
+//     if (!order) return;
+
+//     const newStatus = nextStatus[order.status];
+//     if(!newStatus) return toast("Order already delivered!");
+   
+//     try {
+//         await fetch(`${API_URL}/${id}`, {
+//         method: "PATCH",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ status: newStatus }),
+//      });
+
+//      setOrders((prev) =>
+//       prev.map((o) => (o.id === id ? { ...o, status: newStatus } : o)) 
+//     );
+
+//     toast.dismiss();
+//     toast.success(`Order moved to ${newStatus}!`);
+//   } catch (error) {
+//     toast.error("Updated failed!");
+//   }
+// }; 
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm("Delete this order permanently?")) return;
+
+//     try {
+//       await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+//       setOrders((prev) => prev.filter((o) => o.id !== id));
+//       toast.success("Order deleted!")
+//     } catch {
+//       toast.error("Delete failed!");
+//     }
+//   };
+
+//   const toggleExpand = (id) => {
+//     setExpanded(expanded === id ? null : id);
+//   };
+
+//   const badgeStyle = (status) => 
+//   ({
+//     pending: "bg-yellow-500/20 text-yellow-400",
+//     shipped: "bg-blue-500/20 text-blue-400",
+//     delivered: "bg-green-500/20 text-green-400",
+//   }[status]);
+
+//   return (
+//     <div className="min-h-screen bg-slate-900 p-6">
+//       {/* Header */}
+//         <h1 className="text-3xl font-bold text-white mb-1">Orders Overview</h1>
+//         <p className="text-2xl font-semibold text-gray-300">Manage all customer orders here</p>
+
+//         {loading ? (
+//           <div className="text-center text-gray-400">Loading orders...</div>
+//         ) : orders.length === 0 ? (
+//           <div className="text-center text-gray-400">No orders found...</div>
+//         ) : (
+//           <div className="space-y-4">
+//             {orders.map((order) => {
+//               const next = nextStatus[order.status];
+
+//               return (
+//                 <div 
+//                   key={order.id}
+//                   className="bg-slate-800 border border-slate-700 p-6 rounded-xl hover:border-orange-500 transition"
+//                 >
+//              {/* Header */}
+//               <div className="flex justify-between items-start">
+//                 <div>
+//                   <h3 className="text-lg text-white font-semibold">
+//                     {order.id} — {order.customerName || "Guest User"}
+//                   </h3>
+//                     <p className="text-gray-400 text-sm">
+//                       {order.date || new Date().toLocaleString()}
+//                     </p>
+//                     <span
+//                       className={`inline-block mt-3 px-3 py-1 text-xs rounded-full ${badgeStyle(
+//                         order.status
+//                       )}`}
+//                     >
+//                       {order.status.toUpperCase()}
+//                     </span>
+//                   </div>
+
+//                 <div className="text-right">
+//                   <p className="text-orange-400 font-bold text-xl">
+//                     ₹{Number(order.total || 0).toLocaleString()}
+//                   </p>
+//                    {next ? (
+//                     <button 
+//                       onClick={() => handleAdvance(order.id)}
+//                       className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm transition flex items-center gap-2"
+//                     >
+//                       Advance to {next}
+//                       <FaArrowRight />
+//                     </button>  
+//                   ) : (
+//                     <p className="mt-3 text-green-400 font-semibold">✔ Delivered</p>
+//                   )}
+//                 </div>
+//               </div>
+
+//                <div className="flex gap-3 mt-4">
+//                   <button
+//                     onClick={() => toggleExpand(order.id)}
+//                     className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm flex items-center gap-2"
+//                   >
+//                     {expanded === order.id ? <FaEyeSlash /> : <FaEye />}
+//                     {expanded === order.id ? "Hide Details" : "View Details"}
+//                   </button>
+
+//                   <button
+//                     onClick={() => handleDelete(order.id)}
+//                     className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm flex items-center gap-2"
+//                   >
+//                     <FaTrash /> Delete
+//                   </button>
+//                 </div>
+
+//                 {/* Expanded Items */}
+//                 {expanded === order.id && (
+//                   <div className="mt-5 border-t border-slate-700 pt-4">
+//                     <h4 className="text-white font-semibold mb-2">Order Items</h4>
+
+//                     {order.items?.map((item, index) => (
+//                       <div
+//                         key={index}
+//                         className="flex justify-between bg-slate-700/40 p-3 rounded-lg text-sm mb-2"
+//                       >
+//                         <span className="text-gray-300">{item.name}</span>
+//                         <span className="text-gray-400">
+//                           ₹{item.price} × {item.quantity} = ₹
+//                           {(item.price * item.quantity).toLocaleString()}
+//                         </span>
+//                       </div>
+//                      ))}
+//                    </div>
+//                   )}
+//                 </div>
+//                );
+//              })}
+//           </div>
+//          )}
+//        </div>
+//      );
+//  } 
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useState } from "react";
+// import { FaTrash, FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa";
+// import toast from "react-hot-toast";
+
+// const API_URL = "http://localhost:5000/order";
+
+// export default function AdminOrders() {
+//   const [orders, setOrders] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [expanded, setExpanded] = useState(null);
+
+//   useEffect(() => {
+//     fetchOrders();
+//   }, []);
+
+//   const fetchOrders = async () => {
+//     setLoading(true);
+//     try {
+//       const res = await fetch(API_URL);
+//       const data = await res.json();
+//       setOrders(Array.isArray(data) ? data.reverse() : []);
+//     } catch (error) {
+//       console.error("Error fetching orders:", error);
+//       toast.error("Failed to load orders!");
+//     }
+//     setLoading(false);
+//   };
+
+//   const nextStatus = {
+//     pending: "shipped",
+//     shipped: "delivered",
+//     delivered: null,
+//   };
+
+//   const handleAdvance = async (id) => {
+//     const order = orders.find((o) => o.id === id);
+//     if (!order) return;
+
+//     const current = order.status.toLowerCase().trim();
+//     const newStatus = nextStatus[order.status];
+
+//     if (!newStatus) return toast("Order already delivered!");
+
+//     try {
+//       await fetch(`${API_URL}/${id}`, {
+//         method: "PATCH",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ status: newStatus }),
+//       });
+
+//       setOrders((prev) =>
+//         prev.map((o) => (o.id === id ? { ...o, status: newStatus } : o))
+//       );
+
+//       toast.success(`Order moved to ${newStatus}!`);
+//     } catch {
+//       toast.error("Update failed!");
+//     }
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm("Delete this order permanently?")) return;
+
+//     try {
+//       await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+//       setOrders((prev) => prev.filter((o) => o.id !== id));
+//       toast.success("Order deleted!");
+//     } catch {
+//       toast.error("Delete failed!");
+//     }
+//   };
+
+//   const toggleExpand = (id) => {
+//     setExpanded(expanded === id ? null : id);
+//   };
+
+//   const badgeStyle = (status) =>
+//     ({
+//       pending: "bg-yellow-500/20 text-yellow-400",
+//       shipped: "bg-blue-500/20 text-blue-400",
+//       delivered: "bg-green-500/20 text-green-400",
+//     }[status]);
+
+//   return (
+//     <div className="min-h-screen bg-slate-900 p-6">
+//       <h1 className="text-3xl font-bold text-white mb-1">Orders Overview</h1>
+//       <p className="text-2xl font-semibold text-gray-300 mb-6">
+//         Manage all customer orders here
+//       </p>
+
+//       {loading ? (
+//         <div className="text-center text-gray-400">Loading orders...</div>
+//       ) : orders.length === 0 ? (
+//         <div className="text-center text-gray-400">No orders found...</div>
+//       ) : (
+//         <div className="space-y-4">
+//           {orders.map((order) => {
+//             const next = nextStatus[order.status];
+
+//   // Extract name + date safely
+//             const customerName =
+//               order.address?.name ||
+//               order.shippingAddress?.name ||
+//               "Guest User";
+
+//             const orderDate = order.orderDate || order.date || new Date();
+
+
+//             return (
+//               <div
+//                 key={order.id}
+//                 className={`
+//                   p-6 rounded-xl transition-all 
+//                   bg-slate-800 border
+//                   ${expanded === order.id
+//                     ? "border-orange-500 shadow-[0_0_15px_rgba(255, 124, 32, 0.4)]"
+//                     : "border-slate-700"}
+//                 `}
+//               >
+//                 <div className="flex justify-between items-start">
+
+//                 {/* Header */}
+//                   <div>
+//                     <h3 className="text-lg text-white font-semibold">
+//                       {customerName}
+//                     </h3>
+
+//                     <p className="text-gray-400 text-sm">
+//                       {new Date(orderDate).toLocaleString()}
+//                     </p>
+
+//                     <span
+//                       className={`
+//                         inline-block mt-3 px-3 py-1 text-xs font-semibold rounded-full 
+//                         ${order.status === "pending" ? "bg-blue-600/30 text-blue-300" : ""}
+//                         ${order.status === "shipped" ? "bg-yellow-500/30 text-yellow-300" : ""}
+//                         ${order.status === "delivered" ? "bg-green-500/30 text-green-300" : ""}
+//                       `}
+//                     >
+//                       {order.status.toUpperCase()}
+//                     </span>
+//                   </div>
+
+//                   {/* Right side */}
+//                   <div className="text-right">
+//                     <p className="text-orange-400 font-bold text-xl">
+//                       ₹{Number(order.total || 0).toLocaleString()}
+//                     </p>
+
+//                     {next ? (
+//                       <button
+//                         onClick={() => handleAdvance(order.id)}
+//                         className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm flex items-center gap-2 transition-all"
+//                       >
+//                         Advance to {next}
+//                       </button>
+//                     ) : (
+//                       <p className="mt-3 px-3 py-1 text-sm rounded-lg bg-green-700/40 text-green-400">
+//                         ✔ Delivered
+//                       </p>
+//                     )}
+//                   </div>
+//                 </div>
+
+//                 {/* Buttons */}
+//                 <div className="flex gap-3 mt-4">
+//                   <button
+//                     onClick={() => toggleExpand(order.id)}
+//                     className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm flex items-center gap-2"
+//                   >
+//                       {expanded === order.id ? "Hide Details" : "View Details"}
+//                   </button>
+
+//                   <button
+//                     onClick={() => handleDelete(order.id)}
+//                     className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm flex items-center gap-2"
+//                   >
+//                        Delete
+//                   </button>
+//                 </div>
+
+//                 {/* Expanded order items */}
+//                 {expanded === order.id && (
+//                   <div className="mt-5 border-t border-slate-700 pt-4">
+//                     <h4 className="text-white font-semibold mb-3">
+//                       Order Items
+//                     </h4>
+
+//                     {order.items?.map((item, index) => (
+//                       <div
+//                         key={index}
+//                         className="flex justify-between bg-slate-700/40 p-3 rounded-lg text-sm mb-2"
+//                       >
+//                         <span className="text-gray-300">{item.name}</span>
+//                         <span className="text-gray-400">
+//                           ₹{item.price} × {item.quantity} = ₹
+//                           {(item.price * item.quantity).toLocaleString()}
+//                         </span>
+//                       </div>
+//                     ))}
+//                   </div>
+//                 )}
+//               </div>
+//             );
+//           })}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
 
 const API_URL = "http://localhost:5000/order";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [expanded, setExpanded] = useState(null);
 
   useEffect(() => {
-    fetchOrders();
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((err) => console.error(err));
   }, []);
 
-  const fetchOrders = async () => {
-    try {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-
-      const validOrders = Array.isArray(data) ? data : [];
-      setOrders(validOrders);
-
-      const total = validOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
-      setTotalRevenue(total);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      const order = orders.find((o) => o.id === id);
-      if (!order) return;
-
-      await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...order, status: newStatus }),
-      });
-
-      fetchOrders();
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-      fetchOrders();
-    } catch (error) {
-      console.error("Error deleting order:", error);
-    }
-  };
-
-  const toggleExpand = (id) => {
-    setExpanded(expanded === id ? null : id);
-  };
-
   return (
-    <div className="p-8 max-w-7xl mx-auto font-[Inter]">
-      {/* Header */}
-      <div className="mb-8">
-        <h2 className="text-4xl font-semibold text-gray-900 tracking-tight mb-1">
-          Manage Orders
-        </h2>
-        <p className="text-gray-500 text-sm">
-          Track, manage, and fulfill customer orders efficiently.
-        </p>
-      </div>
-
-      {/* Summary Cards */}
-      <div className="grid md:grid-cols-2 gap-6 mb-10">
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200 shadow-sm hover:shadow-md transition">
-          <h3 className="text-gray-800 font-medium text-sm">Total Revenue</h3>
-          <p className="text-3xl font-bold mt-2 text-green-700">
-            ₹{totalRevenue.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 shadow-sm hover:shadow-md transition">
-          <h3 className="text-gray-800 font-medium text-sm">Total Orders</h3>
-          <p className="text-3xl font-bold mt-2 text-blue-700">{orders.length}</p>
-        </div>
-      </div>
-
-      {/* Orders Table */}
-      <div className="overflow-x-auto bg-white/70 backdrop-blur-md shadow-xl border border-gray-200 rounded-2xl">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-100/70 text-gray-600 uppercase text-xs font-semibold tracking-wide">
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h2 className="text-2xl font-bold mb-4">Orders Overview</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white shadow rounded-lg">
+          <thead className="bg-gray-200">
             <tr>
-              <th className="py-3 px-6 text-left">Order ID</th>
-              <th className="py-3 px-6 text-left">Customer</th>
-              <th className="py-3 px-6 text-left">Total</th>
-              <th className="py-3 px-6 text-left">Status</th>
-              <th className="py-3 px-6 text-center">Actions</th>
+              <th className="py-2 px-4 text-left">Customer</th>
+              <th className="py-2 px-4 text-left">Date</th>
+              <th className="py-2 px-4 text-left">Amount</th>
+              <th className="py-2 px-4 text-left">Status</th>
             </tr>
           </thead>
-
-          <tbody className="divide-y divide-gray-100 text-gray-800">
-            {orders.map((o) => (
-              <>
-                <tr
-                  key={o.id}
-                  className="hover:bg-gray-50/80 transition duration-150 ease-in-out"
-                >
-                  <td className="py-4 px-6 font-semibold text-gray-900">#{o.id}</td>
-                  <td className="py-4 px-6">{o.customerName || "Guest User"}</td>
-                  <td className="py-4 px-6 font-semibold text-gray-700">
-                    ₹{Number(o.total || 0).toLocaleString()}
-                  </td>
-                  <td className="py-4 px-6">
-                    <span
-                      className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                        o.status === "Delivered"
-                          ? "bg-green-100 text-green-700"
-                          : o.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-blue-100 text-blue-700"
-                      }`}
-                    >
-                      {o.status || "Pending"}
-                    </span>
-                  </td>
-
-                  {/* Action Buttons */}
-                  <td className="py-4 px-6 text-center flex justify-center gap-3">
-                    <select
-                      value={o.status || "Pending"}
-                      onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                      className="border border-gray-300 rounded-lg px-2 py-1 text-sm bg-white focus:ring-2 focus:ring-gray-700 transition"
-                    >
-                      <option>Pending</option>
-                      <option>Shipped</option>
-                      <option>Delivered</option>
-                    </select>
-
-                    <button
-                      onClick={() => handleDelete(o.id)}
-                      className="text-gray-600 hover:text-red-600 transition text-lg"
-                      title="Delete Order"
-                    >
-                      <FaTrash />
-                    </button>
-
-                    <button
-                      onClick={() => toggleExpand(o.id)}
-                      className="text-gray-600 hover:text-black transition text-lg"
-                      title={expanded === o.id ? "Hide Details" : "View Details"}
-                    >
-                      {expanded === o.id ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                  </td>
-                </tr>
-
-                {/* Expanded Order Products */}
-                {expanded === o.id && o.items && o.items.length > 0 && (
-                  <tr className="bg-gray-50">
-                    <td colSpan="5" className="py-4 px-10">
-                      <h4 className="text-gray-800 font-semibold mb-2">
-                        Ordered Products
-                      </h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        {o.items.map((item, index) => (
-                          <li
-                            key={index}
-                            className="flex justify-between border-b border-gray-200 pb-2"
-                          >
-                            <span>{item.name}</span>
-                            <span>
-                              ₹{item.price} × {item.quantity}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                )}
-              </>
+          <tbody>
+            {orders.map((order, idx) => (
+              <tr key={idx} className="border-b">
+                <td className="py-2 px-4">{order.customerName}</td>
+                <td className="py-2 px-4">{new Date(order.date).toLocaleString()}</td>
+                <td className="py-2 px-4">₹{order.amount}</td>
+                <td className={`py-2 px-4 font-semibold ${order.status === "DELIVERED" ? "text-green-600" : "text-red-600"}`}>
+                  {order.status}
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
-
-        {loading && (
-          <div className="py-8 text-center text-gray-500">
-            Loading orders...
-          </div>
-        )}
-        {!loading && orders.length === 0 && (
-          <div className="py-8 text-center text-gray-500">No orders found.</div>
-        )}
       </div>
     </div>
   );
 }
-
-
-
-

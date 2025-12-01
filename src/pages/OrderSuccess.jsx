@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Success = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/orders");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   const handleViewOrders = () => {
     navigate("/orders");

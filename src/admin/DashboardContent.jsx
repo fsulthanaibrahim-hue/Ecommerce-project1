@@ -169,9 +169,6 @@
 
 
 
-
-
-
 import React from "react";
 import {
   ResponsiveContainer,
@@ -185,34 +182,66 @@ import {
   Bar,
 } from "recharts";
 
-const salesData = [
-  { month: "Jan", sales: 30, returns: 10 },
-  { month: "Feb", sales: 45, returns: 14 },
-  { month: "Mar", sales: 40, returns: 12 },
-  { month: "Apr", sales: 50, returns: 16 },
-  { month: "May", sales: 60, returns: 18 },
-  { month: "Jun", sales: 55, returns: 15 },
-];
+function StatCard({ title, value, icon }) {
+  return (
+    <div className="bg-orange-600 rounded-lg p-4 text-white shadow">
+      <div className="flex items-center justify-between">
+        <h3 className="font-semibold">{title}</h3>
+        <div>{icon}</div>
+      </div>
+      <p className="text-3xl font-bold mt-2">{value}</p>
+    </div>
+  );
+}
 
-const productData = [
-  { name: "Dress", stock: 13 },
-  { name: "Cape Coat", stock: 11 },
-  { name: "Wool Coat", stock: 9 },
-  { name: "Blouse", stock: 6 },
-];
+const DashboardContent = ({ orders = [], users = [], products = [] }) => {
+  // Calculate stats
+  const totalOrders = orders.length;
+  const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+  const totalReturns = orders.filter(o => o.status && o.status.toLowerCase() === "returned").length;
 
-const DashboardContent = () => {
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  const newUsersCount = users.filter(user => user.createAt && new Date(user.createAt) >= oneMonthAgo).length;
+
+  // Prepare sales data for chart (aggregate by month)
+  const salesDataMap = {};
+  orders.forEach(order => {
+    let date = new Date(order.date || order.orderDate);
+    if (isNaN(date)) return;
+    const month = date.toLocaleString("default", { month: "short" });
+    if (!salesDataMap[month]) salesDataMap[month] = { month, sales: 0, returns: 0 };
+    salesDataMap[month].sales += order.total || 0;
+    if (order.status && order.status.toLowerCase() === "returned") salesDataMap[month].returns += 1;
+  });
+  // Convert map to array and sort by month order (Jan to Dec)
+  const monthOrder = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const salesData = Object.values(salesDataMap).sort(
+    (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
+  ).map(item => ({
+    month: item.month,
+    sales: +(item.sales / 1000).toFixed(1), // in thousands
+    returns: item.returns,
+  }));
+
+  // Prepare product stock data (top 5 by stock)
+  const productData = products
+    .sort((a, b) => b.stock - a.stock)
+    .slice(0, 5)
+    .map(p => ({ name: p.name, stock: p.stock }));
+
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Dashboard Overview</h2>
+      <h2 className="text-2xl font-bold mb-4 text-white">Dashboard Overview</h2>
 
-      {/* Your summary cards here (Total Orders, Revenue, etc.) */}
       <div className="grid grid-cols-4 gap-6">
-        {/* ... cards as before */}
+        <StatCard title="Total Orders" value={totalOrders} icon="🛒" />
+        <StatCard title="Total Revenue" value={`₹${(totalRevenue / 1000).toFixed(1)}K`} icon="₹" />
+        <StatCard title="New Users" value={`${newUsersCount}`} icon="👤" />
+        <StatCard title="Total Returns" value={totalReturns} icon="↩️" />
       </div>
 
       <div className="flex space-x-6">
-        {/* Sales Overview Line Chart */}
         <div className="flex-1 bg-gray-800 rounded p-4 text-white h-96">
           <h3 className="font-semibold mb-4">Sales Overview</h3>
           <ResponsiveContainer width="100%" height="85%">
@@ -227,7 +256,6 @@ const DashboardContent = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Product Stock Bar Chart */}
         <div className="flex-1 bg-gray-800 rounded p-4 text-white h-96">
           <h3 className="font-semibold mb-4">Top Products Stock</h3>
           <ResponsiveContainer width="100%" height="85%">

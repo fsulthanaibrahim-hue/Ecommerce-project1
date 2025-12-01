@@ -142,8 +142,8 @@ const OrdersManagement = () => {
           <tbody>
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => {
+                const userName = getUserName(order.userId);
                 const isLoggedInUser = 
-                  order.userId === loggedInUser.id || 
                   String(order.userId) === String(loggedInUser.id);
                 
                 return (

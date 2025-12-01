@@ -15,7 +15,6 @@ const Checkout = () => {
 
   // READ BUY NOW ITEM
   const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem"));
-
   // Redux cart
   const reduxCart = useSelector((state) => state.cart.items) || [];
 
@@ -24,8 +23,7 @@ const Checkout = () => {
     if (buyNowItem) return [buyNowItem]; // Use Buy Now item only
     if (reduxCart.length) return reduxCart;
 
-    const saved = JSON.parse(localStorage.getItem("cartItems")) || [];
-    return saved;
+    return JSON.parse(localStorage.getItem("cartItems")) || [];
   });
 
   // Address data
@@ -58,7 +56,6 @@ const Checkout = () => {
         : item
     );
     setCartItems(updated);
-
     // Save in localStorage for cart (not needed for BuyNow, but harmless)
     if (!buyNowItem) localStorage.setItem("cartItems", JSON.stringify(updated));
   };
@@ -67,61 +64,70 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePlaceOrder = () => {
-    if (!cartItems.length) {
-      toast.error("Cart is empty!");
-      return;
-    }
+const handlePlaceOrder = async () => {
+  if (!cartItems.length) return toast.error("Cart is empty!");
 
-    if (
-      !formData.fullname ||
-      !formData.email ||
-      !formData.address ||
-      !formData.city ||
-      !formData.state ||
-      !formData.pinCode
-    ) {
-      toast.error("Please fill all required fields!");
-      return;
-    }
+  if (
+    !formData.fullname ||
+    !formData.email ||
+    !formData.address ||
+    !formData.city ||
+    !formData.state ||
+    !formData.pinCode
+  ) {
+    toast.error("Please fill all required fields!");
+    return;
+  }
 
-    const newOrder = {
-      id: uuidv4(),
-      userId: loggedUser.id,
-      userEmail: loggedUser.email,
-      items: cartItems,
-      status: "Pending",
-      orderDate: new Date().toISOString(),
+  const newOrder = {
+    id: uuidv4(),
+    userId: loggedUser.id,
+    userEmail: loggedUser.email,
+    items: cartItems,
+    status: "pending",
+    orderDate: new Date().toISOString(),
 
-      shippingAddress: {
-        name: formData.fullname,
-        email: formData.email,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        pincode: formData.pinCode,
-        country: formData.country,
-      },
+    shippingAddress: {
+      name: formData.fullname,
+      email: formData.email,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      pincode: formData.pinCode,
+      country: formData.country,
+    },
 
-      total: cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
-    };
+    total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+  };
 
-    const existing = JSON.parse(localStorage.getItem("orders")) || [];
-    localStorage.setItem("orders", JSON.stringify([...existing, newOrder]));
+  try {
+      await fetch("http://localhost:5000/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newOrder), // ✅ FIXED
+    });
 
-    // Clear Buy Now or Cart
-    if (buyNowItem) localStorage.removeItem("buyNowItem");
-    else {
+
+    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    existingOrders.push(newOrder);
+    localStorage.setItem("orders", JSON.stringify(existingOrders));
+
+    // Clear cart or Buy Now item
+    if (buyNowItem) {
+      localStorage.removeItem("buyNowItem");
+    } else {
       dispatch(clearCart());
       localStorage.removeItem("cartItems");
     }
 
     toast.success("Order placed successfully!");
-    setTimeout(() => navigate("/order-success"), 800);
-  };
+
+    setTimeout(() => navigate("/order-success"), 1000);
+
+  } catch (err) {
+    toast.error("Order failed. Try again!");
+  }
+};
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,

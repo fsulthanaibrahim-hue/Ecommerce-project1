@@ -433,23 +433,23 @@
       "stock": 8
     },
     {
+      "id": "5b21",
       "name": "WOVEN ANKLE BOOTS",
       "price": 4950,
+      "stock": 2,
       "image": "https://static.zara.net/assets/public/6b90/01e7/c32e4382b915/f9d31d1b91a2/13956619183-e1/13956619183-e1.jpg?ts=1760621940683&w=1024",
-      "category": "women",
       "description": "Woven ankle boots. Easy pull-on fastening. High stiletto heel. Pointed toe.",
-      "stock": 4,
-      "id": "e6f4"
+      "category": "women"
     }
   ],
   "users": [
     {
-      "id": "87c4",
+      "id": "1",
       "name": "Sulthana",
       "email": "sulthana@gmail.com",
       "password": "sulthana123",
       "phone": "8783826579",
-      "status": "blocked",
+      "status": "active",
       "address": {
         "street": "Zaitoon Internatinal Campus",
         "city": "Payyannur",
@@ -461,14 +461,23 @@
       "blocked": false
     },
     {
-      "id": "3ca1",
+      "id": "2",
       "name": "Hasna",
       "email": "hasna@gmail.com",
       "password": "hasnahamza",
-      "blocked": false
+      "blocked": false,
+      "status": "active"
     },
     {
-      "id": "1",
+      "id": "3",
+      "name": "Shahana",
+      "email": "shahana@gmail.com",
+      "password": "shahana123",
+      "blocked": false,
+      "status": "active"
+    },
+    {
+      "id": "4",
       "name": "Admin",
       "role": "admin",
       "password": "Adminn321",
@@ -478,22 +487,72 @@
       "isAdmin": true
     },
     {
-      "id": "7c1a",
-      "name": "Shahana",
-      "email": "shahana@gmail.com",
-      "password": "shahana123",
+      "id": "5",
+      "name": "Udaifa",
+      "email": "udaifa@gmail.com",
+      "password": "udaifa123",
+      "createAt": "2025-11-29T21:59:09.507Z",
+      "status": "active",
+      "orders": [],
       "phone": "8783826579",
       "profileImage": "",
       "address": {
-        "street": "ABC Street",
+        "street": "Zaitoon Internatinal Campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "670307",
+        "country": "India"
+      }
+    },
+    {
+      "id": "6",
+      "name": "Wafa",
+      "email": "wafa@gmail.com",
+      "password": "wafa123"
+    },
+    {
+      "id": "7",
+      "name": "Aleema",
+      "email": "aleema@gmail.com",
+      "password": "aleema123",
+      "createAt": "2025-11-30T16:14:34.821Z",
+      "status": "active",
+      "orders": [],
+      "phone": "8783826579",
+      "profileImage": "",
+      "address": {
+        "street": "Zaitoon Internatinal Campus",
         "city": "Payyannur",
         "state": "Kerala",
         "zip": "270307",
         "country": "India"
       }
+    },
+    {
+      "id": "8",
+      "name": "Shaniya",
+      "email": "shaniya@gmail.com",
+      "password": "shani123"
     }
   ],
   "cart": [],
+  "returns": [
+    {
+      "id": "1",
+      "orderId": "1763503389164",
+      "userId": "87c4",
+      "reason": "Damaged"
+    },
+    {
+      "id": "2",
+      "orderId": "1763509760073",
+      "userId": "87c4",
+      "reason": "Not as described"
+    }
+  ],
+  "revenue": {
+    "total": 125000
+  },
   "order": [
     {
       "id": "1763503389164",
@@ -518,7 +577,7 @@
       },
       "total": 12950,
       "date": "2025-11-18T22:03:09.164Z",
-      "status": "delivered"
+      "status": "Delivered"
     },
     {
       "id": "1763509760073",
@@ -543,7 +602,7 @@
       },
       "total": 13950,
       "date": "2025-11-18T23:49:20.073Z",
-      "status": "pending"
+      "status": "Delivered"
     },
     {
       "id": "1763510153344",
@@ -568,7 +627,7 @@
       },
       "total": 13950,
       "date": "2025-11-18T23:55:53.344Z",
-      "status": "pending"
+      "status": "Delivered"
     },
     {
       "id": "1763511251981",
@@ -593,7 +652,331 @@
       },
       "total": 12950,
       "date": "2025-11-19T00:14:11.981Z",
-      "status": "pending"
+      "status": "Delivered"
+    },
+    {
+      "id": "b528e905-b37d-4f22-9858-fb630f6d8759",
+      "userId": "cb00",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "4",
+          "name": "OVERSIZED BOW-COLLAR BLOUSE",
+          "price": 5499,
+          "image": "https://image.hm.com/assets/hm/24/dc/24dc8af19c5d65d547bdd47ad9b94e109f4e6a0e.jpg?imwidth=2160",
+          "size": "L",
+          "quantity": 1
+        }
+      ],
+      "status": "Pending",
+      "orderDate": "2025-11-29T22:29:17.522Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "Kannur, kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 5499
+    },
+    {
+      "id": "a1996e3b-aaf5-4e0f-84c6-b232f34dd830",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "L",
+          "quantity": 2
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T16:20:15.803Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 27900
+    },
+    {
+      "id": "47763aaa-7d8c-4cf7-8b23-8c9276818a0c",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "XL",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-11-30T16:26:06.741Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 4999
+    },
+    {
+      "id": "0f2b7427-59f9-437e-bd4d-a677486d112a",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "L",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-11-30T16:34:27.985Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 4999
+    },
+    {
+      "id": "449991eb-a59e-4a41-8254-4aa682058ae7",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "XL",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T16:36:06.819Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 4999
+    },
+    {
+      "id": "ba4a13c6-098f-48de-b07f-e4778ffe775e",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T16:41:29.061Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 13950
+    },
+    {
+      "id": "35d2f084-ac8a-47a3-b2a8-1c1dd61ad653",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-11-30T16:41:30.970Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 13950
+    },
+    {
+      "id": "ec535c96-6533-4a97-a55b-3e8c35b7192d",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T16:41:57.552Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 13950
+    },
+    {
+      "id": "bc1871a5-8e24-43a6-81eb-eb6b1c6026ae",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-11-30T16:43:26.258Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 13950
+    },
+    {
+      "id": "ab568073-cbf6-4690-8821-4c95174abb8f",
+      "userId": "705c",
+      "userEmail": "aleema@gmail.com",
+      "items": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+          "size": "XL",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T16:46:03.153Z",
+      "shippingAddress": {
+        "name": "Aleema",
+        "email": "aleema@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 12950
+    },
+    {
+      "id": "be29505f-254f-4f19-a05b-7e6c8e435eeb",
+      "userId": "87c4",
+      "userEmail": "sulthana@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-11-30T19:35:38.222Z",
+      "shippingAddress": {
+        "name": "Sulthana",
+        "email": "sulthana@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 13950
+    },
+    {
+      "id": "1c603926-87ad-4ccd-a11a-f9587e3b08b9",
+      "userId": "87c4",
+      "userEmail": "sulthana@gmail.com",
+      "items": [
+        {
+          "id": "4",
+          "name": "OVERSIZED BOW-COLLAR BLOUSE",
+          "price": 5499,
+          "image": "https://image.hm.com/assets/hm/24/dc/24dc8af19c5d65d547bdd47ad9b94e109f4e6a0e.jpg?imwidth=2160",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2025-11-30T22:44:02.473Z",
+      "shippingAddress": {
+        "name": "Sulthana",
+        "email": "sulthana@gmail.com",
+        "address": "Kannur, kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 5499
     }
   ]
 }
