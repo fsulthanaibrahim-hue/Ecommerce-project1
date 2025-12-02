@@ -28,8 +28,6 @@ import DashboardContent from "./admin/DashboardContent";
 import OrdersManagement from "./admin/OrdersManagement";
 import ProductsManagement from "./admin/ProductsManagement";
 import RevenueChart from "./admin/RevenueChart";
-import Sidebar from "./admin/Sidebar";
-import Topbar from "./admin/Topbar";
 import UserManagement from "./admin/UserManagement";
 
 function Layout({ children }) {
@@ -39,12 +37,11 @@ function Layout({ children }) {
   const isAuthPage = hideLayoutRoutes.includes(location.pathname);
   const isAdminPage = location.pathname.startsWith("/admin");
 
-  const hideLayout = isAuthPage || isAdminPage;
   return (
     <>
-      {!hideLayout && <Navbar />}
+      {!isAuthPage && !isAdminPage && <Navbar />}
       <main className="min-h-screen">{children}</main>
-      {!hideLayout && <Footer />}
+      {!isAuthPage && !isAdminPage && <Footer />}
     </>
   );
 }
@@ -54,7 +51,7 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          {/* Public Routes */}
+          {/* PUBLIC ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -66,7 +63,7 @@ function App() {
           <Route path="/otp" element={<OTP />} />
           <Route path="/order-success" element={<OrderSuccess />} />
 
-          {/* Protected User Routes */}
+          {/* PROTECTED USER ROUTES */}
           <Route
             path="/orders"
             element={
@@ -76,6 +73,7 @@ function App() {
             }
           />
           <Route path="/order-details/:id" element={<OrderDetails />} />
+
           <Route
             path="/wishlist"
             element={
@@ -84,6 +82,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/cart"
             element={
@@ -92,6 +91,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/profile"
             element={
@@ -101,33 +101,31 @@ function App() {
             }
           />
 
+          {/* CATEGORIES */}
           <Route path="/men" element={<Products category="Men" />} />
           <Route path="/women" element={<Products category="Women" />} />
           <Route path="/kids" element={<Products category="Kids" />} />
 
-          {/* Admin Routes */}
-           <Route 
-             path="/admin"
-             element={
+          {/* FIXED ADMIN ROUTES */}
+          <Route
+            path="/admin"
+            element={
               <AdminProtectedRoute>
-                <AdminDashboard />
+                <AdminDashboard /> {/* Contains <Outlet /> */}
               </AdminProtectedRoute>
-             }
-            />
+            }
+          >
+            <Route index element={<DashboardContent />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="orders-management" element={<OrdersManagement />} />
+            <Route path="products-management" element={<ProductsManagement />} />
+            <Route path="revenue-chart" element={<RevenueChart />} />
+            <Route path="user-management" element={<UserManagement />} />
+          </Route>
 
-            <Route path="/admin/orders" element={<AdminOrders />} />
-            <Route path="/admin/products" element={<AdminProducts />} /> 
-            <Route path="/admin/users" element={<AdminUsers />} />
-            <Route path="/admin-dashboard-content" element={<DashboardContent />} />
-            <Route path="/admin/orders-management" element={<OrdersManagement />} />
-            <Route path="/admin/products-management" element={<ProductsManagement />} />
-            <Route path="/admin/revenue-chart" element={<RevenueChart />} />
-            <Route path="/admin/sidebar" element={<Sidebar />} />
-            <Route path="/admin/topbar" element={<Topbar />} />
-            <Route path="/admin/user-management" element={<UserManagement />} />
-
-          
-          {/* 404 Fallback */}
+          {/* 404 */}
           <Route
             path="*"
             element={<h1 className="text-center mt-10 text-white">404 - Page Not Found</h1>}

@@ -91,7 +91,7 @@ const UsersManagement = ({ onRefresh }) => {
               ) : (
                 filteredUsers.map((user) => (
                   <tr
-                    key={user.id}
+                    key={user._id}
                     className={`hover:bg-gray-700 transition duration-150 ${
                       user.blocked ? "opacity-80 line-through" : ""
                     }`}
@@ -158,7 +158,7 @@ const UsersManagement = ({ onRefresh }) => {
           </div>
         </div>  
       )}
-    </div>
+    </div>  
   );
 };
 

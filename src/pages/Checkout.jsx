@@ -19,11 +19,21 @@ const Checkout = () => {
   const reduxCart = useSelector((state) => state.cart.items) || [];
 
   // FINAL CART ITEMS (BuyNow → Cart)
-  const [cartItems, setCartItems] = useState(() => {
-    if (buyNowItem) return [buyNowItem]; // Use Buy Now item only
-    if (reduxCart.length) return reduxCart;
+  // const [cartItems, setCartItems] = useState(() => {
+  //   if (buyNowItem) return [buyNowItem]; // Use Buy Now item only
+  //   if (reduxCart.length) return reduxCart;
 
-    return JSON.parse(localStorage.getItem("cartItems")) || [];
+  //   return JSON.parse(localStorage.getItem("cartItems")) || [];
+  // });
+
+   const [cartItems, setCartItems] = useState(() => {
+    if (buyNowItem) return [{ ...buyNowItem, quantity: buyNowItem.quantity || 1 }];
+    if (reduxCart.length)
+      return reduxCart.map((item) => ({ ...item, quantity: item.quantity || 1 }));
+    return (JSON.parse(localStorage.getItem("cartItems")) || []).map((item) => ({
+      ...item,
+      quantity: item.quantity || 1,
+    }));
   });
 
   // Address data
@@ -39,6 +49,22 @@ const Checkout = () => {
     country: profileAddress.country || "India",
     paymentMethod: "cod",
   });
+
+  
+  // ✅ Reactive totals
+  const [subtotal, setSubtotal] = useState(0);
+  const [shipping, setShipping] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    const newSubtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const newShipping = newSubtotal > 500 ? 0 : 50;
+    const newTotal = newSubtotal + newShipping;
+
+    setSubtotal(newSubtotal);
+    setShipping(newShipping);
+    setTotalAmount(newTotal);
+  }, [cartItems]);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -97,14 +123,14 @@ const handlePlaceOrder = async () => {
       country: formData.country,
     },
 
-    total: cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    total: totalAmount,
   };
 
   try {
       await fetch("http://localhost:5000/order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newOrder), // ✅ FIXED
+      body: JSON.stringify(newOrder), 
     });
 
 
@@ -129,12 +155,12 @@ const handlePlaceOrder = async () => {
   }
 };
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const shipping = subtotal > 500 ? 0 : 50;
-  const totalAmount = subtotal + shipping;
+  // const subtotal = cartItems.reduce(
+  //   (sum, item) => sum + item.price * item.quantity,
+  //   0
+  // );
+  // const shipping = subtotal > 500 ? 0 : 50;
+  // const totalAmount = subtotal + shipping;
 
   return (
     <div className="bg-gray-50 min-h-screen py-8 mt-16">

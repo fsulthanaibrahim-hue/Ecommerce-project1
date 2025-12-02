@@ -6,7 +6,7 @@ const API_URL = "http://localhost:5000/users";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetch(API_URL)
@@ -53,7 +53,7 @@ export default function AdminUsers() {
       <h2 className="text-2xl font-bold mb-4">Users</h2>
 
       <table className="min-w-full bg-white shadow rounded-lg">
-        <thead className="bg-gray-200">
+        <thead className="bg-gray-700">
           <tr>
             <th className="py-2 px-4 text-left">Name</th>
             <th className="py-2 px-4 text-left">Email</th>
@@ -63,8 +63,15 @@ export default function AdminUsers() {
         </thead>
 
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-b">
+          {users.length === 0 ? (
+            <tr>
+              <td colSpan={4} className="text-center py-4 text-gray-500">
+                No users found.
+              </td>
+            </tr>
+          ) : (
+          users.map((user) => (
+            <tr key={user._id} className="border-b border-gray-700">
               <td className="py-2 px-4">{user.name}</td>
               <td className="py-2 px-4">{user.email}</td>
               <td className="py-2 px-4">{user.blocked ? (
@@ -81,39 +88,55 @@ export default function AdminUsers() {
                 >
                   <FaEye size={18} />
                 </button>
-
+              
                 <button 
                   className={`${
-                    user.blocked ? "text-green-600 hover:text-green-800" : "text-red-600 hover:text-red:800"
+                    user.blocked ? "text-green-600 hover:text-green-800" : "text-red-600 hover:text-red-800"
                   }`}
-                   onClick={() => handleBlockToggle(user.id, user.blocked)}
+                   onClick={() => handleBlockToggle(user._id, user.blocked)}
                 >
                   {user.blocked ? <FaCheck size={18} /> : <FaBan size={18} />}
                 </button>  
 
                 <button 
                   className="text-red-600 hover:text-red-800"
-                  onClick={() => handleDelete(user.id)}
+                  onClick={() => handleDelete(user._id)}
                 >
                   <FaTrash size={18} />
                 </button> 
-
               </td>
             </tr>
-          ))}
+          ))
+        )}
         </tbody>
       </table>
 
       {selectedUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white text-black p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-xl font-bold mb-3">User Details</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">        
+          <div className="bg-gray-800 border border-gray-600 p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-xl font-bold text-yellow-400 mb-3">User Details</h3>
+           <div className="flex justify-center mb-4">
+            <img 
+              src={selectedUser.image || "https://i.pravatar.cc/120"}
+              alt="avatar"
+              className="w-24 h-24 rounded-full border-2 border-gray-500 shadow"
+            />
+           </div>    
+
             <p><b>Name:</b> {selectedUser.name}</p>
             <p><b>Email:</b> {selectedUser.email}</p>
-            <p><b>Status:</b> {selectedUser.blocked ? "Blocked" : "Active"}</p>
+            <p><b>Role:</b> {selectedUser.role || "user"}</p>
+            <p className="mb-3">
+              <b>Status:</b>{" "}
+              {selectedUser.blocked ? (
+                <span className="text-red-400 font-semibold">Blocked</span>
+              ) : (
+                <span className="text-green-400 font-semibold">Active</span>
+              )}
+            </p>
 
             <button 
-              className="mt-4 bg-gray-800 text-white px-4 py-2 rounded"
+              className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded"
               onClick={() => setSelectedUser(null)}
             >
               Close
