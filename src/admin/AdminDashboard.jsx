@@ -354,9 +354,10 @@ function UsersPage({ users = [], onDelete, onToggleBlock, onView }) {
             {users.map((u) => {
               const id = u.id ?? u._id;
               const isBlocked = u.status === "blocked" || u.blocked;
+              const isAdmin = u.role === "admin";
 
               return (
-                <tr key={u.id ?? u._id} className="border-t border-slate-700 text-white hover:bg-slate-700/50 transition">
+                <tr key={id} className="border-t border-slate-700 text-white hover:bg-slate-700/50 transition">
                   <td className="p-3 text-sm">{id}</td>
                   <td className="p-3 text-sm">{u.name}</td>
                   <td className="p-3 text-sm">{u.email}</td>
@@ -371,30 +372,41 @@ function UsersPage({ users = [], onDelete, onToggleBlock, onView }) {
                     <div className="flex justify-center gap-3">
 
                       <button 
-                        onClick={() => setSelectedUser(u)}
+                        onClick={() => {
+                          setSelectedUser(u);
+                          onView && onView(u);
+                        }}
                         className="text-blue-400 hover:text-blue-500 transition"
-                        title="View"
+                        title="view"
                       >
                         <FaEye size={20} />
                       </button>  
 
-                      <button
-                        onClick={() => onToggleBlock && onToggleBlock(id)}
-                        className={`transition p-1 rounded ${
-                          isBlocked 
-                          ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
-                          title={isBlocked ? "Unblock User" : "Block"}
-                      >
-                        {isBlocked ? <FaCheck size={20} /> : <FaBan size={20} />}
-                      </button>
+                      {isAdmin ? (
+                        <span className="text-gray-400 italic text-xs flex items-center justify-center">
+                          Admin
+                        </span>
+                      ) : (
+                        <>
+                         <button
+                           onClick={() => onToggleBlock && onToggleBlock(id)}
+                           className={`transition p-1 rounded ${
+                            isBlocked 
+                            ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
+                            title={isBlocked ? "Unblock User" : "Block"}
+                         >
+                            {isBlocked ? <FaCheck size={20} /> : <FaBan size={20} />}
+                         </button>
 
-                      <button 
-                         onClick={() => onDelete && onDelete(id)} 
-                         className="text-gray-400 hover:text-gray-200 transition"
-                         title="Delete"
-                      >
-                        <FaTrash size={20} />
-                      </button>
+                         <button 
+                           onClick={() => onDelete && onDelete(id)} 
+                           className="text-gray-400 hover:text-gray-200 transition"
+                           title="Delete"
+                         >
+                           <FaTrash size={20} />
+                         </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -541,6 +553,30 @@ function OrdersPage({ orders = [], onAdvanceOrder }) {
     return <p className="text-white">Loading orders...</p>;
   }
 
+  const STATUS_FLOW = ["pending", "processing", "shipped", "delivered"];
+
+  const getNextStatus = (currentStatus) => {
+    const idx = STATUS_FLOW.indexOf(currentStatus?.toLowerCase());
+    return idx >= 0 && idx < STATUS_FLOW.length - 1 ? STATUS_FLOW[idx + 1] : null;
+  };
+
+  const getStatusColor = (status) => {
+    switch ((status || "").toLowerCase()) {
+      case "pending": 
+        return "bg-indigo-600";
+      case "processing":
+        return "bg-yellow-600";
+      case "shipped":
+        return "bg-green-600";
+      case "delivered": 
+        return "bg-gray-600";
+      case "cancelled":
+        return "bg-red-600";
+      default:
+        return "bg-gray-500";          
+    }
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4 text-white">Orders</h2>
@@ -551,8 +587,10 @@ function OrdersPage({ orders = [], onAdvanceOrder }) {
 
         {orders.map((o) => {
           const customerName = o.address?.name || o.shippingAddress?.name || o.userId || "Unknown";
-          const orderDate = detectOrderDate(o);
-          const statusLower = String(o.status || "").toLowerCase();
+          const orderDate = o.date || o.createdAt || new Date();
+          const statusLower = (o.status || "").toLowerCase();
+          <div className="text-sm text-gray-400 mt-1 capitalize">{statusLower}</div>
+          const nextStatus = getNextStatus(statusLower);
 
           return (
             <div
@@ -567,25 +605,24 @@ function OrdersPage({ orders = [], onAdvanceOrder }) {
 
               {/* RIGHT SIDE */}
               <div className="text-right">
-                <div className="font-semibold text-orange-400">₹{safeLocale(Number(o.total) || Number(o.totalPrice) || 0)}</div>
-                <div className="text-sm text-gray-400 mt-1">{String(o.status || "").toUpperCase()}</div>
+                <div className="font-semibold text-orange-400">₹{Number(o.total || o.totalPrice || 0).toLocaleString()}</div>
+                <div className="text-sm text-gray-400 mt-1">{statusLower.toUpperCase()}</div>
 
                 <div className="mt-2">
-                  <button
-                    className={`px-3 py-1 rounded-lg text-sm text-white transition ${
-                      statusLower === "pending"
-                        ? "bg-indigo-600"
-                        : statusLower === "processing"
-                        ? "bg-yellow-600"
-                        : statusLower === "shipped"
-                        ? "bg-green-600"
-                        : "bg-gray-600"
-                    }`}
-                    disabled={statusLower === "delivered"}
-                    onClick={() => onAdvanceOrder && onAdvanceOrder(o.id ?? o._id)}
-                  >
-                    {typeof o.status === "string" ? capitalize(o.status) : "Unknown"}
-                  </button>
+                  {nextStatus ? (
+                    <button 
+                      className={`px-3 py-1 rounded-lg text-sm text-white transition ${getStatusColor(statusLower)}`}
+                      onClick={() => onAdvanceOrder && onAdvanceOrder(o.id ?? o._id, nextStatus)}
+                    >
+                      Move to {nextStatus.toUpperCase()}
+                    </button>  
+                  ) : (
+                    <span 
+                      className={`px-3 py-1 rounded-lg text-sm text-white ${getStatusColor(statusLower)}`}
+                    >
+                      {statusLower.toUpperCase()}
+                    </span>  
+                  )}
                 </div>
               </div>
             </div>

@@ -13,7 +13,7 @@ const UsersManagement = ({ onRefresh }) => {
 
   // Load all users
   const loadUsers = async () => {
-    setLoading(true);
+    setLoading(true); 
     try {
       const res = await axios.get(`${API}/users`);
       setUsers(res.data);
@@ -38,13 +38,16 @@ const UsersManagement = ({ onRefresh }) => {
 
   // Toggle block/unblock
   const toggleBlock = async (user) => {
+    if (user.role === "admin") {
+      toast.error("Cannot block/unblock admin user");
+      return;
+    }
+
     try {
-      await axios.patch(`${API}/users/${user.id}`, { blocked: !user.blocked });
+      const res = await axios.patch(`${API}/users/${user.id}`, { blocked: !user.blocked });
       toast.success(user.blocked ? "User unblocked" : "User blocked");
       loadUsers();
-      onRefresh?.();
     } catch (err) {
-      console.error(err);
       toast.error("Action failed");
     }
   };
@@ -119,6 +122,8 @@ const UsersManagement = ({ onRefresh }) => {
                         <FaEye size={20} />
                       </button>
 
+                      {user.role !== "admin" && (
+                        
                       <button 
                         onClick={() => toggleBlock(user)}
                         className={`px-3 py-1 rounded-md text-sm font-medium ${
@@ -128,7 +133,9 @@ const UsersManagement = ({ onRefresh }) => {
                         } transtion`}
                       >
                         {user.blocked ? "Unblock" : "Block"}
-                      </button>  
+                      </button> 
+                      )}
+ 
                     </td>
                   </tr>
                 ))

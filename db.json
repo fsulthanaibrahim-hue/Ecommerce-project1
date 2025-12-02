@@ -7,7 +7,7 @@
       "price": 4999,
       "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
       "description": "Dress with a round neck and short sleeves. Featuring faux button detail and an elasticated belt at the front with gold appliqué. Front patch pockets with flaps. Hem with front vent. Concealed zip fastening in the back seam.",
-      "stock": 13
+      "stock": 14
     },
     {
       "id": "2",
@@ -435,7 +435,7 @@
     {
       "id": "5b21",
       "name": "WOVEN ANKLE BOOTS",
-      "price": 4999,
+      "price": 4950,
       "stock": 2,
       "image": "https://static.zara.net/assets/public/6b90/01e7/c32e4382b915/f9d31d1b91a2/13956619183-e1/13956619183-e1.jpg?ts=1760621940683&w=1024",
       "description": "Woven ankle boots. Easy pull-on fastening. High stiletto heel. Pointed toe.",
@@ -445,6 +445,16 @@
   "users": [
     {
       "id": "1",
+      "name": "Admin",
+      "role": "admin",
+      "password": "Adminn321",
+      "email": "admin@gmail.com",
+      "blocked": false,
+      "status": "active",
+      "isAdmin": true
+    },
+    {
+      "id": "2",
       "name": "Sulthana",
       "email": "sulthana@gmail.com",
       "password": "sulthana123",
@@ -463,7 +473,7 @@
       "orders": []
     },
     {
-      "id": "2",
+      "id": "3",
       "name": "Hasna",
       "email": "hasna@gmail.com",
       "password": "hasnahamza",
@@ -471,22 +481,12 @@
       "status": "active"
     },
     {
-      "id": "3",
+      "id": "4",
       "name": "Shahana",
       "email": "shahana@gmail.com",
       "password": "shahana123",
       "blocked": false,
       "status": "active"
-    },
-    {
-      "id": "4",
-      "name": "Admin",
-      "role": "admin",
-      "password": "Adminn321",
-      "email": "admin@gmail.com",
-      "blocked": false,
-      "status": "active",
-      "isAdmin": true
     },
     {
       "id": "5",
@@ -539,24 +539,6 @@
         "city": "Payyannur",
         "state": "Kerala",
         "zip": "270307",
-        "country": "India"
-      }
-    },
-    {
-      "id": "25bc",
-      "name": "Shaniya",
-      "email": "shaniya@gmail.com",
-      "password": "shaniya123",
-      "createAt": "2025-12-02T04:22:27.575Z",
-      "status": "active",
-      "orders": [],
-      "phone": "8783826579",
-      "profileImage": "",
-      "address": {
-        "street": "Zaitoon Internatinal Campus",
-        "city": "Payyannur",
-        "state": "Kerala",
-        "zip": "670307",
         "country": "India"
       }
     }
@@ -1126,7 +1108,7 @@
           "quantity": 5
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T04:29:57.427Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1450,7 +1432,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T19:28:22.313Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1477,7 +1459,7 @@
           "quantity": 1
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T19:29:30.524Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1504,7 +1486,7 @@
           "quantity": 1
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T20:02:32.370Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1531,7 +1513,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T21:58:56.194Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1558,7 +1540,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-01T21:59:45.036Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1585,7 +1567,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T03:52:30.975Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1612,7 +1594,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T03:56:34.586Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1639,7 +1621,7 @@
           "quantity": 4
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T04:16:16.031Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1666,7 +1648,7 @@
           "quantity": 5
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T04:19:52.421Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -1693,7 +1675,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T04:22:59.803Z",
       "shippingAddress": {
         "name": "Shaniya",
@@ -1736,7 +1718,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-02T04:56:20.706Z",
       "shippingAddress": {
         "name": "Shaniya",
@@ -1885,6 +1867,303 @@
         "country": "India"
       },
       "total": 4998
+    },
+    {
+      "id": "decc987f-a985-45b7-92af-f72ade07d253",
+      "userId": "1",
+      "userEmail": "sulthana@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 5999,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "quantity": 2
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T05:50:58.769Z",
+      "shippingAddress": {
+        "name": "Sulthana",
+        "email": "sulthana@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 11998
+    },
+    {
+      "id": "00e2261f-07b3-42f6-b3b3-22245a299e67",
+      "userId": "1",
+      "userEmail": "sulthana@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 5999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "XL",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T05:51:58.329Z",
+      "shippingAddress": {
+        "name": "Sulthana",
+        "email": "sulthana@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 5999
+    },
+    {
+      "id": "6f8a4a78-7e6a-4a5b-84ad-c03b8974b463",
+      "userId": "2",
+      "userEmail": "sulthana@gmail.com",
+      "items": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T19:33:20.982Z",
+      "shippingAddress": {
+        "name": "Sulthana",
+        "email": "sulthana@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 12950
+    },
+    {
+      "id": "c7b0c94d-ef16-44ea-ab2a-93d1140ba2c0",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "L",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T19:56:10.898Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "Kannur, kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 4999
+    },
+    {
+      "id": "c02175e8-d616-4a14-8a31-6f6c1e2a4d8a",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "size": "L",
+          "quantity": 2
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:04:42.157Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 27900
+    },
+    {
+      "id": "76d78502-8d85-4104-ba4c-fe2c019ed870",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "14",
+          "name": "FLARED HIGH JEANS",
+          "price": 1799,
+          "image": "https://image.hm.com/assets/hm/0a/77/0a777f6ac99c657ca1080d8d3e84fbc38e532bfa.jpg?imwidth=2160",
+          "size": "L",
+          "quantity": 5
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:11:51.057Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 8995
+    },
+    {
+      "id": "60865625-61fa-47c5-ae05-8cad14ced234",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "4",
+          "name": "OVERSIZED BOW-COLLAR BLOUSE",
+          "price": 5499,
+          "image": "https://image.hm.com/assets/hm/24/dc/24dc8af19c5d65d547bdd47ad9b94e109f4e6a0e.jpg?imwidth=2160",
+          "size": "XL",
+          "quantity": 2
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:21:53.376Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "Calicut, Kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 10998
+    },
+    {
+      "id": "0addcc0f-9c30-4b86-bd85-ae95231b4c5f",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "size": "S",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:24:03.947Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 4999
+    },
+    {
+      "id": "29e05781-e4f9-4072-aec8-599bc99e0ad8",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+          "size": "S",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:24:52.094Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "Kannur, kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 12950
+    },
+    {
+      "id": "72ff778a-7720-46aa-a379-5e30d420990d",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+          "size": "XL",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:26:00.606Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "Calicut, Kerala",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 12950
+    },
+    {
+      "id": "3501d2db-ccdd-4f60-b81a-9bef3b12f13e",
+      "userId": "5",
+      "userEmail": "udaifa@gmail.com",
+      "items": [
+        {
+          "id": "2",
+          "name": "WOOL BLEND CAPE COAT",
+          "price": 12950,
+          "image": "https://static.zara.net/assets/public/41a2/87c2/12764d8f8423/e57b174788e8/08491257712-e1/08491257712-e1.jpg?ts=1759477865818&w=750",
+          "size": "M",
+          "quantity": 1
+        }
+      ],
+      "status": "Delivered",
+      "orderDate": "2025-12-02T20:28:10.501Z",
+      "shippingAddress": {
+        "name": "Udaifa",
+        "email": "udaifa@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 12950
     }
   ]
 }

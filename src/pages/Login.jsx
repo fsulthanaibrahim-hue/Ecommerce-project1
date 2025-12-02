@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock } from "lucide-react";
@@ -46,7 +45,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { email, password } = form;
+      const { email, password } = form; 
+
        console.log(email, password)
 
       const res = await fetch(`http://localhost:5000/users?email=${email}`);
@@ -60,6 +60,12 @@ const Login = () => {
 
       const user = users[0];
 
+      if (user.blocked) {
+        toast.error("Your account has been blocked by admin. Contact support.");
+        setLoading(false);
+        return;
+      }
+
       if (user.password !== password) {
         toast.error("Incorrect password. Please try again!");
         setLoading(false);
@@ -69,7 +75,6 @@ const Login = () => {
       // Save user info
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("loggedInUser", JSON.stringify(user));
-      console.log(user)
       toast.success(`Welcome back, ${user?.name}!`);
 
 
