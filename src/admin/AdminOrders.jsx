@@ -53,15 +53,7 @@
   };
 
 
-    // useEffect(() => {
-    //   fetch(API_URL)
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    //       setOrders(sorted);
-    //     })
-    //     .catch((err) => console.error(err));
-    // }, []);
+
 
     return (
       <div className="p-6 bg-gray-100 min-h-screen">

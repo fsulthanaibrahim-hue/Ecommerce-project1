@@ -82,19 +82,7 @@ function Topbar({ isMobile, toggleSidebar, onLogout }) {
       </div>
 
       <div className="flex items-center gap-4">
-        {/* optional search (commented) */}
-        {/* <div className="hidden sm:flex items-center bg-slate-800 px-4 py-2 rounded-lg">
-          <Search className="w-4 h-4 text-gray-400 mr-2" />
-          <input placeholder="Search..." className="bg-transparent outline-none text-sm text-gray-300 w-48" />
-        </div> */}
-
-        {/* <button
-          onClick={onLogout}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition px-3 py-2 rounded-lg hover:bg-slate-800"
-        >
-          <LogOut className="w-5 h-5" />
-          <span className="hidden sm:inline text-sm">Logout</span>
-        </button> */}
+  
       </div>
     </header>
   );

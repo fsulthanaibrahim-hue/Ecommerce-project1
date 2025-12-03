@@ -13,18 +13,8 @@ const Checkout = () => {
 
   const loggedUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
 
-  // READ BUY NOW ITEM
   const buyNowItem = JSON.parse(localStorage.getItem("buyNowItem"));
-  // Redux cart
   const reduxCart = useSelector((state) => state.cart.items) || [];
-
-  // FINAL CART ITEMS (BuyNow → Cart)
-  // const [cartItems, setCartItems] = useState(() => {
-  //   if (buyNowItem) return [buyNowItem]; // Use Buy Now item only
-  //   if (reduxCart.length) return reduxCart;
-
-  //   return JSON.parse(localStorage.getItem("cartItems")) || [];
-  // });
 
    const [cartItems, setCartItems] = useState(() => {
     if (buyNowItem) return [{ ...buyNowItem, quantity: buyNowItem.quantity || 1 }];
@@ -154,13 +144,6 @@ const handlePlaceOrder = async () => {
     toast.error("Order failed. Try again!");
   }
 };
-
-  // const subtotal = cartItems.reduce(
-  //   (sum, item) => sum + item.price * item.quantity,
-  //   0
-  // );
-  // const shipping = subtotal > 500 ? 0 : 50;
-  // const totalAmount = subtotal + shipping;
 
   return (
     <div className="bg-gray-50 min-h-screen py-8 mt-16">
