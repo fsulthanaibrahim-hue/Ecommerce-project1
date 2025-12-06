@@ -80,3 +80,20 @@ button:focus-visible {
 .animate-slide-in {
   animation: slide-in 0.2s forwards;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
