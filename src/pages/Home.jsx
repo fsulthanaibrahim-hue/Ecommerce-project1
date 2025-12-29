@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import { Star, TrendingUp, Truck, Shield } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -87,7 +85,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
