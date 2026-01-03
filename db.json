@@ -469,7 +469,18 @@
       "email": "hasna@gmail.com",
       "password": "hasnahamza",
       "blocked": false,
-      "status": "active"
+      "status": "active",
+      "createAt": "2026-01-03T04:15:29.698Z",
+      "orders": [],
+      "phone": "8783826579",
+      "profileImage": "",
+      "address": {
+        "street": "Zaitoon Internatinal Campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "670307",
+        "country": "India"
+      }
     },
     {
       "id": "4",
@@ -2331,7 +2342,7 @@
           "quantity": 2
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2025-12-25T04:48:13.986Z",
       "shippingAddress": {
         "name": "Sulthana",
@@ -2343,6 +2354,35 @@
         "country": "India"
       },
       "total": 81482
+    },
+    {
+      "id": "4e9cf3c5-75de-449d-9d3f-5cc73fd366b1",
+      "userId": "3",
+      "userEmail": "hasna@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "category": "Women",
+          "price": 4999,
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "description": "Dress with a round neck and short sleeves. Featuring faux button detail and an elasticated belt at the front with gold appliqué. Front patch pockets with flaps. Hem with front vent. Concealed zip fastening in the back seam.",
+          "stock": 14,
+          "quantity": 3
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2026-01-03T04:16:47.038Z",
+      "shippingAddress": {
+        "name": "Hasna",
+        "email": "hasna@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 14997
     }
   ]
 }

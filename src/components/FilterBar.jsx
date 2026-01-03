@@ -2,7 +2,7 @@ import React from "react";
 
 const FilterBar = ({ search, setSearch, category, setCategory, sort, setSort }) => {
     return (
-        <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
+        <div className="flex flex-wrap items-center justify-between mb-6 gap-2">
            <input 
              type="text"
              placeholder="Search products..."
@@ -14,7 +14,7 @@ const FilterBar = ({ search, setSearch, category, setCategory, sort, setSort }) 
             <select 
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="border p-2 rounded-lg ml-130"
+              className="border p-2 rounded-lg ml-100"
             >
                 <option value="">All Categories</option>
                 <option value="Men">Men</option>
