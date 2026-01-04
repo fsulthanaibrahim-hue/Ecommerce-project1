@@ -15,7 +15,7 @@ import Checkout from "./pages/Checkout";
 import OrderDetails from "./pages/OrderDetails";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
-import OTP from "./pages/Otp";
+import OTP from "./pages/OTP";
 import OrderSuccess from "./pages/OrderSuccess";
 
 // Admin Pages
