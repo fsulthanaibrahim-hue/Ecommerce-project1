@@ -543,6 +543,24 @@
         "zip": "270307",
         "country": "India"
       }
+    },
+    {
+      "id": "8939",
+      "name": "Rana",
+      "email": "rana@gmail.com",
+      "password": "rana123",
+      "createAt": "2026-01-04T01:45:29.226Z",
+      "status": "active",
+      "orders": [],
+      "phone": "8745637821",
+      "profileImage": "",
+      "address": {
+        "street": "Zaitoon Internatinal Campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "zip": "670307",
+        "country": "India"
+      }
     }
   ],
   "cart": [],
@@ -2371,7 +2389,7 @@
           "quantity": 3
         }
       ],
-      "status": "pending",
+      "status": "Delivered",
       "orderDate": "2026-01-03T04:16:47.038Z",
       "shippingAddress": {
         "name": "Hasna",
@@ -2383,6 +2401,137 @@
         "country": "India"
       },
       "total": 14997
+    },
+    {
+      "id": "779eea94-1d9e-4197-ac75-88a3a5cdc56c",
+      "userId": "8939",
+      "userEmail": "rana@gmail.com",
+      "items": [
+        {
+          "id": "45",
+          "name": "WATER-REPELLENT QUILTED COAT WITH TIES",
+          "price": 3250,
+          "category": "kids",
+          "image": "https://static.zara.net/assets/public/bcd2/9567/c2ae4300bddc/3ad23247f0e8/00874577712-000-e1/00874577712-000-e1.jpg?ts=1759131615577&w=1024",
+          "quantity": 1
+        },
+        {
+          "id": "42",
+          "name": "BASIC MEDIUM WEIGHT T-SHIRT",
+          "price": 1250,
+          "category": "Men",
+          "image": "https://static.zara.net/assets/public/fcfe/daa5/8a6040e08a8f/4a42ca9f7367/01887420066-e1/01887420066-e1.jpg?ts=1754987519073&w=750",
+          "quantity": 2
+        },
+        {
+          "id": "38",
+          "name": "SHIRT WITH WAIST KNOT",
+          "price": 2799,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/9025/81ee/64c74f6780b2/774b3af7089f/03564167712-e1/03564167712-e1.jpg?ts=1759142381848&w=750",
+          "quantity": 1
+        },
+        {
+          "id": "39",
+          "name": "COMBINED DENIM MIDI SKIRT",
+          "price": 2499,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/de1f/2139/47894c15b676/9ff09498a31a/06164159427-e1/06164159427-e1.jpg?ts=1753177763961&w=750",
+          "quantity": 1
+        },
+        {
+          "id": "33",
+          "name": "GIRLS BOW APPLIQUE SWEATER",
+          "price": 899,
+          "category": "kids",
+          "image": "https://assets-jiocdn.ajio.com/medias/sys_master/root1/20250926/R3x2/68d6741b8bfb9009ac3af8b2/-473Wx593H-443081635-white-MODEL.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "30",
+          "name": "RELAXED FIT LIMITED EDITION JEANS",
+          "price": 4999,
+          "category": "Men",
+          "image": "https://static.zara.net/assets/public/05a2/99eb/b79649bb820f/e47680f583de/03991393427-e1/03991393427-e1.jpg?ts=1753892272637&w=750",
+          "quantity": 2
+        },
+        {
+          "id": "27",
+          "name": "FITTED BLAZER WITH BELT",
+          "price": 5999,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/fc92/f11f/f5a944b5a602/f1f64e4f1d66/08585593741-e1/08585593741-e1.jpg?ts=1755846558638&w=750",
+          "quantity": 1
+        },
+        {
+          "id": "22",
+          "name": "WIDE-LEG JEANS WITH SPARKLES",
+          "price": 2950,
+          "category": "kids",
+          "image": "https://static.zara.net/assets/public/bfae/df00/d70b445dacbd/98a0eb089070/00327715400-e1/00327715400-e1.jpg?ts=1761576188413&w=1125",
+          "quantity": 1
+        },
+        {
+          "id": "19",
+          "name": "SUPPER BAGGY JEANS",
+          "price": 2699,
+          "category": "Men",
+          "image": "https://image.hm.com/assets/hm/63/59/63591a40c92defdaf141d7ba3fc77fd76b07c1ee.jpg?imwidth=384",
+          "quantity": 2
+        },
+        {
+          "id": "20",
+          "name": "FLOWING TIE-DYE PRINT SHIRT",
+          "price": 3499,
+          "category": "Men",
+          "image": "https://static.zara.net/assets/public/1c28/d78a/d43f45f7a7ee/15aff2350630/05666162605-e1/05666162605-e1.jpg?ts=1753351964760&w=750",
+          "quantity": 1
+        },
+        {
+          "id": "14",
+          "name": "FLARED HIGH JEANS",
+          "price": 1799,
+          "category": "Women",
+          "image": "https://image.hm.com/assets/hm/0a/77/0a777f6ac99c657ca1080d8d3e84fbc38e532bfa.jpg?imwidth=2160",
+          "quantity": 1
+        },
+        {
+          "id": "8",
+          "name": "OVERSIZED FLOWING TRENCH COAT",
+          "price": 11950,
+          "category": "Men",
+          "image": "https://static.zara.net/assets/public/2f2c/ca6a/8b8845cd8cb0/88f7714326d8/06861495832-e1/06861495832-e1.jpg?ts=1756293567389&w=750",
+          "quantity": 2
+        },
+        {
+          "id": "3",
+          "name": "WOOL COAT WITH FAUX FUR COLLAR",
+          "price": 13950,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/d282/5d2b/2e5c4a7883ab/4536455d407b/03736251800-e1/03736251800-e1.jpg?ts=1760353558525&w=750",
+          "quantity": 1
+        },
+        {
+          "id": "1",
+          "name": "MIDI DRESS WITH BELT",
+          "price": 4999,
+          "category": "Women",
+          "image": "https://static.zara.net/assets/public/770c/a7ae/c6a94bcea9d9/8ddf70e547b8/03897801645-e1/03897801645-e1.jpg?ts=1757587879356&w=1024",
+          "quantity": 1
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2026-01-04T01:46:48.574Z",
+      "shippingAddress": {
+        "name": "Rana",
+        "email": "rana@gmail.com",
+        "address": "zaitoon internatioal campus",
+        "city": "Payyannur",
+        "state": "Kerala",
+        "pincode": "670307",
+        "country": "India"
+      },
+      "total": 84439
     }
   ]
 }
